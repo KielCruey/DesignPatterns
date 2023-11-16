@@ -1,6 +1,9 @@
 #include <iostream>
 
-// the "product" in the builder design pattern
+// ============ THE PRODUCT ============
+/*
+    acts like a normal class, define everything that your "product" has
+*/
 class Car
 {
 private:
@@ -60,8 +63,7 @@ public:
     }
 };
 
-
-// "abstract builder" for the builder design pattern.
+// ============ THE ABSTRACT BUILDER -- INTERFACE ============
 class CarBuilder
 {
 public:
@@ -71,10 +73,12 @@ public:
     virtual void ProduceTransmission() = 0;
 };
 
+// ============ THE CONCRETE BUILDER ============
 class ConcreteCarBuilder : public CarBuilder
 {
 private:
     Car * car;
+
 public:
     ConcreteCarBuilder()
     {
@@ -182,7 +186,7 @@ void SeasonalProjectCars(CarDirector & carDirector)
     winterCar->printModel();
     delete summerCar;
 
-    //delete builder;
+    delete builder;
 }
 
 // used without the CarDirector class
@@ -220,7 +224,7 @@ void CarProject_MakeAndModel(CarDirector & carDirector)
     delete completedCar;
 }
 
-
+// ============ MAIN ============
 int main()
 {
     CarDirector * director = new CarDirector();
