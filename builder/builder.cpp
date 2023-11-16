@@ -131,6 +131,7 @@ public:
     }
 };
 
+// ============ Director ============
 class CarDirector
 {
 private:
@@ -156,6 +157,7 @@ public:
     }
 };
 
+// ============ Client Code ============
 // implemented with the CarDirector class
 void SeasonalProjectCars(CarDirector & carDirector)
 {
