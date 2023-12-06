@@ -10,5 +10,12 @@ The goal is to have the code:
 * UML or Sequence diagrams
 * unit test the code (Google test)
 
+# Resources 
+## Abstract Factory Pattern
+[Article](https://refactoring.guru/design-patterns/abstract-factory/cpp/example)
+
+## Builder Pattern
+[Article](https://hackernoon.com/c-type-casting-for-c-developers-0c823y9k)
+
 # Compiling Code
 This [video](https://www.youtube.com/watch?v=3-9sObAg6R0) helps with compiling on VS code.
