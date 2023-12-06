@@ -4,43 +4,43 @@
 class AbstractPerson
 {
 public:
-    virtual ~AbstractPerson() {}
+    virtual ~AbstractPerson() {};
     virtual void Attack() = 0;
     virtual void CheckHealth() = 0;
 };
 
-// ============ CONCRETE PRODUCTS ============
-class Soldier : public AbstractPerson
+// ============ CONCRETE PRODUCTS -- will be created by concrete factories ============
+class ConcreteSoldier : public AbstractPerson
 { 
 public:
-    Soldier() { std::cout << "Soldier Created" << std::endl; }
-    ~Soldier() { std::cout << "Soldier Destroyed" << std::endl; }
+    ConcreteSoldier() { std::cout << "Soldier Created" << std::endl; }
+    ~ConcreteSoldier() { std::cout << "Soldier Destroyed" << std::endl; }
 
     // ============ concrete functions -- getting overridden ============
     void Attack() { std::cout << "Soldier Attacked" << std::endl; }
     void CheckHealth() { std::cout << "Soldier Checked Health" << std::endl; }
 };
 
-class Archer : public AbstractPerson
+class ConcreteArcher : public AbstractPerson
 {
 public:
-    Archer() { std::cout << "Archer Created" << std::endl; }
-    ~Archer () { std::cout << "Archer Destroyed" << std::endl; }
+    ConcreteArcher() { std::cout << "Archer Created" << std::endl; }
+    ~ConcreteArcher () { std::cout << "Archer Destroyed" << std::endl; }
 
     // ============ concrete functions -- getting overridden ============
-    void Attack() { std::cout << "Archer Attacked" << std::endl; }
-    void CheckHealth() { std::cout << "Archer Checked Health" << std::endl; }
+    void Attack() override { std::cout << "Archer Attacked" << std::endl; }
+    void CheckHealth() override { std::cout << "Archer Checked Health" << std::endl; }
 };
 
-class Calvary : public AbstractPerson
+class ConcreteCalvary : public AbstractPerson
 {
 public:
-    Calvary() { std::cout << "Calvary Created" << std::endl; }
-    ~Calvary() { std::cout << "Calvary Destroyed" << std::endl; }
+    ConcreteCalvary() { std::cout << "Calvary Created" << std::endl; }
+    ~ConcreteCalvary() { std::cout << "Calvary Destroyed" << std::endl; }
 
     // ============ concrete functions -- getting overridden ============
-    void Attack() { std::cout << "Calvary Attacked" << std::endl; }
-    void CheckHealth() { std::cout << "Calvary Checked Health" << std::endl; }
+    void Attack() override { std::cout << "Calvary Attacked" << std::endl; }
+    void CheckHealth() override { std::cout << "Calvary Checked Health" << std::endl; }
 };
 
 // ============ ABSTRACT FACTORY ============
@@ -56,49 +56,47 @@ public:
 };
 
 // ============ CONCRETE FACTORIES ============
-class HumanFactory : public AbstractRaceFactory
+class ConcreteHumanFactory : public AbstractRaceFactory
 {
 public:
-    HumanFactory() { std::cout << "Human Factory Created" << std::endl; }
-
-    ~HumanFactory() { std::cout << "Human Factory Destroyed" << std::endl; }
+    ConcreteHumanFactory() { std::cout << "Human Factory Created" << std::endl; }
+    ~ConcreteHumanFactory() { std::cout << "Human Factory Destroyed" << std::endl; }
 
     AbstractPerson * MakeSoldier()
     {
-        return new Soldier();
+        return new ConcreteSoldier();
     }
 
     AbstractPerson * MakeArcher()
     {
-        return new Archer();
+        return new ConcreteArcher();
     }
     
     AbstractPerson * MakeCalvary() 
     {
-        return new Calvary();
+        return new ConcreteCalvary();
     }
 };
 
-class OrcFactory : public AbstractRaceFactory
+class ConcreteOrcFactory : public AbstractRaceFactory
 {
 public:
-    OrcFactory() { std::cout << "Orc Factory Created" << std::endl; }
-
-    ~OrcFactory() { std::cout << "Orc Factory Destroyed" << std::endl; }
+    ConcreteOrcFactory() { std::cout << "Orc Factory Created" << std::endl; }
+    ~ConcreteOrcFactory() { std::cout << "Orc Factory Destroyed" << std::endl; }
 
     AbstractPerson * MakeSoldier()
     {
-        return new Soldier();
+        return new ConcreteSoldier();
     }
 
     AbstractPerson * MakeArcher()
     {
-        return new Archer();
+        return new ConcreteArcher();
     }
     
     AbstractPerson * MakeCalvary() 
     {
-        return new Calvary();
+        return new ConcreteCalvary();
     }
 };
 
@@ -106,15 +104,27 @@ public:
 void CreateHumanArmy(AbstractRaceFactory & factory)
 {
     AbstractPerson * humanSoldier = factory.MakeSoldier(); 
+    AbstractPerson * humanArcher = factory.MakeArcher();
+    AbstractPerson * humanCalvary = factory.MakeCalvary();
+}
+
+void CreateOrcArmy(AbstractRaceFactory & factory)
+{
+    AbstractPerson * orcSoldier = factory.MakeSoldier(); 
+    AbstractPerson * orcArcher = factory.MakeArcher();
+    AbstractPerson * orcCalvary = factory.MakeCalvary();
 }
 
 // ============ MAIN ============
 int main()
 {
-    HumanFactory * factory = new HumanFactory();
-    CreateHumanArmy(*factory);
+    // factory creating humans
+    ConcreteHumanFactory * humanFactory = new ConcreteHumanFactory();
+    CreateHumanArmy(*humanFactory);
+    delete humanFactory;
 
-    // appears the solder isn't deleted, MEMORY LEAK
-
-    delete factory;
+    // factory creating humans
+    ConcreteOrcFactory * orcFactory = new ConcreteOrcFactory();
+    CreateHumanArmy(*orcFactory);
+    delete orcFactory;
 }
