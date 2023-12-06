@@ -10,8 +10,10 @@ The goal is to have the code:
 * UML or Sequence diagrams
 * unit test the code (Google test)
 
-
 # Resources 
+## Abstract Factory Pattern
+[Article](https://refactoring.guru/design-patterns/abstract-factory/cpp/example)
+
 ## Builder Pattern
 [Article](https://hackernoon.com/c-type-casting-for-c-developers-0c823y9k)
 
