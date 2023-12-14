@@ -17,5 +17,8 @@ The goal is to have the code:
 ## Builder Pattern
 [Article](https://hackernoon.com/c-type-casting-for-c-developers-0c823y9k)
 
+## Factory Method Pattern
+[Article](https://refactoring.guru/design-patterns/factory-method/cpp/example)
+
 # Compiling Code
 This [video](https://www.youtube.com/watch?v=3-9sObAg6R0) helps with compiling on VS code.
