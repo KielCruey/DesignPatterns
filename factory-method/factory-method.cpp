@@ -184,7 +184,7 @@ public:
 // they are all using the default constructor/destructor 
 class ConcreteCowCreator : public AnimalCreator
 {
-private: 
+public: 
     AbstractAnimal * FactoryMethod() override
     {
         return new Cow();
@@ -193,7 +193,7 @@ private:
 
 class ConcreteSheepCreator : public AnimalCreator
 {
-private: 
+public: 
     AbstractAnimal * FactoryMethod() override
     {
         return new Sheep();
@@ -202,7 +202,7 @@ private:
 
 class ConcretePigCreator : public AnimalCreator
 {
-private: 
+public: 
     AbstractAnimal* FactoryMethod() override
     {
         return new Pig();
@@ -212,6 +212,8 @@ private:
 // ============ Main ============
 int main()
 {
+    AnimalCreator * creator = new Cow();
+
     std::cout << "Hello World" << std::endl;
     return 0;
 }
