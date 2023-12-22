@@ -212,8 +212,17 @@ public:
 // ============ Main ============
 int main()
 {
-    AnimalCreator * creator = new Cow();
+    // AnimalCreator knows to create a Cow because creator is of type ConcreteCowCreator's "FactoryMethod"
+    AnimalCreator * animalCreator;
+    
+    animalCreator = new ConcreteCowCreator();  
+    animalCreator->CreateAnimal(); // creates Cow object -- calls the Cow() constructor
 
-    std::cout << "Hello World" << std::endl;
+    animalCreator = new ConcreteSheepCreator();
+    animalCreator->FactoryMethod(); // creates a sheep -- calls the Sheep() constructor
+
+    animalCreator = new ConcretePigCreator();
+    animalCreator->CreateAnimal(); // creates a pig -- calls the Pig() constructor
+
     return 0;
 }
