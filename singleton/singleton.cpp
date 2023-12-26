@@ -1,12 +1,10 @@
 #include <string>
 
-
-
 class Globals
 {
 private:
     // creating private constructor, since only static methods can access the constructor only
-    Globals() : systemState(static_cast<int>(standardMode)), numberOfFiles(0) {}
+    Globals() : systemState(static_cast<int>(standardMode)), numberOfFiles(NULL) {}
 
     Globals(int systemState, int numberOfFiles)
     {
@@ -22,11 +20,10 @@ private:
 public:
     enum state { standardMode, calibrationMode, maintenanceMode, idleMode } state;
 
-
     static Globals * getInstance()
     {
         // checking if no instance of class
-        if (pGlobals == NULL) 
+        if (pGlobals == nullptr) 
         {
             // We can access private members within the class.
             pGlobals = new Globals(); 
@@ -41,8 +38,10 @@ public:
         }
     }
 
-    // deleting copy constructor
+    // deleting copy constructor -- can be clone-able
     Globals(const Globals& obj) = delete; 
+    // deleting assignment operator -- can't use the "=" operator
+    void operator=(const Globals &) = delete;
 
     // ============ getters ============ 
     int GetSystemState()
@@ -75,5 +74,6 @@ int main()
     // directly calling the getInstance() method which act as the constructor
     Globals * pMainGlobals = Globals::getInstance();
 
+    int state = pMainGlobals->GetSystemState();
     return 0;
 }
