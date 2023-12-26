@@ -1,4 +1,5 @@
 #include <string>
+#include <iostream>
 
 class Globals
 {
@@ -25,6 +26,8 @@ public:
         // checking if no instance of class
         if (pGlobals == nullptr) 
         {
+            std::cout << "Creating a new Globals object" << std::endl;
+
             // We can access private members within the class.
             pGlobals = new Globals(); 
             
@@ -32,6 +35,8 @@ public:
         }
         else
         {
+            std::cout << "Globals object exists, returning existing Globals object" << std::endl;
+
             // if instancePtr != NULL that means the class already have an instance. 
             // So, we are returning that instance and not creating new one.
             return pGlobals;
