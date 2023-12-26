@@ -4,7 +4,7 @@ class Globals
 {
 private:
     // creating private constructor, since only static methods can access the constructor only
-    Globals() : systemState(static_cast<int>(standardMode)), numberOfFiles(NULL) {}
+    Globals() : systemState(static_cast<int>(standardMode)), numberOfFiles(0) {}
 
     Globals(int systemState, int numberOfFiles)
     {
@@ -74,6 +74,7 @@ int main()
     // directly calling the getInstance() method which act as the constructor
     Globals * pMainGlobals = Globals::getInstance();
 
+    pMainGlobals->SetNumberOfFiles(4);
     int state = pMainGlobals->GetSystemState();
     return 0;
 }
