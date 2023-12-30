@@ -1,12 +1,17 @@
-
 // =========== Abstract Target ===========
 class AbstractPlug
 {
-public:
+private:
     int VoltageRating;
     int FrequencyRating;
 
 public:
+    AbstractPlug(int VoltageRating, int FrequencyRating)
+    {
+        this->VoltageRating = VoltageRating;
+        this->FrequencyRating = FrequencyRating;
+    }
+
     virtual ~AbstractPlug();
     virtual bool HasRoundPins();
     virtual int GetNumberOfPins();
@@ -32,7 +37,8 @@ private:
 
 public:
     // =========== special class functions ===========
-    AmericanPlug(int NumberOfPins)
+    AmericanPlug(int VoltageRating, int FrequencyRating, int NumberOfPins) : 
+        AbstractPlug(VoltageRating, FrequencyRating)
     {
         this->NumberOfPins = NumberOfPins;
     }
@@ -59,7 +65,8 @@ public:
 
 public:
     // =========== special class functions ===========
-    UKPlug(int NumberOfPins)
+    UKPlug(int VoltageRating, int FrequencyRating, int NumberOfPins) : 
+        AbstractPlug(VoltageRating, FrequencyRating)
     {
         this->NumberOfPins = NumberOfPins;
     }
@@ -86,7 +93,8 @@ private:
 
 public:
     // =========== special class functions ===========
-    JapanesePlug(int NumberOfPins)
+    JapanesePlug(int VoltageRating, int FrequencyRating, int NumberOfPins) :
+        AbstractPlug(VoltageRating, FrequencyRating)
     {
         this->NumberOfPins = NumberOfPins;
     }
@@ -115,7 +123,7 @@ private:
     int Frequency;
 
 public:
-    virtual bool GetAcceptsFlatPins();
+    virtual bool GetAcceptsRoundPins();
     virtual int GetPinCount();
 
     // =========== special class functions ===========
@@ -128,7 +136,7 @@ public:
     ~Outlet() {};
 
     // =========== general function ===========
-    bool GetAcceptsFlatPins()
+    bool GetAcceptsRoundPins()
     {
         return this->AcceptsFlatPins;
     }
@@ -163,6 +171,19 @@ public:
     }
 
     // =========== general functions ===========
+    // now the point of the adapter class is to call the target's AbstractPlug virtual functions
+    bool HasRoundPins() override
+    {
+        return pOutlet->GetAcceptsRoundPins();
+    }
+
+    // now the point of the adapter class is to call the target's AbstractPlug virtual functions
+    int GetNumberOfPins() override
+    {
+        return pOutlet->GetPinCount();
+    }
+    
+    // =========== getters/setters ===========
     void SetOutlet(Outlet * pOutlet)
     {
         this->pOutlet = pOutlet;
@@ -173,3 +194,11 @@ public:
         return this->pOutlet;
     }
 };
+
+// =========== MAIN code ===========
+int main()
+{
+
+
+    return 0;
+}
