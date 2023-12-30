@@ -8,7 +8,6 @@ public:
 
 public:
     virtual ~AbstractPlug();
-
     virtual bool HasRoundPins();
     virtual int GetNumberOfPins();
 
@@ -56,7 +55,6 @@ class UKPlug : public AbstractPlug
 {
 public:
     const bool RoundPins = false;
-    
     int NumberOfPins;
 
 public:
@@ -84,7 +82,6 @@ class JapanesePlug : public AbstractPlug
 {
 private:
     const bool RoundPins = true;
-    
     int NumberOfPins;
 
 public:
@@ -105,5 +102,74 @@ public:
     int GetNumberOfPins() override
     {
         return this->NumberOfPins;
+    }
+};
+
+// =========== Adaptee ===========
+class Outlet
+{
+private:
+    bool AcceptsFlatPins;
+    int PinCount;
+    int Voltage;
+    int Frequency;
+
+public:
+    virtual bool GetAcceptsFlatPins();
+    virtual int GetPinCount();
+
+    // =========== special class functions ===========
+    Outlet(int Voltage, int Frequency)
+    {
+        this->Voltage = Voltage;
+        this->Frequency = Frequency;
+    }
+
+    ~Outlet() {};
+
+    // =========== general function ===========
+    bool GetAcceptsFlatPins()
+    {
+        return this->AcceptsFlatPins;
+    }
+
+    int GetPinCount()
+    {
+        return this->PinCount;
+    }
+
+    int GetVoltage()
+    {
+        return this->Voltage;
+    }
+
+    int GetFrequency()
+    {
+        return this->Frequency;
+    }
+};
+
+// =========== Adapter ===========
+class PlugAdapter : public AbstractPlug
+{
+private:
+    Outlet * pOutlet;
+
+public:
+    // =========== special class functions ===========
+    PlugAdapter(Outlet * pOutlet)
+    {
+        SetOutlet(pOutlet);
+    }
+
+    // =========== general functions ===========
+    void SetOutlet(Outlet * pOutlet)
+    {
+        this->pOutlet = pOutlet;
+    }
+
+    Outlet * GetOutlet()
+    {
+        return this->pOutlet;
     }
 };
