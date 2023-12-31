@@ -257,11 +257,10 @@ int main()
 {
     AmericanPlug * plug = new AmericanPlug(120, 60, 2);
     int temp = plug->GetNumberOfPins();
-    std::cout << "Pins are round: " + plug->HasRoundPins() << std::endl;
-    std::cout << "number of pins: " + temp << std::endl;
 
+    
     Outlet * outlet = new Outlet(false, 3, 120, 60);
     AbstractPlug * adapter = new PlugAdapter(outlet, 120, 60);
-    
+
     return 0;
 }
