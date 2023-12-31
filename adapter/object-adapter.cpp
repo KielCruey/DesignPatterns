@@ -1,3 +1,5 @@
+#include <iostream>
+
 // =========== Abstract Target ===========
 class AbstractPlug
 {
@@ -10,9 +12,15 @@ public:
     {
         this->VoltageRating = VoltageRating;
         this->FrequencyRating = FrequencyRating;
+
+        std::cout << "AbstractPlug Created" << std::endl;
     }
 
-    virtual ~AbstractPlug();
+    virtual ~AbstractPlug()
+    {
+        std::cout << "AbstractPlug deleted" << std::endl;
+    }
+
     virtual bool HasRoundPins();
     virtual int GetNumberOfPins();
 
@@ -41,9 +49,14 @@ public:
         AbstractPlug(VoltageRating, FrequencyRating)
     {
         this->NumberOfPins = NumberOfPins;
+
+        std::cout << "AmericanPlug Created" << std::endl;
     }
 
-    ~AmericanPlug() override = default;
+    ~AmericanPlug() override 
+    {
+        std::cout << "AmericanPlug deleted" << std::endl;
+    }
 
     // =========== general functions ===========
     bool HasRoundPins() override
@@ -69,9 +82,14 @@ public:
         AbstractPlug(VoltageRating, FrequencyRating)
     {
         this->NumberOfPins = NumberOfPins;
+
+        std::cout << "UKPlug created" << std::endl;
     }
 
-    ~UKPlug() override = default;
+    ~UKPlug() override 
+    {
+        std::cout << "UKPlug deleted" << std::endl;
+    };
 
     // =========== general functions ===========
     bool HasRoundPins() override
@@ -97,9 +115,14 @@ public:
         AbstractPlug(VoltageRating, FrequencyRating)
     {
         this->NumberOfPins = NumberOfPins;
+
+        std::cout << "JapanesePlug created" << std::endl;
     }
 
-    ~JapanesePlug() override = default;
+    ~JapanesePlug() override
+    {
+        std::cout << "JapanesePlug deleted" << std::endl;
+    }
 
     // =========== general functions ===========
     bool HasRoundPins() override
@@ -131,9 +154,14 @@ public:
     {
         this->Voltage = Voltage;
         this->Frequency = Frequency;
+
+        std::cout << "Outlet created" << std::endl;
     }
 
-    ~Outlet() {};
+    ~Outlet()
+    {
+        std::cout << "Outlet deleted" << std::endl;
+    }
 
     // =========== general function ===========
     bool GetAcceptsRoundPins()
@@ -198,7 +226,5 @@ public:
 // =========== MAIN code ===========
 int main()
 {
-
-
     return 0;
 }
