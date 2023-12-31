@@ -30,6 +30,11 @@ public:
     {
         this->baseVariable = baseVariable;
     }
+
+    void printBaseVariable()
+    {
+        std::cout << "Base Variable: " + this->baseVariable << std::endl;
+    }
 };
 
 class Derived : public Base
@@ -82,8 +87,7 @@ Derived * DownCasting(Base * pBase)
 int main()
 {
     Base * base = new Base();
-    int tempBaseVariable = base->GetBaseVariable(); 
-    std::cout << "temp Base Variable: " + tempBaseVariable << std::endl;
+    base->printBaseVariable();
 
     // downcasting
     Derived * derived = DownCasting(base);
