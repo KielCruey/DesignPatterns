@@ -84,13 +84,19 @@ Derived * DownCasting(Base * pBase)
     return derived;
 }
 
+Base * UpCasting(Derived * pDerived)
+{
+    Base * base = dynamic_cast<Base *>(pDerived);
+    return base;
+}
+
 int main()
 {
     Base * base = new Base();
     base->printBaseVariable();
-
-    // downcasting
-    Derived * derived = DownCasting(base);
+    
+    Derived * derived = DownCasting(base); // downcasting
+    base = UpCasting(derived); // upcasting
 
     return 0;
 }
