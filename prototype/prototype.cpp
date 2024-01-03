@@ -184,12 +184,13 @@ void SimpleCivilianClone()
     delete civRobot;
 }
 
+// ============== main ==============
 int main()
 {
-    // cloning without a factory
+    // cloning military robot without a factory
     SimpleMiliaryClone();
 
-    // cloning civilian robot
+    // cloning civilian robot without a factory
     SimpleCivilianClone();
 
     return 0;
