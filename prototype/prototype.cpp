@@ -82,7 +82,7 @@ public:
     // =========== pure virtual functions ===========
     RobotPrototype * Clone() const override 
     {
-        return new ConcreteCivilianRobotPrototype(*this);
+        return new ConcreteCivilianRobotPrototype(*this); // calling default copy constructor -- shallow copy only
     }
 
     // ============== getters/setters ==============
@@ -124,7 +124,7 @@ public:
     // =========== pure virtual functions ===========
     RobotPrototype * Clone() const override 
     {
-        return new ConcreteMilitaryRobotPrototype(*this);
+        return new ConcreteMilitaryRobotPrototype(*this); // calling default copy constructor -- shallow copy only
     }
 
     // ============== getters/setters ==============
