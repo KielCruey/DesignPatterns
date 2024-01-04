@@ -79,7 +79,7 @@ public:
 
     Sheep( std::string name) 
     { 
-        std::cout << "I'm a sheep and my name is " + name + "!" << std::endl; 
+        std::cout << "I'm a sheep, and my name is " + name + "!" << std::endl; 
     } 
 
     ~Sheep() 
@@ -129,7 +129,7 @@ public:
 
     Pig(std::string name) 
     { 
-        std::cout << "I'm a pig and my name is " + name + "!" << std::endl; 
+        std::cout << "I'm a pig, and my name is " + name + "!" << std::endl; 
     }
 
     ~Pig() 
@@ -258,20 +258,48 @@ std::vector<AbstractAnimal *> CreateOneOfEachAnimals_NoNames(AnimalCreator * pAn
     return vAnimals;
 }
 
+void PrintAnimalSounds(std::vector<AbstractAnimal *> v)
+{
+    for(int i = 0; i <= (v.size() - 1); i++)
+    {
+        std::cout << v[i]->SoundsOfYourPeople() << std::endl;
+    }
+}
+
+
+std::vector<AbstractAnimal *> CreateOneOfEachAnimals_Names(AnimalCreator * pAnimalCreator)
+{
+    std::vector<AbstractAnimal *> vAnimals;
+
+    pAnimalCreator = new ConcreteCowCreator(); 
+    AbstractAnimal * cow = pAnimalCreator->CreateAnimal("Daisy"); // creates Cow object -- calls the Cow() constructor
+    vAnimals.push_back(cow); 
+
+    pAnimalCreator = new ConcreteSheepCreator();
+    AbstractAnimal * sheep = pAnimalCreator->FactoryMethod("Grant"); // creates a sheep -- calls the Sheep() constructor
+    vAnimals.push_back(sheep);
+
+    pAnimalCreator = new ConcretePigCreator();
+    AbstractAnimal * pig = pAnimalCreator->CreateAnimal("Luigi"); // creates a pig -- calls the Pig() constructor
+    vAnimals.push_back(pig);
+
+    return vAnimals;
+}
 
 // ============ Main ============
 int main()
 {
     AnimalCreator * animalCreator;
     std::vector<AbstractAnimal *> animals_NoNames;
+    std::vector<AbstractAnimal *> animals_Names;
 
-    // vector of one of each farm animals
+    // vector of each farm animals -- with no names
     animals_NoNames = CreateOneOfEachAnimals_NoNames(animalCreator);
+    PrintAnimalSounds(animals_NoNames);
 
-    for(int i = 0; i <= animals_NoNames.size(); i++)
-    {
-        std::cout << animals_NoNames[i]->SoundsOfYourPeople() << std::endl;
-    }
+    // vector of each farm animals -- with names 
+    animals_Names = CreateOneOfEachAnimals_Names(animalCreator);
+    PrintAnimalSounds(animals_Names);
 
     return 0;
 }
