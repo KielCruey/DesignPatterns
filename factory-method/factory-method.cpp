@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 
 // ============ Product ============
 class AbstractAnimal
@@ -172,13 +173,21 @@ class AnimalCreator
 {
 public:
     virtual ~AnimalCreator() {};
+
     virtual AbstractAnimal * FactoryMethod() = 0;
+    virtual AbstractAnimal * FactoryMethod(std::string name) = 0;
 
     // non-virtual function to call the virtual FactoryMethod(), which will be overwritten by the subclass "products"
     // the subclasses will use the new keyword to create their own object
     AbstractAnimal * CreateAnimal()
     {
         AbstractAnimal * animal = this->FactoryMethod();
+        return animal;
+    }
+
+    AbstractAnimal * CreateAnimal(std::string name)
+    {
+        AbstractAnimal * animal = this->FactoryMethod(name);
         return animal;
     }
 };
@@ -193,6 +202,11 @@ public:
     {
         return new Cow();
     }
+
+    AbstractAnimal * FactoryMethod(std::string name)
+    {
+        return new Cow(name);
+    }
 };
 
 class ConcreteSheepCreator : public AnimalCreator
@@ -201,6 +215,11 @@ public:
     AbstractAnimal * FactoryMethod() override
     {
         return new Sheep();
+    }
+
+    AbstractAnimal * FactoryMethod(std::string name)
+    {
+        return new Sheep(name);
     }
 };
 
@@ -211,22 +230,48 @@ public:
     {
         return new Pig();
     }
+
+    AbstractAnimal * FactoryMethod(std::string name)
+    {
+        return new Pig(name);
+    }
 };
+
+// ============ Client Code ============
+// AnimalCreator knows to create the concrete animals because creator is of type ConcreteCowCreator's "FactoryMethod"
+std::vector<AbstractAnimal *> CreateOneOfEachAnimals_NoNames(AnimalCreator * pAnimalCreator)
+{
+    std::vector<AbstractAnimal *> vAnimals;
+
+    pAnimalCreator = new ConcreteCowCreator();  
+    AbstractAnimal * cow = pAnimalCreator->CreateAnimal(); // creates Cow object -- calls the Cow() constructor
+    vAnimals.push_back(cow);
+
+    pAnimalCreator = new ConcreteSheepCreator();
+    AbstractAnimal * sheep = pAnimalCreator->FactoryMethod(); // creates a sheep -- calls the Sheep() constructor
+    vAnimals.push_back(sheep);
+
+    pAnimalCreator = new ConcretePigCreator();
+    AbstractAnimal * pig = pAnimalCreator->CreateAnimal(); // creates a pig -- calls the Pig() constructor
+    vAnimals.push_back(pig);
+
+    return vAnimals;
+}
+
 
 // ============ Main ============
 int main()
 {
-    // AnimalCreator knows to create the concrete animals because creator is of type ConcreteCowCreator's "FactoryMethod"
     AnimalCreator * animalCreator;
-    
-    animalCreator = new ConcreteCowCreator();  
-    AbstractAnimal * cow = animalCreator->CreateAnimal(); // creates Cow object -- calls the Cow() constructor
+    std::vector<AbstractAnimal *> animals_NoNames;
 
-    animalCreator = new ConcreteSheepCreator();
-    AbstractAnimal * sheep = animalCreator->FactoryMethod(); // creates a sheep -- calls the Sheep() constructor
+    // vector of one of each farm animals
+    animals_NoNames = CreateOneOfEachAnimals_NoNames(animalCreator);
 
-    animalCreator = new ConcretePigCreator();
-    AbstractAnimal * pig =animalCreator->CreateAnimal(); // creates a pig -- calls the Pig() constructor
+    for(int i = 0; i <= animals_NoNames.size(); i++)
+    {
+        std::cout << animals_NoNames[i]->SoundsOfYourPeople() << std::endl;
+    }
 
     return 0;
 }
