@@ -5,7 +5,10 @@
 class AbstractAnimal
 {
 public:
-    virtual ~AbstractAnimal() {};
+    virtual ~AbstractAnimal() 
+    {
+        std::cout << "Abstract Animal destroyed" << std::endl;   
+    };
 
     // functions concrete classes must have
     virtual std::string SoundsOfYourPeople() = 0;
@@ -173,9 +176,10 @@ public:
 
     // non-virtual function to call the virtual FactoryMethod(), which will be overwritten by the subclass "products"
     // the subclasses will use the new keyword to create their own object
-    std::string CreateAnimal()
+    AbstractAnimal * CreateAnimal()
     {
         AbstractAnimal * animal = this->FactoryMethod();
+        return animal;
     }
 };
 
@@ -212,17 +216,17 @@ public:
 // ============ Main ============
 int main()
 {
-    // AnimalCreator knows to create a Cow because creator is of type ConcreteCowCreator's "FactoryMethod"
+    // AnimalCreator knows to create the concrete animals because creator is of type ConcreteCowCreator's "FactoryMethod"
     AnimalCreator * animalCreator;
     
     animalCreator = new ConcreteCowCreator();  
-    animalCreator->CreateAnimal(); // creates Cow object -- calls the Cow() constructor
+    AbstractAnimal * cow = animalCreator->CreateAnimal(); // creates Cow object -- calls the Cow() constructor
 
     animalCreator = new ConcreteSheepCreator();
-    animalCreator->FactoryMethod(); // creates a sheep -- calls the Sheep() constructor
+    AbstractAnimal * sheep = animalCreator->FactoryMethod(); // creates a sheep -- calls the Sheep() constructor
 
     animalCreator = new ConcretePigCreator();
-    animalCreator->CreateAnimal(); // creates a pig -- calls the Pig() constructor
+    AbstractAnimal * pig =animalCreator->CreateAnimal(); // creates a pig -- calls the Pig() constructor
 
     return 0;
 }
