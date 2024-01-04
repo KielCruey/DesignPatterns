@@ -9,6 +9,13 @@
 // This is true if you use pointers for your member variables, deep copy is required.
 // https://stackoverflow.com/questions/33142935/prototype-design-pattern-example-c
 
+
+
+enum RobotTypes {
+    MILITARY = 0,
+    CIVILIAN
+};
+
 // ============== Abstract Product ==============
 class RobotPrototype
 {
@@ -41,6 +48,7 @@ public:
 
     // =========== pure virtual functions ===========
     virtual RobotPrototype * Clone() const = 0;
+    virtual int GetRobotType() = 0;
 
     // =========== getters/setters ===========
     void SetSerialNumber(int serialNumber)
@@ -95,6 +103,11 @@ public:
     {
         return this->name;
     }
+
+    int GetRobotType()
+    {
+        return RobotTypes::CIVILIAN;
+    }
 };
 
 class ConcreteMilitaryRobotPrototype : public RobotPrototype
@@ -137,6 +150,18 @@ public:
     {
         return this->rank;
     }
+
+    int GetRobotType()
+    {
+        return RobotTypes::MILITARY;
+    }
+};
+
+class PrototypeFactory
+{
+public:
+    PrototypeFactory();
+    ~PrototypeFactory();
 };
 
 // ============== client code ==============
@@ -187,6 +212,16 @@ void SimpleCivilianClone()
 // ============== main ==============
 int main()
 {
+    ConcreteCivilianRobotPrototype * rJim = new ConcreteCivilianRobotPrototype(9, "Jim");
+    if(rJim->GetRobotType() == RobotTypes::CIVILIAN)
+    {
+        std::cout << "Jim is a robot" << std::endl;
+    }
+    else
+    {
+        std::cout << "Jim is NOT a robot" << std::endl;
+    }
+
     // cloning military robot without a factory
     SimpleMiliaryClone();
 
