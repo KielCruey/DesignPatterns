@@ -19,6 +19,7 @@ The goal is to have the code:
 
 ## Factory Method Pattern
 [Article](https://refactoring.guru/design-patterns/factory-method/cpp/example)
+[Article #2](https://www.modernescpp.com/index.php/factory-method/)
 
 # Compiling Code
 This [video](https://www.youtube.com/watch?v=3-9sObAg6R0) helps with compiling on VS code.
