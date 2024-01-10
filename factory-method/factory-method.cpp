@@ -223,7 +223,7 @@ std::vector<AbstractAnimal *> CreateOneOfEachAnimals_NoNames(AnimalCreator * pAn
 
 void PrintAnimalSounds(std::vector<AbstractAnimal *> v)
 {
-    for(int i = 0; i <= (v.size() - 1); i++)
+    for(int i = 0; i < v.size(); i++)
     {
         std::cout << v[i]->SoundsOfYourPeople() << std::endl;
     }

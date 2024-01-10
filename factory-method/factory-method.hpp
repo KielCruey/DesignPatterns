@@ -98,7 +98,7 @@ public:
 class ConcreteCowCreator : public AnimalCreator
 {
 public: 
-    ~ConcreteCowCreator();
+    ~ConcreteCowCreator() override;
 
     AbstractAnimal * FactoryMethod() override;
     AbstractAnimal * FactoryMethod(std::string name) override;
@@ -107,7 +107,7 @@ public:
 class ConcreteSheepCreator : public AnimalCreator
 {
 public: 
-    ~ConcreteSheepCreator();
+    ~ConcreteSheepCreator() override;
 
     AbstractAnimal * FactoryMethod() override;
     AbstractAnimal * FactoryMethod(std::string name) override;
@@ -116,7 +116,7 @@ public:
 class ConcretePigCreator : public AnimalCreator
 {
 public: 
-    ~ConcretePigCreator();
+    ~ConcretePigCreator() override;
 
     AbstractAnimal* FactoryMethod() override;
     AbstractAnimal * FactoryMethod(std::string name) override;
