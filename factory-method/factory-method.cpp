@@ -2,240 +2,203 @@
 #include <string>
 #include <vector>
 
-// ============ Product ============
-class AbstractAnimal
-{
-public:
-    virtual ~AbstractAnimal() 
-    {
-        std::cout << "Abstract Animal destroyed" << std::endl;   
-    };
+#include "factory-method.hpp"
 
-    // functions concrete classes must have
-    virtual std::string SoundsOfYourPeople() = 0;
-    virtual void Sleeps() = 0;
-    virtual void Eats() = 0;
+// ============ animal ============
+AbstractAnimal::~AbstractAnimal()
+{
+    std::cout << "Abstract Animal destroyed" << std::endl;   
 };
 
-// ============ Concrete Products ============
-class Cow : public AbstractAnimal
+// ======= Cow =======
+Cow::Cow() 
 {
-public:
-    // ======= special class functions =======
-    Cow() 
-    {
-        std::cout << "I'm a cow!" << std::endl; 
-    }
+    std::cout << "I'm a cow!" << std::endl; 
+}
 
-    Cow(std::string name)
-    { 
-        std::cout << "I'm a cow, and my name is " + name + "!" << std::endl; 
-    }
+Cow::Cow(std::string name)
+{ 
+    std::cout << "I'm a cow, and my name is " + name + "!" << std::endl; 
+}
 
-    ~Cow() 
-    { 
-        std::cout << "No more cow!" << std::endl; 
-    }
+Cow::~Cow() 
+{ 
+    std::cout << "No more cow!" << std::endl; 
+}
 
-    // ======= overriding base class's functions =======
-    std::string SoundsOfYourPeople() override 
-    { 
-        return "Moo!"; 
-    }
-
-    void Sleeps() override 
-    { 
-        std::cout << "zzZZzz. Counting cows." << std::endl; 
-    }
-
-    void Eats () override 
-    { 
-        std::cout << "Starts to eat hay." << std::endl; 
-    }
-
-    // ======= getters/setters =======
-    std::string GetName() 
-    { 
-        return this->name; 
-    }
-
-    void SetName(std::string name) 
-    { 
-        this->name = name; 
-    }
-
-private:
-    std::string name;
-};
-
-class Sheep : public AbstractAnimal
+std::string Cow::SoundsOfYourPeople() 
 {
-public:
-    // ======= special class functions =======
-    Sheep() 
-    { 
-        std::cout << "I'm a sheep!" << std::endl; 
-    }
+    return "Moo!"; 
+}
 
-    Sheep( std::string name) 
-    { 
-        std::cout << "I'm a sheep, and my name is " + name + "!" << std::endl; 
-    } 
+void Cow::Sleeps() 
+{ 
+    std::cout << "zzZZzz. Counting cows." << std::endl; 
+}
 
-    ~Sheep() 
-    { 
-        std::cout << "No more sheep!" << std::endl; 
-    }
+void Cow::Eats() 
+{ 
+    std::cout << "Starts to eat hay." << std::endl; 
+}
 
-    // ======= overriding base class's functions =======
-    std::string SoundsOfYourPeople() override 
-    { 
-        return "Baa!"; 
-    }
 
-    void Sleeps() override 
-    { 
-        std::cout << "zzZZzz. Counting Sheep." << std::endl; 
-    }
+std::string Cow::GetName() 
+{ 
+    return this->name; 
+}
 
-    void Eats () override 
-    { 
-        std::cout << "Starts to eat grass." << std::endl; 
-    }
+void Cow::SetName(std::string name) 
+{ 
+    this->name = name; 
+}
 
-    // ======= getters/setters =======
-    std::string GetName() 
-    { 
-        return this->name; 
-    }
+// ======= Sheep =======
+Sheep::Sheep() 
+{ 
+    std::cout << "I'm a sheep!" << std::endl; 
+}
 
-    void SetName(std::string name) 
-    { 
-        this->name = name; 
-    }
+Sheep::Sheep(std::string name) 
+{ 
+    std::cout << "I'm a sheep, and my name is " + name + "!" << std::endl; 
+} 
 
-private:
-    std::string name;
-};
+Sheep::~Sheep() 
+{ 
+    std::cout << "No more sheep!" << std::endl; 
+}
 
-class Pig : public AbstractAnimal
-{
-public:
-    // ======= special class functions =======
-    Pig() 
-    { 
-        std::cout << "I'm a pig!" << std::endl; 
-    }
+std::string Sheep::SoundsOfYourPeople() 
+{ 
+    return "Baa!"; 
+}
 
-    Pig(std::string name) 
-    { 
-        std::cout << "I'm a pig, and my name is " + name + "!" << std::endl; 
-    }
+void Sheep::Sleeps()
+{ 
+    std::cout << "zzZZzz. Counting Sheep." << std::endl; 
+}
 
-    ~Pig() 
-    { 
-        std::cout << "No more pig!" << std::endl; 
-    }
+void Sheep::Eats() 
+{ 
+    std::cout << "Starts to eat grass." << std::endl; 
+}
 
-    // ======= overriding base class's functions =======
-    std::string SoundsOfYourPeople() override 
-    { 
-        return "Oink!"; 
-    }
+std::string Sheep::GetName() 
+{ 
+    return this->name; 
+}
 
-    void Sleeps() override 
-    { 
-        std::cout << "zzZZZzz. Counting pigs." << std::endl; 
-    }
+void Sheep::SetName(std::string name) 
+{ 
+    this->name = name; 
+}
 
-    void Eats () override 
-    { 
-        std::cout << "Starts to eat slop." << std::endl; 
-    }
+// ======= Pig =======
+Pig::Pig() 
+{ 
+    std::cout << "I'm a pig!" << std::endl; 
+}
 
-    // ======= getters/setters =======
-    std::string GetName() 
-    { 
-        return this->name; 
-    }
-    void SetName(std::string name) 
-    { 
-        this->name = name; 
-    }
+Pig::Pig(std::string name) 
+{ 
+    std::cout << "I'm a pig, and my name is " + name + "!" << std::endl; 
+}
 
-private:
-    std::string name;
-};
+Pig::~Pig() 
+{ 
+    std::cout << "No more pig!" << std::endl; 
+}
+
+std::string Pig::SoundsOfYourPeople()  
+{ 
+    return "Oink!"; 
+}
+
+void Pig::Sleeps()  
+{ 
+    std::cout << "zzZZZzz. Counting pigs." << std::endl; 
+}
+
+void Pig::Eats ()  
+{ 
+    std::cout << "Starts to eat slop." << std::endl; 
+}
+
+std::string Pig::GetName() 
+{ 
+    return this->name; 
+}
+
+void Pig::SetName(std::string name) 
+{ 
+    this->name = name; 
+}
 
 // ============ Creator ============
-// the point of the creator is to not create products, but to call the FactoryMethod() function which then creates the subclass objects we need
-class AnimalCreator
+AnimalCreator::~AnimalCreator() 
 {
-public:
-    virtual ~AnimalCreator() {};
+    std::cout << "AnimalCreator destroyed" << std::endl;
+}
 
-    virtual AbstractAnimal * FactoryMethod() = 0;
-    virtual AbstractAnimal * FactoryMethod(std::string name) = 0;
-
-    // non-virtual function to call the virtual FactoryMethod(), which will be overwritten by the subclass "products"
-    // the subclasses will use the new keyword to create their own object
-    AbstractAnimal * CreateAnimal()
-    {
-        AbstractAnimal * animal = this->FactoryMethod();
-        return animal;
-    }
-
-    AbstractAnimal * CreateAnimal(std::string name)
-    {
-        AbstractAnimal * animal = this->FactoryMethod(name);
-        return animal;
-    }
-};
-
-// ============ Concrete Creators ============
-// only need these subclasses to override the virtual FactoryMethod() function
-// they are all using the default constructor/destructor 
-class ConcreteCowCreator : public AnimalCreator
+AbstractAnimal * AnimalCreator::CreateAnimal()
 {
-public: 
-    AbstractAnimal * FactoryMethod() override
-    {
-        return new Cow();
-    }
+    AbstractAnimal * animal = this->FactoryMethod();
+    return animal;
+}
 
-    AbstractAnimal * FactoryMethod(std::string name)
-    {
-        return new Cow(name);
-    }
-};
-
-class ConcreteSheepCreator : public AnimalCreator
+AbstractAnimal * AnimalCreator::CreateAnimal(std::string name)
 {
-public: 
-    AbstractAnimal * FactoryMethod() override
-    {
-        return new Sheep();
-    }
+    AbstractAnimal * animal = this->FactoryMethod(name);
+    return animal;
+}
 
-    AbstractAnimal * FactoryMethod(std::string name)
-    {
-        return new Sheep(name);
-    }
-};
-
-class ConcretePigCreator : public AnimalCreator
+// ============ Cow Creators ============
+ConcreteCowCreator::~ConcreteCowCreator()
 {
-public: 
-    AbstractAnimal* FactoryMethod() override
-    {
-        return new Pig();
-    }
+    std::cout << "ConcreteCowCreator destroyed" << std::endl;
+}
 
-    AbstractAnimal * FactoryMethod(std::string name)
-    {
-        return new Pig(name);
-    }
-};
+AbstractAnimal * ConcreteCowCreator::FactoryMethod()
+{
+    return new Cow();
+}
+
+AbstractAnimal * ConcreteCowCreator::FactoryMethod(std::string name)
+{
+    return new Cow(name);
+}
+
+// ============ Sheep Creators ============
+ConcreteSheepCreator::~ConcreteSheepCreator()
+{
+    std::cout << "ConcreteSheepCreator destroyed" << std::endl;
+}
+
+AbstractAnimal * ConcreteSheepCreator::FactoryMethod()
+{
+    return new Sheep();
+}
+
+AbstractAnimal * ConcreteSheepCreator::FactoryMethod(std::string name)
+{
+    return new Sheep(name);
+}
+
+// ============ Pig Creators ============
+ConcretePigCreator::~ConcretePigCreator()
+{
+    std::cout << "ConcretePigCreator destroyed" << std::endl;
+}
+
+AbstractAnimal* ConcretePigCreator::FactoryMethod()
+{
+    return new Pig();
+}
+
+AbstractAnimal * ConcretePigCreator::FactoryMethod(std::string name)
+{
+    return new Pig(name);
+}
 
 // ============ Client Code ============
 // AnimalCreator knows to create the concrete animals because creator is of type ConcreteCowCreator's "FactoryMethod"
