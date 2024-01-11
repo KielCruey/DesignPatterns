@@ -17,5 +17,14 @@ The goal is to have the code:
 ## Builder Pattern
 [Article](https://hackernoon.com/c-type-casting-for-c-developers-0c823y9k)
 
+## Factory Method Pattern
+For the factor method, there seems to be three ways it is implemented:
+1) Pure Factor Method (creational pattern) 
+2) Abstract Factory (creational pattern) implemented using a Factory Method (creational pattern) 
+3) Template Method (behavioral pattern) using Factory Method (creational pattern) 
+
+[Article](https://refactoring.guru/design-patterns/factory-method/cpp/example)
+[Article #2](https://www.modernescpp.com/index.php/factory-method/)
+
 # Compiling Code
 This [video](https://www.youtube.com/watch?v=3-9sObAg6R0) helps with compiling on VS code.
