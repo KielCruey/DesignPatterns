@@ -18,6 +18,7 @@ public:
     // deleting assignment operator -- can't use the "=" operator
     void operator=(const Globals &) = delete;
 
+    // functions calls the private constructor -- effectively is the constructor
     static Globals * getInstance();
 
     // ============ getters ============ 
