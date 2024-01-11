@@ -1,76 +1,63 @@
 #include <string>
 #include <iostream>
 
-class Globals
+#include "singleton.hpp"
+
+// ========== Singleton class ==========
+Globals::Globals(): 
+    systemState(static_cast<int>(standardMode)), 
+    numberOfFiles(0) 
+{ }
+
+Globals::Globals(int systemState, int numberOfFiles)
 {
-private:
-    // creating private constructor, since only static methods can access the constructor only
-    Globals() : systemState(static_cast<int>(standardMode)), numberOfFiles(0) {}
+    this->systemState = systemState;
+    this->numberOfFiles = numberOfFiles;
+}
 
-    Globals(int systemState, int numberOfFiles)
+Globals * Globals::getInstance()
+{
+    // checking if no instance of class
+    if (pGlobals == nullptr) 
     {
-        this->systemState = systemState;
-        this->numberOfFiles = numberOfFiles;
+        std::cout << "Creating a new Globals object" << std::endl;
+
+        // We can access private members within the class.
+        pGlobals = new Globals(); 
+        
+        return pGlobals; 
     }
-
-    // ========== member variables ==========
-    static Globals * pGlobals;
-    int systemState;
-    int numberOfFiles;
-    
-public:
-    enum state { standardMode, calibrationMode, maintenanceMode, idleMode } state;
-
-    static Globals * getInstance()
+    else
     {
-        // checking if no instance of class
-        if (pGlobals == nullptr) 
-        {
-            std::cout << "Creating a new Globals object" << std::endl;
+        std::cout << "Globals object exists, returning existing Globals object" << std::endl;
 
-            // We can access private members within the class.
-            pGlobals = new Globals(); 
-            
-            return pGlobals; 
-        }
-        else
-        {
-            std::cout << "Globals object exists, returning existing Globals object" << std::endl;
-
-            // if instancePtr != NULL that means the class already have an instance. 
-            // So, we are returning that instance and not creating new one.
-            return pGlobals;
-        }
+        // if instancePtr != NULL that means the class already have an instance. 
+        // So, we are returning that instance and not creating new one.
+        return pGlobals;
     }
+}
 
-    // deleting copy constructor -- can be clone-able
-    Globals(const Globals& obj) = delete; 
-    // deleting assignment operator -- can't use the "=" operator
-    void operator=(const Globals &) = delete;
+int Globals::GetSystemState()
+{
+    return this->systemState;
+}
 
-    // ============ getters ============ 
-    int GetSystemState()
-    {
-        return this->systemState;
-    }
+int Globals::GetNumberOfFiles()
+{
+    return this->numberOfFiles;
+}
 
-    int GetNumberOfFiles()
-    {
-        return this->numberOfFiles;
-    }
+void Globals::SetSystemState(int systemState)
+{
+    this->systemState = systemState;
+}
 
-    // ============ setters ============
-    void SetSystemState(int systemState)
-    {
-        this->systemState = systemState;
-    }
+void Globals::SetNumberOfFiles(int numberOfFiles)
+{
+    this->numberOfFiles = numberOfFiles;
+}
 
-    void SetNumberOfFiles(int numberOfFiles)
-    {
-        this->numberOfFiles = numberOfFiles;
-    }
-};
-
+// ========== Main ==========
 // initializing member pointer to itself
 Globals * Globals::pGlobals = nullptr;
 
