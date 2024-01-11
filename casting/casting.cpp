@@ -1,4 +1,5 @@
 #include <iostream>
+#include <typeinfo>
 
 class Base
 {
@@ -20,6 +21,12 @@ public:
     // ======== virtual functions ========
     virtual void SomeFunction() {}
 
+    // ======== general functions ========
+    void PrintBaseVariable()
+    {
+        std::cout << "Base Variable: " << this->baseVariable << std::endl;
+    }
+
     // ======== getters/setters ========
     int GetBaseVariable()
     { 
@@ -29,11 +36,6 @@ public:
     void SetBaseVariable(int baseVariable)
     {
         this->baseVariable = baseVariable;
-    }
-
-    void printBaseVariable()
-    {
-        std::cout << "Base Variable: " + this->baseVariable << std::endl;
     }
 };
 
@@ -54,7 +56,7 @@ public:
         std::cout << "Derived object destroyed" << std::endl;
     }
 
-// ======== virtual functions ========
+    // ======== virtual functions ========
     virtual void SomeFunction() override
     {
         std::cout << "SomeFunction()" << std::endl;
@@ -65,6 +67,12 @@ public:
     {
         std::cout << "DerivedFunction()" << std::endl;
     }  
+
+    // ======== general functions ========
+    void PrintDerivedVariable()
+    {
+        std::cout << "Derived Variable: " << this->derivedVariable << std::endl;
+    }
 
     // ======== getters/setters ========
     int GetDerivedVariable()
@@ -90,13 +98,37 @@ Base * UpCasting(Derived * pDerived)
     return base;
 }
 
+void CheckSameTypes(void * class1, void * class2)
+{
+    if(typeid(class1).name() == typeid(class2).name())
+    {
+        std::cout << "Same types" << std::endl;
+    }
+    else
+    {
+        std::cout << "Different types" << std::endl;
+    }
+}
+
+// ======== Main ========
 int main()
 {
+    /*
     Base * base = new Base();
-    base->printBaseVariable();
-    
+    base->PrintBaseVariable();
     Derived * derived = DownCasting(base); // downcasting
+    derived->PrintDerivedVariable();
     base = UpCasting(derived); // upcasting
+    */
+
+    Base * base = new Base();
+
+    Derived * derived = new Derived();
+    derived->PrintDerivedVariable();
+    derived->PrintBaseVariable();
+
+    std::cout << typeid(base).name() << std::endl;
+    std::cout << typeid(derived).name() << std::endl;
 
     return 0;
 }
