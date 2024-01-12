@@ -1,168 +1,116 @@
 #include <iostream>
 #include <string>
 
-// For the prototype design pattern, the use of the copy constructs is a must.
-// That's the mechanism that clones the same instance of already initialized object.
-// It appears that using the 'rule of three' would be good enough for the prototype design pattern.
+#include "prototype.hpp"
 
-// The use of deep copy is important, because creating a new object with own independent member variables.
-// This is true if you use pointers for your member variables, deep copy is required.
-// https://stackoverflow.com/questions/33142935/prototype-design-pattern-example-c
-
-
-
-enum RobotTypes {
-    MILITARY = 0,
-    CIVILIAN
-};
-
-// ============== Abstract Product ==============
-class RobotPrototype
+// ============== RobotPrototype class ==============
+RobotPrototype::RobotPrototype()
 {
-private:
-    int serialNumber;
+    std::cout << "Robot Prototype created" << std::endl;
+}
 
-public:
-    // =========== class special functions ===========
-    RobotPrototype()
-    {
-        std::cout << "Robot Prototype created" << std::endl;
-    }
+RobotPrototype::RobotPrototype(int serialNumber) :
+    serialNumber(serialNumber)
+{ 
+    std::cout << "Robot Prototype created with serial number" << std::endl;
+}
 
-    RobotPrototype(int serialNumber) :
-        serialNumber(serialNumber)
-    { 
-        std::cout << "Robot Prototype created with serial number" << std::endl;
-    }
-
-    virtual ~RobotPrototype()
-    {
-        std::cout << "Robot Prototype destroyed" << std::endl;
-    }
-
-    // =========== virtual functions ===========
-    virtual void PrintInfo()
-    {
-        std::cout << "Robot's serial number: " + GetSerialNumber() << std::endl;
-    }
-
-    // =========== pure virtual functions ===========
-    virtual RobotPrototype * Clone() const = 0;
-    virtual int GetRobotType() = 0;
-
-    // =========== getters/setters ===========
-    void SetSerialNumber(int serialNumber)
-    {
-        this->serialNumber = serialNumber;
-    }
-
-    int GetSerialNumber()
-    {
-        return this->serialNumber;
-    }
-};
-
-// ============== Concrete Product ==============
-class ConcreteCivilianRobotPrototype : public RobotPrototype
+RobotPrototype::~RobotPrototype()
 {
-private:
-    std::string name;
+    std::cout << "Robot Prototype destroyed" << std::endl;
+}
 
-public:
-    ConcreteCivilianRobotPrototype(int serialNumber, std::string name) :
-        RobotPrototype(serialNumber), 
-        name(name)
-    {
-        std::cout << "Concrete Civilian Robot created" << std::endl;
-    }
-
-    ~ConcreteCivilianRobotPrototype()
-    {
-        std::cout << "Concrete Civilian Robot destroyed" << std::endl;
-    }
-
-    // =========== virtual functions ===========
-    void PrintInfo() override
-    {
-        std::cout << "Concrete Civilian Robot is named " + GetName() + " with the serial number " << GetSerialNumber() << "." << std::endl;
-    }
-
-    // =========== pure virtual functions ===========
-    RobotPrototype * Clone() const override 
-    {
-        return new ConcreteCivilianRobotPrototype(*this); // calling default copy constructor -- shallow copy only
-    }
-
-    // ============== getters/setters ==============
-    void SetName(std::string name)
-    {
-        this->name = name;
-    }
-
-    std::string GetName()
-    {
-        return this->name;
-    }
-
-    int GetRobotType()
-    {
-        return RobotTypes::CIVILIAN;
-    }
-};
-
-class ConcreteMilitaryRobotPrototype : public RobotPrototype
+void RobotPrototype::PrintInfo()
 {
-private:
-    std::string rank;
+    std::cout << "Robot's serial number: " + GetSerialNumber() << std::endl;
+}
 
-public:
-    ConcreteMilitaryRobotPrototype(int serialNumber, std::string rank) :
-        RobotPrototype(serialNumber),
-        rank(rank)
-    {
-        std::cout << "Concrete Military Robot created" << std::endl;
-    }
-
-    ~ConcreteMilitaryRobotPrototype()
-    {
-        std::cout << "Concrete Military Robot destroyed" << std::endl;
-    }
-
-    // =========== virtual functions ===========
-    void PrintInfo() override
-    {
-        std::cout << "Concrete Military Robot rank is " + GetRank() + " with the serial number " << GetSerialNumber() << "." << std::endl;
-    }
-
-    // =========== pure virtual functions ===========
-    RobotPrototype * Clone() const override 
-    {
-        return new ConcreteMilitaryRobotPrototype(*this); // calling default copy constructor -- shallow copy only
-    }
-
-    // ============== getters/setters ==============
-    void SetRank(std::string rank)
-    {
-        this->rank = rank;
-    }
-
-    std::string GetRank()
-    {
-        return this->rank;
-    }
-
-    int GetRobotType()
-    {
-        return RobotTypes::MILITARY;
-    }
-};
-
-class PrototypeFactory
+void RobotPrototype::SetSerialNumber(int serialNumber)
 {
-public:
-    PrototypeFactory();
-    ~PrototypeFactory();
-};
+    this->serialNumber = serialNumber;
+}
+
+int RobotPrototype::GetSerialNumber()
+{
+    return this->serialNumber;
+}
+
+// ============== ConcreteCivilianRobotPrototype class ==============
+ConcreteCivilianRobotPrototype::ConcreteCivilianRobotPrototype(int serialNumber, std::string name) :
+    RobotPrototype(serialNumber), 
+    name(name)
+{
+    std::cout << "Concrete Civilian Robot created" << std::endl;
+}
+
+ConcreteCivilianRobotPrototype::~ConcreteCivilianRobotPrototype()
+{
+    std::cout << "Concrete Civilian Robot destroyed" << std::endl;
+}
+
+void ConcreteCivilianRobotPrototype::PrintInfo() 
+{
+    std::cout << "Concrete Civilian Robot is named " + GetName() + " with the serial number " << GetSerialNumber() << "." << std::endl;
+}
+
+RobotPrototype * ConcreteCivilianRobotPrototype::Clone() const
+{
+    return new ConcreteCivilianRobotPrototype(*this); // calling default copy constructor -- shallow copy only
+}
+
+void ConcreteCivilianRobotPrototype::SetName(std::string name)
+{
+    this->name = name;
+}
+
+std::string ConcreteCivilianRobotPrototype::GetName()
+{
+    return this->name;
+}
+
+int ConcreteCivilianRobotPrototype::GetRobotType()
+{
+    return RobotTypes::CIVILIAN;
+}
+
+// ============== ConcreteMilitaryRobotPrototype class ==============
+ConcreteMilitaryRobotPrototype::ConcreteMilitaryRobotPrototype(int serialNumber, std::string rank) :
+    RobotPrototype(serialNumber),
+    rank(rank)
+{
+    std::cout << "Concrete Military Robot created" << std::endl;
+}
+
+ConcreteMilitaryRobotPrototype::~ConcreteMilitaryRobotPrototype()
+{
+    std::cout << "Concrete Military Robot destroyed" << std::endl;
+}
+
+
+void ConcreteMilitaryRobotPrototype::PrintInfo()
+{
+    std::cout << "Concrete Military Robot rank is " + GetRank() + " with the serial number " << GetSerialNumber() << "." << std::endl;
+}
+
+RobotPrototype * ConcreteMilitaryRobotPrototype::Clone() const 
+{
+    return new ConcreteMilitaryRobotPrototype(*this); // calling default copy constructor -- shallow copy only
+}
+
+void ConcreteMilitaryRobotPrototype::SetRank(std::string rank)
+{
+    this->rank = rank;
+}
+
+std::string ConcreteMilitaryRobotPrototype::GetRank()
+{
+    return this->rank;
+}
+
+int ConcreteMilitaryRobotPrototype::GetRobotType()
+{
+    return RobotTypes::MILITARY;
+}
 
 // ============== client code ==============
 RobotPrototype * CloneAndPrintMilitaryRobot(ConcreteMilitaryRobotPrototype * mRobot)
