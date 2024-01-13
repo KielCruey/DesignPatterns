@@ -6,6 +6,10 @@
 // This is true if you use pointers for your member variables, deep copy is required.
 // https://stackoverflow.com/questions/33142935/prototype-design-pattern-example-c
 
+#include <iostream>
+#include <string>
+#include <unordered_map>
+
 enum RobotTypes {
     MILITARY = 0,
     CIVILIAN
@@ -81,7 +85,12 @@ public:
 // ============== Factory ==============
 class PrototypeFactory
 {
+private:
+    std::unordered_map<RobotTypes, RobotPrototype *> robotMap;
+
 public:
     PrototypeFactory();
     ~PrototypeFactory();
+
+    RobotPrototype * CreatePrototype(RobotTypes rType);
 };

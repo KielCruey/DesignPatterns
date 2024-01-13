@@ -1,6 +1,3 @@
-#include <iostream>
-#include <string>
-
 #include "prototype.hpp"
 
 // ============== RobotPrototype class ==============
@@ -86,7 +83,6 @@ ConcreteMilitaryRobotPrototype::~ConcreteMilitaryRobotPrototype()
     std::cout << "Concrete Military Robot destroyed" << std::endl;
 }
 
-
 void ConcreteMilitaryRobotPrototype::PrintInfo()
 {
     std::cout << "Concrete Military Robot rank is " + GetRank() + " with the serial number " << GetSerialNumber() << "." << std::endl;
@@ -112,6 +108,24 @@ int ConcreteMilitaryRobotPrototype::GetRobotType()
     return RobotTypes::MILITARY;
 }
 
+// ============== Factory ==============
+PrototypeFactory::PrototypeFactory()
+{
+    robotMap[RobotTypes::CIVILIAN] = new ConcreteCivilianRobotPrototype(0, "John");
+    robotMap[RobotTypes::MILITARY] = new ConcreteMilitaryRobotPrototype(0, "Private");
+}
+
+PrototypeFactory::~PrototypeFactory()
+{
+    delete robotMap[RobotTypes::CIVILIAN];
+    delete robotMap[RobotTypes::MILITARY];
+}
+
+RobotPrototype * PrototypeFactory::CreatePrototype(RobotTypes rType)
+{
+    return robotMap[rType]->Clone();
+}
+
 // ============== client code ==============
 RobotPrototype * CloneAndPrintMilitaryRobot(ConcreteMilitaryRobotPrototype * mRobot)
 {
@@ -121,6 +135,16 @@ RobotPrototype * CloneAndPrintMilitaryRobot(ConcreteMilitaryRobotPrototype * mRo
     protoMilitary->PrintInfo();
 
     return protoMilitary;
+}
+
+RobotPrototype * CloneAndPrintCivilianRobot(ConcreteCivilianRobotPrototype * cRobot) 
+{
+    // cloning civilian robot
+    RobotPrototype * protoCivilian = cRobot->Clone();
+    // printing out member variables
+    cRobot->PrintInfo();
+
+    return cRobot;
 }
 
 void SimpleMiliaryClone()
@@ -135,16 +159,6 @@ void SimpleMiliaryClone()
     delete milRobot;
 }
 
-RobotPrototype * CloneAndPrintCivilianRobot(ConcreteCivilianRobotPrototype * cRobot) 
-{
-    // cloning civilian robot
-    RobotPrototype * protoCivilian = cRobot->Clone();
-    // printing out member variables
-    cRobot->PrintInfo();
-
-    return cRobot;
-}
-
 void SimpleCivilianClone()
 {
     ConcreteCivilianRobotPrototype * cRobot = new ConcreteCivilianRobotPrototype(321, "Dawn");
@@ -157,18 +171,30 @@ void SimpleCivilianClone()
     delete civRobot;
 }
 
+void CheckRobotType(RobotPrototype * r)
+{
+    if(r->GetRobotType() == RobotTypes::CIVILIAN)
+    {
+        std::cout << r->GetSerialNumber() << " is a civilian robot" << std::endl;
+    }
+    else if(r->GetRobotType() == RobotTypes::MILITARY)
+    {
+        std::cout << r->GetSerialNumber() << " is a military robot" << std::endl;
+    }
+    else
+    {
+        std::cout << "This isn't a robot, sorry!" << std::endl;
+    }
+}
+
 // ============== main ==============
 int main()
 {
     ConcreteCivilianRobotPrototype * rJim = new ConcreteCivilianRobotPrototype(9, "Jim");
-    if(rJim->GetRobotType() == RobotTypes::CIVILIAN)
-    {
-        std::cout << "Jim is a robot" << std::endl;
-    }
-    else
-    {
-        std::cout << "Jim is NOT a robot" << std::endl;
-    }
+    ConcreteMilitaryRobotPrototype * rBob = new ConcreteMilitaryRobotPrototype(888, "General");
+
+    CheckRobotType(rJim);
+    CheckRobotType(rBob);
 
     // cloning military robot without a factory
     SimpleMiliaryClone();
