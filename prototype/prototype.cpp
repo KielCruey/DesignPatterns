@@ -111,8 +111,8 @@ int ConcreteMilitaryRobotPrototype::GetRobotType()
 // ============== Factory ==============
 PrototypeFactory::PrototypeFactory()
 {
-    robotMap[RobotTypes::CIVILIAN] = new ConcreteCivilianRobotPrototype(0, "John");
-    robotMap[RobotTypes::MILITARY] = new ConcreteMilitaryRobotPrototype(0, "Private");
+    robotMap[RobotTypes::CIVILIAN] = new ConcreteCivilianRobotPrototype(0, "No Name");
+    robotMap[RobotTypes::MILITARY] = new ConcreteMilitaryRobotPrototype(0, "No Rank");
 }
 
 PrototypeFactory::~PrototypeFactory()
@@ -123,6 +123,8 @@ PrototypeFactory::~PrototypeFactory()
 
 RobotPrototype * PrototypeFactory::CreatePrototype(RobotTypes rType)
 {
+    std::cout << "Prototype created of type " << rType  << std::endl;
+
     return robotMap[rType]->Clone();
 }
 
@@ -154,9 +156,6 @@ void SimpleMiliaryClone()
 
     // cloning
     RobotPrototype * milRobot = CloneAndPrintMilitaryRobot(mRobot);
-
-    delete mRobot;
-    delete milRobot;
 }
 
 void SimpleCivilianClone()
@@ -166,9 +165,6 @@ void SimpleCivilianClone()
 
     // cloning
     RobotPrototype * civRobot = CloneAndPrintCivilianRobot(cRobot);
-
-    delete cRobot;
-    delete civRobot;
 }
 
 void CheckRobotType(RobotPrototype * r)
@@ -187,9 +183,24 @@ void CheckRobotType(RobotPrototype * r)
     }
 }
 
+void FactoryMilitaryClone(PrototypeFactory * pFactory)
+{
+    RobotPrototype * pMilRobot = pFactory->CreatePrototype(RobotTypes::MILITARY);
+
+    pMilRobot->PrintInfo();
+}
+
+void FactoryCivilianClone(PrototypeFactory * pFactory)
+{
+    RobotPrototype * pCivRobot = pFactory->CreatePrototype(RobotTypes::CIVILIAN);
+
+    pCivRobot->PrintInfo();
+}
+
 // ============== main ==============
 int main()
 {
+    // creating a prototype, using just prototype design pattern
     ConcreteCivilianRobotPrototype * rJim = new ConcreteCivilianRobotPrototype(9, "Jim");
     ConcreteMilitaryRobotPrototype * rBob = new ConcreteMilitaryRobotPrototype(888, "General");
 
@@ -201,6 +212,12 @@ int main()
 
     // cloning civilian robot without a factory
     SimpleCivilianClone();
+
+    // ===================================================
+    // using the factory/prototype design pattern together
+    PrototypeFactory * pFactory = new PrototypeFactory();
+    FactoryMilitaryClone(pFactory);
+    FactoryCivilianClone(pFactory);
 
     return 0;
 }
