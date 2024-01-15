@@ -2,184 +2,155 @@
 #include <memory>
 
 // =========== Abstract Target ===========
-class AbstractPlug
+class Outlet
 {
-private:
-    int VoltageRating;
-    int FrequencyRating;
+private: 
+    bool RoundHoles;
+    int NumberOfHoles;
 
 public:
-    AbstractPlug()
+    Outlet(bool RoundHoles, int NumberOfHoles)
     {
-        this->VoltageRating = 0;
-        this->FrequencyRating = 0;
+        this->RoundHoles = RoundHoles;
+        this->NumberOfHoles = NumberOfHoles;
 
-        std::cout << "AbstractPlug Created" << std::endl;
+        std::cout << "Outlet Created" << std::endl;
     }
 
-    AbstractPlug(int VoltageRating, int FrequencyRating)
+    virtual ~Outlet()
+    {
+        std::cout << "Outlet deleted" << std::endl;
+    }
+
+    // =========== getters/setters ===========
+    bool GetRoundHoles()
+    {
+        return this->RoundHoles;
+    }
+
+    int GetNumberOfHoles()
+    {
+        return this->NumberOfHoles;
+    }
+};
+
+// =========== Concrete Target ===========
+class AmericanOutlet : public Outlet
+{
+private:
+    const int FrequencyRating = 60;
+    int VoltageRating;
+
+public:
+    // =========== special class functions ===========
+    // if voltage isn't defined, assumes stander non-industrial voltage
+    AmericanOutlet(int VoltageRating = 120) :
+        Outlet(false, 3)
     {
         this->VoltageRating = VoltageRating;
-        this->FrequencyRating = FrequencyRating;
 
-        std::cout << "AbstractPlug Created" << std::endl;
+        std::cout << "AmericanOutlet Created" << std::endl;
     }
 
-    ~AbstractPlug()
+    ~AmericanOutlet() 
     {
-        std::cout << "AbstractPlug deleted" << std::endl;
+        std::cout << "AmericanOutlet deleted" << std::endl;
     }
-
-    virtual bool HasRoundPins() = 0;
-    virtual int GetNumberOfPins() = 0;
 
     // =========== general functions ===========
-    int GetVoltageRating()
-    {
-        return this->VoltageRating;
-    }
-
     int GetFrequencyRating()
     {
         return this->FrequencyRating;
     }
 
-    void SetVoltageRating(int VoltageRating)
+    int GetVoltageRating()
     {
-        this->VoltageRating = VoltageRating;
-    }
-
-    void SetFrequencyRating(int FrequencyRating)
-    {
-        this->FrequencyRating = FrequencyRating;
+        return this->VoltageRating;
     }
 };
 
-// =========== Concrete Target ===========
-class AmericanPlug : public AbstractPlug
-{
-private:
-    const bool RoundPins = false;
-    int NumberOfPins;
-
-public:
-    // =========== special class functions ===========
-    AmericanPlug(int VoltageRating, int FrequencyRating, int NumberOfPins) : 
-        AbstractPlug(VoltageRating, FrequencyRating)
-    {
-        this->NumberOfPins = NumberOfPins;
-
-        std::cout << "AmericanPlug Created" << std::endl;
-    }
-
-    ~AmericanPlug() 
-    {
-        std::cout << "AmericanPlug deleted" << std::endl;
-    }
-
-    // =========== general functions ===========
-    bool HasRoundPins() override
-    {
-        return this->RoundPins;
-    }
-
-    int GetNumberOfPins() override
-    {
-        return this->NumberOfPins;
-    }
-};
-
-
-class UKPlug : public AbstractPlug
+class UKOutlet : public Outlet
 {
 public:
-    const bool RoundPins = false;
-    int NumberOfPins;
-
+    int FrequencyRating;
+    int VoltageRating;
+    
 public:
     // =========== special class functions ===========
-    UKPlug(int VoltageRating, int FrequencyRating, int NumberOfPins) : 
-        AbstractPlug(VoltageRating, FrequencyRating)
+    UKOutlet(int VoltageRating, int FrequencyRating) :
+        Outlet(false, 3)
     {
-        this->NumberOfPins = NumberOfPins;
-
-        std::cout << "UKPlug created" << std::endl;
+        std::cout << "UKOutlet created" << std::endl;
     }
 
-    ~UKPlug()
+    ~UKOutlet()
     {
-        std::cout << "UKPlug deleted" << std::endl;
+        std::cout << "UKOutlet deleted" << std::endl;
     };
 
     // =========== general functions ===========
-    bool HasRoundPins() override
+    int GetFrequencyRating()
     {
-        return this->RoundPins;
+        return this->FrequencyRating;
     }
 
-    int GetNumberOfPins() override
+    int GetVoltageRating()
     {
-        return this->NumberOfPins;
+        return this->VoltageRating;
     }
 };
 
-class JapanesePlug : public AbstractPlug
+class JapaneseOutlet : public Outlet
 {
 private:
-    const bool RoundPins = true;
-    int NumberOfPins;
-
+    int FrequencyRating;
+    int VoltageRating;
+    
 public:
     // =========== special class functions ===========
-    JapanesePlug(int VoltageRating, int FrequencyRating, int NumberOfPins) :
-        AbstractPlug(VoltageRating, FrequencyRating)
+    JapaneseOutlet(int VoltageRating, int FrequencyRating) :
+        Outlet(true, 50)
     {
-        this->NumberOfPins = NumberOfPins;
-
-        std::cout << "JapanesePlug created" << std::endl;
+        std::cout << "JapaneseOutlet created" << std::endl;
     }
 
-    ~JapanesePlug()
+    ~JapaneseOutlet()
     {
-        std::cout << "JapanesePlug deleted" << std::endl;
+        std::cout << "JapaneseOutlet deleted" << std::endl;
     }
 
     // =========== general functions ===========
-    bool HasRoundPins() override
+    int GetFrequencyRating()
     {
-        return this->RoundPins;
+        return this->FrequencyRating;
     }
 
-    int GetNumberOfPins() override
+    int GetVoltageRating()
     {
-        return this->NumberOfPins;
+        return this->VoltageRating;
     }
 };
 
 // =========== Adaptee ===========
-class Outlet
+class Plug
 {
 private:
     bool HasRoundPins;
     int PinCount;
-    int Voltage;
-    int Frequency;
 
 public:
     // =========== special class functions ===========
-    Outlet(bool HasRoundPins, int PinCount, int Voltage, int Frequency)
+    Plug(int PinCount, bool HasRoundPins)
     {
         this->HasRoundPins = HasRoundPins;
         this->PinCount = PinCount;
-        this->Voltage = Voltage;
-        this->Frequency = Frequency;
 
-        std::cout << "Outlet created" << std::endl;
+        std::cout << "Plug created" << std::endl;
     }
 
-    ~Outlet()
+    ~Plug()
     {
-        std::cout << "Outlet deleted" << std::endl;
+        std::cout << "Plug deleted" << std::endl;
     }
 
     // =========== general function ===========
@@ -192,75 +163,78 @@ public:
     {
         return this->PinCount;
     }
-
-    int GetVoltage()
-    {
-        return this->Voltage;
-    }
-
-    int GetFrequency()
-    {
-        return this->Frequency;
-    }
 };
 
 // =========== Adapter ===========
-class PlugAdapter : public AbstractPlug
+class Adapter : public Outlet
 {
 private:
-    Outlet * pOutlet;
+    Plug * pPlug;
 
 public:
     // =========== special class functions ===========
-    PlugAdapter(Outlet * pOutlet, int VoltageRating, int FrequencyRating) 
+    Adapter(Outlet * pOutlet, Plug * pPlug) :
+        Outlet(pOutlet->GetRoundHoles(), pOutlet->GetNumberOfHoles())
     {
-        SetOutlet(pOutlet); // setting class variable
-        
-        SetVoltageRating(VoltageRating);
-        SetFrequencyRating(FrequencyRating);
+        this->pPlug = pPlug;
+
+        std::cout << "Adapter created" << std::endl;
+    }
+    
+    ~Adapter()
+    {
+        std::cout << "Adapter deleted" << std::endl;
     }
 
     // =========== general functions ===========
-    // now the point of the adapter class is to call the target's AbstractPlug virtual functions
-    bool HasRoundPins()
+    std::string WhatTypeOfOutletAdapter(Outlet * pOutlet)
     {
-        return pOutlet->GetHasRoundPins();
+        if(CheckOutletCompatibility(pOutlet))
+        {
+            return "No Adapter Needed!";
+        }
+        else{
+            return "Adapter Needed!";
+        }
+
     }
 
-    // now the point of the adapter class is to call the target's AbstractPlug virtual functions
-    int GetNumberOfPins()
+    bool CheckOutletCompatibility(Outlet * pOutlet)
     {
-        return pOutlet->GetPinCount();
+        if( pPlug->GetHasRoundPins() == pOutlet->GetRoundHoles() 
+            && pPlug->GetPinCount() <= pOutlet->GetNumberOfHoles())
+        {
+            return true;
+        }
+        else
+            return false;
     }
-    
+
     // =========== getters/setters ===========
-    void SetOutlet(Outlet * pOutlet)
+    void SetPlug(Plug * pPlug)
     {
-        this->pOutlet = pOutlet;
+        this->pPlug = pPlug;
     }
 
-    Outlet * GetOutlet()
+    Plug * GetPlug()
     {
-        return this->pOutlet;
+        return this->pPlug;
     }
 };
 
 // =========== Client code ===========
-void PrintPlugData(AbstractPlug * plug)
-{
-    std::cout << "voltage rating: " + plug->GetVoltageRating() << std::endl;
-    std::cout << "frequency rating: " + plug->GetFrequencyRating() << std::endl;
-}
+
 
 // =========== MAIN code ===========
 int main()
 {
-    AmericanPlug * plug = new AmericanPlug(120, 60, 2);
-    int temp = plug->GetNumberOfPins();
+    Plug * pAmericanPlug = new Plug(2, false);
+    AmericanOutlet * pAmericanOutlet = new AmericanOutlet();
 
-    
-    Outlet * outlet = new Outlet(false, 3, 120, 60);
-    AbstractPlug * adapter = new PlugAdapter(outlet, 120, 60);
+    // checks if adapter and fit into plug
+    Adapter * pAdapter = new Adapter(pAmericanOutlet, pAmericanPlug);
+    std::string WhatAdapter = pAdapter->WhatTypeOfOutletAdapter(pAmericanOutlet);
+    std::cout << WhatAdapter << std::endl;
 
     return 0;
 }
