@@ -1,91 +1,75 @@
-#include <iostream>
-#include <typeinfo>
+#include "casting.hpp"
 
-class Base
+// ================ Base ================
+Base::Base() : 
+    baseVariable(0)
 {
-private:
-    int baseVariable;
+    std::cout << "Base object created" << std::endl;
+}
 
-public:
-    // ======== special class functions ========
-    Base() : baseVariable(0)
-    {
-        std::cout << "Base object created" << std::endl;
-    }
+Base::~Base() 
+{  
+    std::cout << "Base object destroyed" << std::endl;
+}
 
-    virtual ~Base() 
-    {  
-        std::cout << "Base object destroyed" << std::endl;
-    }
-
-    // ======== virtual functions ========
-    virtual void SomeFunction() {}
-
-    // ======== general functions ========
-    void PrintBaseVariable()
-    {
-        std::cout << "Base Variable: " << this->baseVariable << std::endl;
-    }
-
-    // ======== getters/setters ========
-    int GetBaseVariable()
-    { 
-        return this->baseVariable; 
-    }
-
-    void SetBaseVariable(int baseVariable)
-    {
-        this->baseVariable = baseVariable;
-    }
-};
-
-class Derived : public Base
+void Base::SomeFunction()
 {
-private:
-    int derivedVariable;
 
-public:
-    // ======== special class functions ========
-    Derived() : derivedVariable(1)
-    {
-        std::cout << "Derived object created" << std::endl;
-    }
+}
 
-    ~Derived() override
-    {
-        std::cout << "Derived object destroyed" << std::endl;
-    }
+void Base::PrintBaseVariable()
+{
+    std::cout << "Base Variable: " << this->baseVariable << std::endl;
+}
 
-    // ======== virtual functions ========
-    virtual void SomeFunction() override
-    {
-        std::cout << "SomeFunction()" << std::endl;
-    }
+int Base::GetBaseVariable()
+{ 
+    return this->baseVariable; 
+}
 
-    // ======== general functions ========
-    void DerivedFunction()
-    {
-        std::cout << "DerivedFunction()" << std::endl;
-    }  
+void Base::SetBaseVariable(int baseVariable)
+{
+    this->baseVariable = baseVariable;
+}
 
-    // ======== general functions ========
-    void PrintDerivedVariable()
-    {
-        std::cout << "Derived Variable: " << this->derivedVariable << std::endl;
-    }
+// ================ Derived ================
+Derived::Derived() :
+    derivedVariable(1)
+{
+    std::cout << "Derived object created" << std::endl;
+}
 
-    // ======== getters/setters ========
-    int GetDerivedVariable()
-    {
-        return this->derivedVariable;
-    }
+Derived::~Derived() 
+{
+    std::cout << "Derived object destroyed" << std::endl;
+}
 
-    void SetDerivedVariable(int derivedVariable)
-    {
-        this->derivedVariable = derivedVariable;
-    }
-};
+void Derived::SomeFunction()
+{
+    std::cout << "SomeFunction()" << std::endl;
+}
 
+void Derived::DerivedFunction()
+{
+    std::cout << "DerivedFunction()" << std::endl;
+}  
+
+void Derived::PrintDerivedVariable()
+{
+    std::cout << "Derived Variable: " << this->derivedVariable << std::endl;
+}
+
+int Derived::GetDerivedVariable()
+{
+    return this->derivedVariable;
+}
+
+void Derived::SetDerivedVariable(int derivedVariable)
+{
+    this->derivedVariable = derivedVariable;
+}
+
+// ================ Client Code ================
 Derived * DownCasting(Base * pBase)
 {
     Derived * derived = dynamic_cast<Derived *>(pBase);
@@ -110,7 +94,7 @@ void CheckSameTypes(void * class1, void * class2)
     }
 }
 
-// ======== Main ========
+// ================ Main ================
 int main()
 {
     /*
