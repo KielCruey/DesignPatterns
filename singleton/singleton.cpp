@@ -5,7 +5,7 @@
 
 // ========== Singleton class ==========
 Globals::Globals(): 
-    systemState(static_cast<int>(standardMode)), 
+    systemState(static_cast<int>(state::standardMode)), 
     numberOfFiles(0) 
 { }
 
@@ -31,8 +31,8 @@ Globals * Globals::getInstance()
     {
         std::cout << "Globals object exists, returning existing Globals object" << std::endl;
 
-        // if instancePtr != NULL that means the class already have an instance. 
-        // So, we are returning that instance and not creating new one.
+        // if instancePtr != NULL that means the class already has an instance. 
+        // So, we are returning that known instance and not creating new one.
         return pGlobals;
     }
 }
