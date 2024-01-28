@@ -4,7 +4,7 @@ enum ShapeType { circle = 0, triangle };
 class AbstractShapes
 {
 public:
-    virtual ~AbstractShapes();
+    virtual ~AbstractShapes() = 0;
     virtual double CalculateArea() = 0;
     virtual double CalculatePerimeter() = 0;
 
@@ -16,14 +16,14 @@ class Circle : public AbstractShapes
 {
 public:
     Circle(double radius = 1.0); // assumes unit circle
-    ~Circle();
+    ~Circle() override;
 
-    void print();
+    void print() override;
 
     double CalculateArea() override;
     double CalculatePerimeter() override;
 
-    int GetShapeType();
+    int GetShapeType() override;
     double GetArea();
     double GetPerimeter();
     double GetRadius();
@@ -42,9 +42,9 @@ class Triangle : public AbstractShapes
 {
 public:
     Triangle(double side1 = 1.0, double side2 = 1.0, double angleInDegrees = 90); // assumes unit right triangle
-    ~Triangle();
+    ~Triangle() override;
 
-    void print();
+    void print() override;
 
     double CalculateArea() override;
     double CalculatePerimeter() override;
@@ -52,7 +52,7 @@ public:
 
     double ConvertDegreesToRadians(double degrees);
 
-    int GetShapeType();
+    int GetShapeType() override;
     double GetSide1();
     double GetSide2();
     double GetHypotenuse();
@@ -85,8 +85,6 @@ class ShapeAdapter : public Circle, public Triangle
 public:
     ShapeAdapter(AbstractShapes * abstractShapes);
     ~ShapeAdapter();
-
-    AbstractShapes * ConvertShapes();
 
     Triangle * ConvertCircleToTriangle(Circle * circle);
     Circle * ConvertTriangleToCircle(Triangle * triangle);

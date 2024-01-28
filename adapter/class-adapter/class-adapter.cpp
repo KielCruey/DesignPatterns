@@ -8,7 +8,7 @@
 // ==================== AbstractShapes ====================
 AbstractShapes::~AbstractShapes()
 {
-    std::cout << "AbstractShapes destroyed" << std::endl;
+    //std::cout << "AbstractShapes destroyed" << std::endl;
 }
 
 // ==================== Circle ====================
@@ -212,13 +212,15 @@ ShapeAdapter::ShapeAdapter(AbstractShapes * abstractShapes)
     {
         std::cout << "ShapeAdapter converts circle to triangle" << std::endl;
         SetCircle(dynamic_cast<Circle *>(abstractShapes));  // sets circle
+
         Triangle * triangle = ConvertCircleToTriangle(GetCircle());
         SetTriangle(triangle);
     }
     else if(abstractShapes->GetShapeType() == ShapeType::triangle)
     {
         std::cout << "ShapeAdapter converts triangle to circle" << std::endl;
-        SetTriangle(dynamic_cast<Triangle *>(abstractShapes));
+        SetTriangle(dynamic_cast<Triangle *>(abstractShapes)); // sets triangle
+
         Circle * circle = ConvertTriangleToCircle(GetTriangle());
         SetCircle(circle);
     }
@@ -227,20 +229,6 @@ ShapeAdapter::ShapeAdapter(AbstractShapes * abstractShapes)
 ShapeAdapter::~ShapeAdapter()
 {
     std::cout << "ShapeAdapter Destroyed" << std::endl;
-}
-
-AbstractShapes * ShapeAdapter::ConvertShapes()
-{
-    if(pCircle != nullptr)
-    {
-        return ConvertCircleToTriangle(pCircle);
-    }
-    else if(pTriangle != nullptr)
-    {
-        return ConvertTriangleToCircle(pTriangle);
-    }
-
-    return nullptr;
 }
 
 // the area of the circle helps convert all dimensions of the new triangle
