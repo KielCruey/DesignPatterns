@@ -27,9 +27,11 @@ Circle::~Circle()
     std::cout << "Circle destroyed" << std::endl;
 }
 
-int Circle::GetShapeType()
+void Circle::print()
 {
-    return ShapeType::circle;
+    std::cout << "radius: " << GetRadius() << std::endl;
+    std::cout << "perimeter: " << GetPerimeter() << std::endl;
+    std::cout << "area: " << GetArea() << std::endl;
 }
 
 double Circle::CalculateArea() 
@@ -40,6 +42,11 @@ double Circle::CalculateArea()
 double Circle::CalculatePerimeter() 
 {
     return 2 * M_PI * GetRadius(); 
+}
+
+int Circle::GetShapeType()
+{
+    return ShapeType::circle;
 }
 
 double Circle::GetArea()
@@ -98,6 +105,16 @@ Triangle::Triangle(double side1, double side2, double angleInDegrees)
 Triangle::~Triangle()
 {
     std::cout << "Triangle destroyed" << std::endl;
+}
+
+void Triangle::print()
+{
+    std::cout << "side1: " << GetSide1() << std::endl;
+    std::cout << "side3: " << GetSide2() << std::endl;
+    std::cout << "angle: " << GetAngle() << std::endl;
+    std::cout << "hypotenuse: " << GetHypotenuse() << std::endl;
+    std::cout << "perimeter: " << GetPerimeter() << std::endl;
+    std::cout << "area: " << GetArea() << std::endl;
 }
 
 double Triangle::CalculateArea()
@@ -268,7 +285,10 @@ Triangle * ShapeAdapter::GetTriangle()
 int main()
 {
     Triangle * triangle = new Triangle();
+    triangle->print();
+
     Circle * circle = new Circle();
+    circle->print();
 
     ShapeAdapter * shapeAdapter1 = new ShapeAdapter(triangle);
     ShapeAdapter * shapeAdapter2 = new ShapeAdapter(circle);

@@ -8,6 +8,7 @@ public:
     virtual double CalculateArea() = 0;
     virtual double CalculatePerimeter() = 0;
 
+    virtual void print() = 0;
     virtual int GetShapeType() = 0;
 };
 
@@ -16,6 +17,8 @@ class Circle : public AbstractShapes
 public:
     Circle(double radius = 1.0); // assumes unit circle
     ~Circle();
+
+    void print();
 
     double CalculateArea() override;
     double CalculatePerimeter() override;
@@ -40,6 +43,8 @@ class Triangle : public AbstractShapes
 public:
     Triangle(double side1 = 1.0, double side2 = 1.0, double angleInDegrees = 90); // assumes unit right triangle
     ~Triangle();
+
+    void print();
 
     double CalculateArea() override;
     double CalculatePerimeter() override;
