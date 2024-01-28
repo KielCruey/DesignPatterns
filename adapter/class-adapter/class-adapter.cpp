@@ -8,7 +8,7 @@
 // ==================== AbstractShapes ====================
 AbstractShapes::~AbstractShapes()
 {
-    //std::cout << "AbstractShapes destroyed" << std::endl;
+    
 }
 
 // ==================== Circle ====================
