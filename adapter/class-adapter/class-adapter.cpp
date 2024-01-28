@@ -3,7 +3,7 @@
 
 #include "class-adapter.hpp"
 
-#define M_PI   3.14159265358979323846
+#define M_PI    3.14159265358979323846 // pi constant
 
 // ==================== AbstractShapes ====================
 AbstractShapes::~AbstractShapes()
@@ -25,6 +25,11 @@ Circle::Circle(double radius)
 Circle::~Circle()
 {
     std::cout << "Circle destroyed" << std::endl;
+}
+
+int Circle::GetShapeType()
+{
+    return ShapeType::circle;
 }
 
 double Circle::CalculateArea() 
@@ -116,6 +121,11 @@ double Triangle::ConvertDegreesToRadians(double degrees)
     return degrees * M_PI / 180; // radians
 }
 
+int Triangle::GetShapeType()
+{
+    return ShapeType::triangle;
+}
+
 double Triangle::GetSide1()
 {
     return this->side1;
@@ -176,11 +186,98 @@ void Triangle::SetPerimeter(double perimeter)
     this->perimeter = perimeter;
 }
 
+// ==================== Adapter ====================
+ShapeAdapter::ShapeAdapter(AbstractShapes * abstractShapes)
+{
+    std::cout << "ShapeAdapter created" << std::endl;
+
+    if(abstractShapes->GetShapeType() == ShapeType::circle)
+    {
+        std::cout << "ShapeAdapter converts circle to triangle" << std::endl;
+        SetCircle(dynamic_cast<Circle *>(abstractShapes));  // sets circle
+        Triangle * triangle = ConvertCircleToTriangle(GetCircle());
+        SetTriangle(triangle);
+    }
+    else if(abstractShapes->GetShapeType() == ShapeType::triangle)
+    {
+        std::cout << "ShapeAdapter converts triangle to circle" << std::endl;
+        SetTriangle(dynamic_cast<Triangle *>(abstractShapes));
+        Circle * circle = ConvertTriangleToCircle(GetTriangle());
+        SetCircle(circle);
+    }
+}
+
+ShapeAdapter::~ShapeAdapter()
+{
+    std::cout << "ShapeAdapter Destroyed" << std::endl;
+}
+
+AbstractShapes * ShapeAdapter::ConvertShapes()
+{
+    if(pCircle != nullptr)
+    {
+        return ConvertCircleToTriangle(pCircle);
+    }
+    else if(pTriangle != nullptr)
+    {
+        return ConvertTriangleToCircle(pTriangle);
+    }
+
+    return nullptr;
+}
+
+// the area of the circle helps convert all dimensions of the new triangle
+Triangle * ShapeAdapter::ConvertCircleToTriangle(Circle * circle)
+{
+    double triangleArea = circle->GetArea(); 
+    double triangleSideCalculation = sqrt(2 * triangleArea); // Area = a * b / 2 where a = b, because right triangle legs are the same
+
+    return new Triangle(triangleSideCalculation, triangleSideCalculation);
+}
+
+// the area of the triangle helps convert all dimensions of the new circle
+Circle * ShapeAdapter::ConvertTriangleToCircle(Triangle * triangle)
+{
+    double circleArea = triangle->GetArea();
+    double circleRadius = sqrt(circleArea / M_PI); // area = pi * r^2
+
+    return new Circle(circleRadius);
+}
+
+void ShapeAdapter::SetCircle(Circle * pCircle)
+{
+    this->pCircle = pCircle;
+}
+
+void ShapeAdapter::SetTriangle(Triangle * pTriangle)
+{
+    this->pTriangle = pTriangle;
+}
+    
+Circle * ShapeAdapter::GetCircle()
+{
+    return this->pCircle;
+}
+
+Triangle * ShapeAdapter::GetTriangle()
+{
+    return this->pTriangle;
+}
+
 // ==================== Main ====================
 int main()
 {
     Triangle * triangle = new Triangle();
     Circle * circle = new Circle();
+
+    ShapeAdapter * shapeAdapter1 = new ShapeAdapter(triangle);
+    ShapeAdapter * shapeAdapter2 = new ShapeAdapter(circle);
+
+    delete triangle;
+    delete circle;
+    
+    delete shapeAdapter1;
+    delete shapeAdapter2;
 
     return 0;
 }
