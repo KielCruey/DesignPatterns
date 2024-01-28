@@ -29,6 +29,7 @@ Circle::~Circle()
 
 void Circle::print()
 {
+    std::cout << "Circle's variables!" << std::endl;
     std::cout << "radius: " << GetRadius() << std::endl;
     std::cout << "perimeter: " << GetPerimeter() << std::endl;
     std::cout << "area: " << GetArea() << std::endl;
@@ -109,8 +110,9 @@ Triangle::~Triangle()
 
 void Triangle::print()
 {
+    std::cout << "Triangle's variables!" << std::endl;
     std::cout << "side1: " << GetSide1() << std::endl;
-    std::cout << "side3: " << GetSide2() << std::endl;
+    std::cout << "side2: " << GetSide2() << std::endl;
     std::cout << "angle: " << GetAngle() << std::endl;
     std::cout << "hypotenuse: " << GetHypotenuse() << std::endl;
     std::cout << "perimeter: " << GetPerimeter() << std::endl;
@@ -279,7 +281,12 @@ int main()
     circle->print();
 
     ShapeAdapter * shapeAdapter1 = new ShapeAdapter(triangle);
+    shapeAdapter1->GetTriangle()->print();
+    shapeAdapter1->GetCircle()->print();
+    
     ShapeAdapter * shapeAdapter2 = new ShapeAdapter(circle);
+    shapeAdapter2->GetCircle()->print();
+    shapeAdapter2->GetTriangle()->print();
 
     delete triangle;
     delete circle;
