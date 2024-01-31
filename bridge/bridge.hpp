@@ -95,6 +95,9 @@ public:
     virtual int ChannelUp(Device * device);
     virtual int ChannelDown(Device * device);
 
+    Device * GetDevice();
+    void SetDevice(Device * device);
+
 // device needs to be accessible to the derived classes -- used protected
 protected:
     Device * device; 

@@ -157,10 +157,16 @@ Remote::~Remote()
 bool Remote::TogglePower(Device * device)
 {
     if(device->GetPower())
+    {
         device->SetPower(State::OFF);
+        std::cout << "Remote Device is OFF" << std::endl;
+    }
     else
+    {
         device->SetPower(State::ON);
-
+        std::cout << "Remote Device is ON" << std::endl;
+    }
+        
     return device->GetPower();
 }
 
@@ -168,10 +174,16 @@ bool Remote::TogglePower(Device * device)
 bool Remote::ToggleMute(Device * device)
 {
     if(device->GetIsMuted())
+    {
         device->SetIsMuted(State::OFF);
+        std::cout << "Remote Device is UNMUTED" << std::endl;
+    }
     else
+    {
         device->SetIsMuted(State::ON);
-
+        std::cout << "Remote Device is MUTED" << std::endl;
+    }
+        
     return device->GetIsMuted();
 }
 
@@ -219,6 +231,16 @@ int Remote::ChannelDown(Device * device)
     return device->GetChannel();
 }
 
+Device * Remote::GetDevice()
+{
+    return this->device;
+}
+
+void Remote::SetDevice(Device * device)
+{
+    this->device = device;
+}
+
 // ============= Redefined Abstraction =============
 // constructor calls the 
 TVRemote::TVRemote(Device * device) :
@@ -235,10 +257,16 @@ TVRemote::~TVRemote()
 bool TVRemote::TogglePower(Device * device)
 {
     if(device->GetPower())
+    {
         device->SetPower(State::OFF);
+        std::cout << "TV Remote Device is OFF" << std::endl;
+    }
     else
+    {
         device->SetPower(State::ON);
-
+        std::cout << "TV Remote Device is ON" << std::endl;
+    }
+        
     return device->GetPower();
 }
 
@@ -312,11 +340,48 @@ int TVRemote::FastForward(Device * device)
     return 0;
 }
 
+
+// =============== Client Code ===============
+// increases/decreases channel to requested new channel
+void ChangeChannelTo(Remote * remote, int changeChannelTo)
+{
+    do
+    {
+        if(remote->GetDevice()->GetChannel() < changeChannelTo)
+            remote->GetDevice()->SetChannel(remote->ChannelUp(remote->GetDevice()));
+        else
+            remote->GetDevice()->SetChannel(remote->ChannelDown(remote->GetDevice()));
+
+        std::cout << remote->GetDevice()->GetChannel() << std::endl;
+    }
+    while(remote->GetDevice()->GetChannel() != changeChannelTo);
+}
+
+void ChangeVolumeTo(Remote * remote, int changeVolumeTo)
+{
+    do
+    {
+        if(remote->GetDevice()->GetVolume() < changeVolumeTo)
+            remote->GetDevice()->SetVolume(remote->VolumeUp(remote->GetDevice()));
+        else
+            remote->GetDevice()->SetVolume(remote->VolumeDown(remote->GetDevice()));
+
+        std::cout << remote->GetDevice()->GetVolume() << std::endl;
+    }
+    while(remote->GetDevice()->GetVolume() != changeVolumeTo);
+}
+
+
 // =============== Main ===============
 int main()
 {
     Device * radioDevice = new RadioDevice();
     Remote * radioRemote = new Remote(radioDevice);
+
+    radioRemote->TogglePower(radioDevice);
+    radioRemote->ToggleMute(radioDevice);
+    ChangeVolumeTo(radioRemote, 4);
+    ChangeChannelTo(radioRemote, 10);
 
     delete radioDevice;
     delete radioRemote;
