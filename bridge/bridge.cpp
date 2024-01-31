@@ -273,10 +273,16 @@ bool TVRemote::TogglePower(Device * device)
 bool TVRemote::ToggleMute(Device * device)
 {
     if(device->GetIsMuted())
+    {
         device->SetIsMuted(State::OFF);
+        std::cout << "Remote Device is UNMUTED" << std::endl;
+    }
     else
+    {
         device->SetIsMuted(State::ON);
-
+        std::cout << "Remote Device is MUTED" << std::endl;
+    }
+        
     return device->GetIsMuted();
 }
 
@@ -388,6 +394,11 @@ int main()
 
     TVDevice * tvDevice = new TVDevice();
     TVRemote * tvRemote = new TVRemote(tvDevice);
+
+    tvRemote->TogglePower(tvDevice);
+    tvRemote->ToggleMute(tvDevice);
+    ChangeVolumeTo(tvRemote, 7);
+    ChangeChannelTo(tvRemote, 50);
 
     delete tvDevice;
     delete tvRemote;

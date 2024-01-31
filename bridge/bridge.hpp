@@ -19,9 +19,9 @@ public:
 class TVDevice : public Device
 {
 public:
-    TVDevice(bool isMuted = 0, 
+    TVDevice(bool isMuted = 1, 
             bool isPowered = 0, 
-            int volume = 0, 
+            int volume = 1, 
             int channel = 1, 
             double watchTime = 0, 
             double totalTime = 0);
@@ -56,9 +56,9 @@ private:
 class RadioDevice : public Device
 {
 public:
-    RadioDevice(bool isMuted = 0,
+    RadioDevice(bool isMuted = 1,
                 bool isPowered = 0,
-                int volume = 0,
+                int volume = 1,
                  int channel = 1);
                  
     virtual ~RadioDevice() override;
