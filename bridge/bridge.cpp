@@ -10,14 +10,28 @@ int const MINIMUM_VOLUME = 0;
 int const MAXIMUM_CHANNEL = 100;
 int const MINIMUM_CHANNEL = 1;
 
+// ============= Movie =============
+Movie::Movie(std::string name = "How to Code", double currentDuration = 0, double totalDuration = 60) :
+    name(name),
+    currentDuration(currentDuration),
+    totalDuration(totalDuration)
+{
+    std::cout << "Movie created" << std::endl;
+}
+
+Movie::~Movie()
+{
+    std::cout << "Movie destroyed" << std::endl;
+}
+
 // ============= TVDevice =============
-TVDevice::TVDevice(bool isMuted, bool isPowered, int volume, int channel, double watchTime, double totalTime) :
+// --------- special class functions ---------
+TVDevice::TVDevice(Movie * movie, bool isMuted, bool isPowered, int volume, int channel) :
+    movie(movie),
     isMuted(isMuted),
     isPowered(isPowered),
     volume(volume),
-    channel(channel),
-    watchTime(watchTime),
-    totalTime(totalTime)
+    channel(channel)
 {
     std::cout << "TV Device created" << std::endl;
 }
@@ -25,6 +39,12 @@ TVDevice::TVDevice(bool isMuted, bool isPowered, int volume, int channel, double
 TVDevice::~TVDevice()
 {
     std::cout << "TV Device destroyed" << std::endl;
+}
+
+// --------- setters ---------
+void TVDevice::SetMovie(Movie * movie)
+{
+    this->movie = movie;
 }
 
 void TVDevice::SetIsMuted(bool isMuted)
@@ -47,14 +67,10 @@ void TVDevice::SetChannel(int channel)
     this->channel = channel;
 }
 
-void TVDevice::SetWatchTime(double watchTime)
+// --------- getters ---------
+Movie * TVDevice::GetMovie()
 {
-    this->watchTime = watchTime;
-}
-
-void TVDevice::SetTotalTime(double totalTime)
-{
-    this->totalTime = totalTime;
+    return this->movie;
 }
 
 bool TVDevice::GetIsMuted()
@@ -77,17 +93,8 @@ int TVDevice::GetChannel()
     return this->channel;
 }
 
-double TVDevice::GetWatchTime()
-{
-    return this->watchTime;
-}
-
-double TVDevice::GetTotalTime()
-{
-    return this->totalTime;
-}
-
 // ============= RadioDevice =============
+// --------- special class functions ---------
 RadioDevice::RadioDevice(bool isMuted, bool isPowered, int volume, int channel) :
     isPowered(isPowered),
     volume(volume),
@@ -101,6 +108,7 @@ RadioDevice::~RadioDevice()
     std::cout << "Radio Device destroyed" << std::endl;
 }
 
+// --------- setters ---------
 void RadioDevice::SetIsMuted(bool isMuted)
 {
     this->isMuted = isMuted;
@@ -121,6 +129,7 @@ void RadioDevice::SetChannel(int channel)
     this->channel  = channel;
 }
 
+// --------- getters ---------
 bool RadioDevice::GetIsMuted()
 {
     return this->isMuted;
@@ -142,6 +151,7 @@ int RadioDevice::GetChannel()
 }
 
 // ============= Abstraction =============
+// --------- special class functions ---------
 Remote::Remote(Device * device) :
     device(device)
 {
@@ -153,6 +163,7 @@ Remote::~Remote()
     std::cout << "Remote Device destroyed" << std::endl;
 }
 
+// --------- general functions ---------
 // turns the power on/off
 bool Remote::TogglePower(Device * device)
 {
@@ -231,6 +242,7 @@ int Remote::ChannelDown(Device * device)
     return device->GetChannel();
 }
 
+// --------- getters/setters ---------
 Device * Remote::GetDevice()
 {
     return this->device;
@@ -242,7 +254,7 @@ void Remote::SetDevice(Device * device)
 }
 
 // ============= Redefined Abstraction =============
-// constructor calls the 
+// --------- special class functions ---------
 TVRemote::TVRemote(Device * device) :
     Remote(device)
 {
@@ -254,6 +266,7 @@ TVRemote::~TVRemote()
     std::cout << "TV Remote Device destroyed" << std::endl;
 }
 
+// --------- general functions ---------
 bool TVRemote::TogglePower(Device * device)
 {
     if(device->GetPower())
@@ -346,7 +359,6 @@ int TVRemote::FastForward(Device * device)
     return 0;
 }
 
-
 // =============== Client Code ===============
 // increases/decreases channel to requested new channel
 void ChangeChannelTo(Remote * remote, int changeChannelTo)
@@ -363,6 +375,7 @@ void ChangeChannelTo(Remote * remote, int changeChannelTo)
     while(remote->GetDevice()->GetChannel() != changeChannelTo);
 }
 
+// increases/decreases volume to requested new volume
 void ChangeVolumeTo(Remote * remote, int changeVolumeTo)
 {
     do
@@ -377,29 +390,30 @@ void ChangeVolumeTo(Remote * remote, int changeVolumeTo)
     while(remote->GetDevice()->GetVolume() != changeVolumeTo);
 }
 
-
 // =============== Main ===============
 int main()
 {
     Device * radioDevice = new RadioDevice();
     Remote * radioRemote = new Remote(radioDevice);
 
-    radioRemote->TogglePower(radioDevice);
-    radioRemote->ToggleMute(radioDevice);
+    radioRemote->TogglePower(radioRemote->GetDevice());
+    radioRemote->ToggleMute(radioRemote->GetDevice());
     ChangeVolumeTo(radioRemote, 4);
     ChangeChannelTo(radioRemote, 10);
 
     delete radioDevice;
     delete radioRemote;
 
-    TVDevice * tvDevice = new TVDevice();
+    Movie * movie = new Movie();
+    TVDevice * tvDevice = new TVDevice(movie);
     TVRemote * tvRemote = new TVRemote(tvDevice);
 
-    tvRemote->TogglePower(tvDevice);
-    tvRemote->ToggleMute(tvDevice);
+    tvRemote->TogglePower(tvRemote->GetDevice());
+    tvRemote->ToggleMute(tvRemote->GetDevice());
     ChangeVolumeTo(tvRemote, 7);
     ChangeChannelTo(tvRemote, 50);
 
+    delete movie;
     delete tvDevice;
     delete tvRemote;
 

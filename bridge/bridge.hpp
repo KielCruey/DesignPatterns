@@ -1,3 +1,14 @@
+// TVRemote needs this object
+struct Movie
+{
+    Movie(std::string name, double currentDuration, double totalDuration);
+    ~Movie();
+
+    std::string name;
+    double currentDuration; // the place where the user is currently watching
+    double totalDuration;   // length of movie
+};
+
 // ============= Implementation =============
 class Device
 {
@@ -19,38 +30,34 @@ public:
 class TVDevice : public Device
 {
 public:
-    TVDevice(bool isMuted = 1, 
+    TVDevice(Movie * movie,
+            bool isMuted = 1, 
             bool isPowered = 0, 
             int volume = 1, 
-            int channel = 1, 
-            double watchTime = 0, 
-            double totalTime = 0);
+            int channel = 1);
             
-    virtual ~TVDevice() override;
+    virtual ~TVDevice() override;   
+
+    void SetMovie(Movie * movie);
+    Movie * GetMovie();
 
     virtual void SetIsMuted(bool isMuted) override;
     virtual void SetPower(bool isPowered) override;
     virtual void SetVolume(int volume) override;
     virtual void SetChannel(int channel) override;
 
-    void SetWatchTime(double watchTime);
-    void SetTotalTime(double totalTime);
-
     virtual bool GetIsMuted() override;
     virtual bool GetPower() override;
     virtual int GetVolume() override;
     virtual int GetChannel() override;
 
-    double GetWatchTime();
-    double GetTotalTime();
-
 private:
+    Movie * movie;
+
     bool isMuted;
     bool isPowered;
     int volume;
     int channel;
-    double watchTime; // tv feature only
-    double totalTime; // tv feature only
 };
 
 class RadioDevice : public Device
