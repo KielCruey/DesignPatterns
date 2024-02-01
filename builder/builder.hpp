@@ -39,13 +39,11 @@ public:
 class ConcreteCarBuilder : public CarBuilder
 {
 public:
-    ConcreteCarBuilder();
-    ConcreteCarBuilder(std::string make, std::string model);
+    ConcreteCarBuilder(std::string make = "N/A", std::string model = "N/A");
     ~ConcreteCarBuilder();
 
     // ============ car constructors ============
-    void CreateCar();
-    void CreateCar(std::string make, std::string model);
+    void CreateCar(std::string make = "N/A", std::string model = "N/A");
 
     // ============ car components builds ============
     void ProduceEngine();
@@ -54,7 +52,7 @@ public:
 
     // ============ getters/setters ============
     void SetCar(Car * car);
-    Car * GetCar() const;
+    Car * GetCar();
     
 private:
     Car * car;

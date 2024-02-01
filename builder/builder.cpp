@@ -37,10 +37,6 @@ std::string Car::GetModel() const {
 }
 
 // ============ THE CONCRETE BUILDER ============
-ConcreteCarBuilder::ConcreteCarBuilder() {
-    this->CreateCar();
-}
-
 ConcreteCarBuilder::ConcreteCarBuilder(std::string make, std::string model){
     this->CreateCar(make, model);
 }
@@ -49,12 +45,8 @@ ConcreteCarBuilder::~ConcreteCarBuilder() {
     delete this->car;
 }
 
-void ConcreteCarBuilder::CreateCar() {
-    this->car = new Car();
-}
-
 void ConcreteCarBuilder::CreateCar(std::string make, std::string model) {
-    this->car = new Car(make, model);
+    SetCar(new Car(make, model));
 }
 
 void ConcreteCarBuilder::ProduceEngine() { 
@@ -74,7 +66,7 @@ void ConcreteCarBuilder::SetCar(Car * car)
     this->car = car;
 }
 
-Car * ConcreteCarBuilder::GetCar() const {
+Car * ConcreteCarBuilder::GetCar() {
     Car * result = this->car;
     CreateCar();
     return result;
@@ -100,17 +92,17 @@ void CarDirector::BuildMaximumViableCar()
 
 // ============ Client Code ============
 // implemented with the CarDirector class
-void SeasonalProjectCars(CarDirector & carDirector)
+void SeasonalProjectCars(CarDirector * carDirector)
 {
     // concreteCalBuilder makes the car object
     ConcreteCarBuilder * builder = new ConcreteCarBuilder();
     // director calls what type of car 'setting' it should have once assigned a concreteCarBuilder as parameter
-    carDirector.SetBuilder(builder);
+    carDirector->SetBuilder(builder);
 
     // director creating a new "winter" build
     std::cout << "Winter Project Car Built!" << std::endl;
     // carDirector creates a Car object
-    carDirector.BuildMinimalViableCar(); 
+    carDirector->BuildMinimalViableCar(); 
 
     // creating a Car object and assigning the Car object to the "favor" of car created but the concreteCarBuilder
     Car * winterCar = builder->GetCar();
@@ -121,7 +113,7 @@ void SeasonalProjectCars(CarDirector & carDirector)
     // director creating a new "summer" build
     std::cout << "Summer Project Car Built!" << std::endl;
     // carDirector creates a Car object
-    carDirector.BuildMaximumViableCar(); 
+    carDirector->BuildMaximumViableCar(); 
 
     // creating a Car object and assigning the Car object to the "favor" of car created but the concreteCarBuilder
     Car * summerCar = builder->GetCar();
@@ -133,10 +125,10 @@ void SeasonalProjectCars(CarDirector & carDirector)
 }
 
 // used without the CarDirector class
-void ProjectCars(CarDirector & carDirector)
+void ProjectCars(CarDirector * carDirector)
 {
     ConcreteCarBuilder * builder = new ConcreteCarBuilder();
-    carDirector.SetBuilder(builder);
+    carDirector->SetBuilder(builder);
 
     // now created "products" that car will have
     std::cout << "Spring Project Car Built!" << std::endl;
@@ -150,15 +142,15 @@ void ProjectCars(CarDirector & carDirector)
     delete builder;
 }
 
-void CarProject_MakeAndModel(CarDirector & carDirector)
+void CarProject_MakeAndModel(CarDirector * carDirector)
 {
     ConcreteCarBuilder * builder = new ConcreteCarBuilder("Ford", "Mustang");
-    carDirector.SetBuilder(builder);
+    carDirector->SetBuilder(builder);
 
     // director creating a new "summer" build
     std::cout << "Car Built!" << std::endl;
     // carDirector creates a Car object
-    carDirector.BuildMaximumViableCar();
+    carDirector->BuildMaximumViableCar();
 
     // creating a Car object and assigning the Car object to the "favor" of car created but the concreteCarBuilder
     Car * completedCar = builder->GetCar();
@@ -172,9 +164,9 @@ int main()
 {
     CarDirector * director = new CarDirector();
 
-    SeasonalProjectCars(*director);
-    ProjectCars(*director);
-    CarProject_MakeAndModel(*director);
+    SeasonalProjectCars(director);
+    ProjectCars(director);
+    CarProject_MakeAndModel(director);
 
     delete director;
     return 0;
