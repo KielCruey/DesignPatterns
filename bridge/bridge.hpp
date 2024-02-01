@@ -1,7 +1,10 @@
 // TVRemote needs this object
 struct Movie
 {
-    Movie(std::string name, double currentDuration, double totalDuration);
+    Movie(std::string name, 
+            double currentDuration, 
+            double totalDuration);
+
     ~Movie();
 
     std::string name;
@@ -30,7 +33,8 @@ public:
 class TVDevice : public Device
 {
 public:
-    TVDevice(Movie * movie,
+    TVDevice(Movie * movie = nullptr,
+            bool isPlaying = 0,
             bool isMuted = 1, 
             bool isPowered = 0, 
             int volume = 1, 
@@ -40,6 +44,9 @@ public:
 
     void SetMovie(Movie * movie);
     Movie * GetMovie();
+
+    void SetIsPlaying(bool isPlaying);
+    bool GetIsPlaying();
 
     virtual void SetIsMuted(bool isMuted) override;
     virtual void SetPower(bool isPowered) override;
@@ -54,6 +61,7 @@ public:
 private:
     Movie * movie;
 
+    bool isPlaying;
     bool isMuted;
     bool isPowered;
     int volume;
@@ -125,6 +133,7 @@ public:
     virtual int ChannelDown(Device * device) override;
 
     // tv only features
+    bool TogglePlay(Device * device);
     int FastRewind(Device * device); // rewinds only 10 seconds
     int Rewind(Device * device);
     int Play(Device * device);

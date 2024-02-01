@@ -26,8 +26,9 @@ Movie::~Movie()
 
 // ============= TVDevice =============
 // --------- special class functions ---------
-TVDevice::TVDevice(Movie * movie, bool isMuted, bool isPowered, int volume, int channel) :
+TVDevice::TVDevice(Movie * movie, bool isPlaying, bool isMuted, bool isPowered, int volume, int channel) :
     movie(movie),
+    isPlaying(isPlaying),
     isMuted(isMuted),
     isPowered(isPowered),
     volume(volume),
@@ -45,6 +46,11 @@ TVDevice::~TVDevice()
 void TVDevice::SetMovie(Movie * movie)
 {
     this->movie = movie;
+}
+
+void TVDevice::SetIsPlaying(bool isPlaying)
+{
+    this->isPlaying;
 }
 
 void TVDevice::SetIsMuted(bool isMuted)
@@ -71,6 +77,11 @@ void TVDevice::SetChannel(int channel)
 Movie * TVDevice::GetMovie()
 {
     return this->movie;
+}
+
+bool TVDevice::GetIsPlaying()
+{
+    return this->isPlaying;
 }
 
 bool TVDevice::GetIsMuted()
@@ -339,6 +350,25 @@ int TVRemote::ChannelDown(Device * device)
     return device->GetChannel();
 }
 
+// ERROR -- why doesn't the return value give the correct value? Does it have something to do with dynamic cast?
+bool TVRemote::TogglePlay(Device * device)
+{
+    TVDevice * tvDevice = dynamic_cast<TVDevice *>(device);
+
+    if(tvDevice->GetIsPlaying())
+    {
+        tvDevice->SetIsPlaying(State::OFF);
+        std::cout << "TVDevice is NOT PLAYING" << std::endl;
+    }
+    else
+    {
+        tvDevice->SetIsPlaying(State::ON);
+        std::cout << "TVDevice is PLAYING" << std::endl;
+    }
+
+    return tvDevice->GetIsPlaying();
+}
+
 int TVRemote::FastRewind(Device * device)
 {
     return 0;
@@ -407,9 +437,10 @@ int main()
     Movie * movie = new Movie();
     TVDevice * tvDevice = new TVDevice(movie);
     TVRemote * tvRemote = new TVRemote(tvDevice);
-
+ 
     tvRemote->TogglePower(tvRemote->GetDevice());
     tvRemote->ToggleMute(tvRemote->GetDevice());
+    tvRemote->TogglePlay(tvRemote->GetDevice());
     ChangeVolumeTo(tvRemote, 7);
     ChangeChannelTo(tvRemote, 50);
 
