@@ -2,16 +2,10 @@
 
 // ============ THE PRODUCT ============
 // acts like a normal class, define everything that your "product" has
-
 class Car
 {
-private:
-    std::string make;
-    std::string model;
-
 public:
-    Car();
-    Car(std::string make, std::string model);
+    Car(std::string make = "N/A", std::string model = "N/A");
     ~Car();
 
     // ============ printing functions ============
@@ -23,15 +17,19 @@ public:
     void SetModel(std::string model);
 
     // ============ getters ============
-    std::string GetMake();
-    std::string GetModel();
+    std::string GetMake() const;
+    std::string GetModel() const;
+
+private:
+    std::string make;
+    std::string model;
 };
 
 // ============ THE ABSTRACT BUILDER -- INTERFACE ============
 class CarBuilder
 {
 public:
-    virtual ~CarBuilder(){}
+    virtual ~CarBuilder() = default;
     virtual void ProduceEngine() = 0;
     virtual void ProduceChassis() = 0;
     virtual void ProduceTransmission() = 0;
@@ -40,9 +38,6 @@ public:
 // ============ THE CONCRETE BUILDER ============
 class ConcreteCarBuilder : public CarBuilder
 {
-private:
-    Car * car;
-
 public:
     ConcreteCarBuilder();
     ConcreteCarBuilder(std::string make, std::string model);
@@ -57,16 +52,17 @@ public:
     void ProduceChassis();
     void ProduceTransmission();
 
-    // ============ getters ============
-    Car * GetCar();
+    // ============ getters/setters ============
+    void SetCar(Car * car);
+    Car * GetCar() const;
+    
+private:
+    Car * car;
 };
 
 // ============ Director ============
 class CarDirector
 {
-private:
-    CarBuilder * carBuilder;
-
 public:
     void SetBuilder(CarBuilder * carBuilder);
 
@@ -74,4 +70,7 @@ public:
     // functions that help create a "recipe" for the director to trigger the builder
     void BuildMinimalViableCar();
     void BuildMaximumViableCar();
+
+private:
+    CarBuilder * carBuilder;
 };

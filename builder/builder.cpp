@@ -1,99 +1,82 @@
 #include "builder.hpp"
 
 // ============ Car class ============
-Car::Car() 
-{ 
-    this->make = "N/A";
-    this->model = "N/A";
+Car::Car(std::string make, std::string model) :
+    make(make),
+    model(model)
+{
     std::cout << "Constructor -- Car" << std::endl; 
 }
 
-Car::Car(std::string make, std::string model)
-{
-    this->make = make;
-    this->model = model;
-}
-
-Car::~Car() 
-{ 
+Car::~Car() { 
     std::cout << "Deconstructor -- Car" << std::endl; 
 }
 
-void Car::printMake()
-{
-    std::cout << "Make: " + this->make << std::endl;
+void Car::printMake() {
+    std::cout << "Make: " + GetMake() << std::endl;
 }
 
-void Car::printModel()
-{
-    std::cout << "Model: " + this->model << std::endl;
+void Car::printModel() {
+    std::cout << "Model: " + GetModel() << std::endl;
 }
 
-void Car::SetMake(std::string make)
-{
+void Car::SetMake(std::string make) {
     this->make = make;
 }
 
-void Car::SetModel(std::string model)
-{
+void Car::SetModel(std::string model) {
     this->model = model;
 }
 
-std::string Car::GetMake()
-{
+std::string Car::GetMake() const {
     return this->make;
 }
 
-std::string Car::GetModel()
-{
+std::string Car::GetModel() const {
     return this->model;
 }
 
 // ============ THE CONCRETE BUILDER ============
-ConcreteCarBuilder::ConcreteCarBuilder()
-{
+ConcreteCarBuilder::ConcreteCarBuilder() {
     this->CreateCar();
 }
 
-ConcreteCarBuilder::ConcreteCarBuilder(std::string make, std::string model)
-{
+ConcreteCarBuilder::ConcreteCarBuilder(std::string make, std::string model){
     this->CreateCar(make, model);
 }
 
-ConcreteCarBuilder::~ConcreteCarBuilder()
-{
+ConcreteCarBuilder::~ConcreteCarBuilder() {
     delete this->car;
 }
 
-void ConcreteCarBuilder::CreateCar()
-{
+void ConcreteCarBuilder::CreateCar() {
     this->car = new Car();
 }
 
-void ConcreteCarBuilder::CreateCar(std::string make, std::string model)
-{
+void ConcreteCarBuilder::CreateCar(std::string make, std::string model) {
     this->car = new Car(make, model);
 }
 
-void ConcreteCarBuilder::ProduceEngine()
-{ 
+void ConcreteCarBuilder::ProduceEngine() { 
     std::cout << "Engine Created! -- Car" << std::endl;
 }
 
-void ConcreteCarBuilder::ProduceChassis()
-{
+void ConcreteCarBuilder::ProduceChassis() {
     std::cout << "Chassis Created! -- Car" << std::endl;
 }
 
-void ConcreteCarBuilder::ProduceTransmission()
-{
+void ConcreteCarBuilder::ProduceTransmission() {
     std::cout << "Transmission Created! -- Car" << std::endl;
 }
 
-Car * ConcreteCarBuilder::GetCar()
+void ConcreteCarBuilder::SetCar(Car * car)
 {
+    this->car = car;
+}
+
+Car * ConcreteCarBuilder::GetCar() const {
     Car * result = this->car;
-    this->CreateCar();
+    CreateCar();
     return result;
 }
 
