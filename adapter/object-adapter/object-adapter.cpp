@@ -1,50 +1,42 @@
 #include "object-adapter.hpp"
 
 // =========== Outlet ===========
-Outlet::Outlet(bool HasRoundHoles, int NumberOfHoles)
+Outlet::Outlet(bool HasRoundHoles, int NumberOfHoles) :
+    HasRoundHoles(HasRoundHoles),
+    NumberOfHoles(NumberOfHoles)
 {
-    this->HasRoundHoles = HasRoundHoles;
-    this->NumberOfHoles = NumberOfHoles;
-
     std::cout << "Outlet Created" << std::endl;
 }
 
-Outlet::~Outlet()
-{
+Outlet::~Outlet() {
     std::cout << "Outlet deleted" << std::endl;
 }
 
-bool Outlet::GetHasRoundHoles()
-{
+bool Outlet::GetHasRoundHoles() {
     return this->HasRoundHoles;
 }
 
-int Outlet::GetNumberOfHoles()
-{
+int Outlet::GetNumberOfHoles() {
     return this->NumberOfHoles;
 }
 
 // =========== AmericanOutlet ===========
 AmericanOutlet::AmericanOutlet(int VoltageRating) :
+    VoltageRating(VoltageRating),
     Outlet(false, 3)
 {
-    this->VoltageRating = VoltageRating;
-
     std::cout << "AmericanOutlet Created" << std::endl;
 }
 
-AmericanOutlet::~AmericanOutlet() 
-{
+AmericanOutlet::~AmericanOutlet() {
     std::cout << "AmericanOutlet deleted" << std::endl;
 }
 
-int AmericanOutlet::GetFrequencyRating()
-{
+int AmericanOutlet::GetFrequencyRating() {
     return this->FrequencyRating;
 }
 
-int AmericanOutlet::GetVoltageRating()
-{
+int AmericanOutlet::GetVoltageRating() {
     return this->VoltageRating;
 }
 
@@ -55,18 +47,15 @@ UKOutlet::UKOutlet(int VoltageRating, int FrequencyRating) :
     std::cout << "UKOutlet created" << std::endl;
 }
 
-UKOutlet::~UKOutlet()
-{
+UKOutlet::~UKOutlet() {
     std::cout << "UKOutlet deleted" << std::endl;
 };
 
-int UKOutlet::GetFrequencyRating()
-{
+int UKOutlet::GetFrequencyRating() {
     return this->FrequencyRating;
 }
 
-int UKOutlet::GetVoltageRating()
-{
+int UKOutlet::GetVoltageRating() {
     return this->VoltageRating;
 }
 
@@ -77,42 +66,35 @@ JapaneseOutlet::JapaneseOutlet(int FrequencyRating, int VoltageRating) :
     std::cout << "JapaneseOutlet created" << std::endl;
 }
 
-JapaneseOutlet::~JapaneseOutlet()
-{
+JapaneseOutlet::~JapaneseOutlet() {
     std::cout << "JapaneseOutlet deleted" << std::endl;
 }
 
-int JapaneseOutlet::GetFrequencyRating()
-{
+int JapaneseOutlet::GetFrequencyRating() {
     return this->FrequencyRating;
 }
 
-int JapaneseOutlet::GetVoltageRating()
-{
+int JapaneseOutlet::GetVoltageRating() {
     return this->VoltageRating;
 }
 
 // =========== Plug ===========
-Plug::Plug(int PinCount, bool HasRoundPins)
-{
+Plug::Plug(int PinCount, bool HasRoundPins) {
     this->HasRoundPins = HasRoundPins;
     this->PinCount = PinCount;
 
     std::cout << "Plug created" << std::endl;
 }
 
-Plug::~Plug()
-{
+Plug::~Plug() {
     std::cout << "Plug deleted" << std::endl;
 }
 
-bool Plug::GetHasRoundPins()
-{
+bool Plug::GetHasRoundPins() {
     return this->HasRoundPins;
 }
 
-int Plug::GetPinCount()
-{
+int Plug::GetPinCount() {
     return this->PinCount;
 }
 
@@ -125,15 +107,12 @@ Adapter::Adapter(Plug * pPlug, Outlet * pOutlet) :
     std::cout << "Adapter created" << std::endl;
 }
 
-Adapter::~Adapter()
-{
+Adapter::~Adapter() {
     std::cout << "Adapter deleted" << std::endl;
 }
 
-std::string Adapter::WhatTypeOfOutletAdapter(Outlet * pOutlet)
-{
-    if(CheckOutletCompatibility(pOutlet))
-    {
+std::string Adapter::WhatTypeOfOutletAdapter(Outlet * pOutlet) {
+    if(CheckOutletCompatibility(pOutlet)) {
         return "No Adapter Needed!";
     }
     else{
@@ -153,19 +132,16 @@ bool Adapter::CheckOutletCompatibility(Outlet * pOutlet)
         return false;
 }
 
-void Adapter::SetPlug(Plug * pPlug)
-{
+void Adapter::SetPlug(Plug * pPlug) {
     this->pPlug = pPlug;
 }
 
-Plug * Adapter::GetPlug()
-{
+Plug * Adapter::GetPlug() {
     return this->pPlug;
 }
 
 // =========== Client code ===========
-void CheckPlugAndOutlet(Plug * pPlug, Outlet * pOutlet)
-{
+void CheckPlugAndOutlet(Plug * pPlug, Outlet * pOutlet) {
     // checks if adapter is needed
     Adapter * pAdapter = new Adapter(pPlug, pOutlet);
     bool temp = pAdapter->CheckOutletCompatibility(pOutlet);
@@ -174,8 +150,7 @@ void CheckPlugAndOutlet(Plug * pPlug, Outlet * pOutlet)
 }
 
 // =========== MAIN code ===========
-int main()
-{
+int main() {
     Plug * pAmericanPlug = new Plug(2, false);
     Plug * pUKPlug = new Plug(3, false);
     Plug * pJapanesePlug = new Plug(2, true);
