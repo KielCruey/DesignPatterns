@@ -1,15 +1,25 @@
 // TVRemote needs this object
 struct Movie
 {
+public:
     Movie(std::string name, 
             double currentDuration, 
             double totalDuration);
 
     ~Movie();
 
+    void SetName(std::string name);
+    void SetCurrentDuration(double currentDuration);
+    void SetTotalDuration(double totalDuration);
+
+    std::string GetName() const;
+    double GetCurrentDuration() const;
+    double GetTotalDuration() const;
+
+private:
     std::string name;
-    double currentDuration; // the place where the user is currently watching
-    double totalDuration;   // length of movie
+    double currentDuration; // the place where the user is currently watching in [mins]
+    double totalDuration;   // length of movie in [mins]
 };
 
 // ============= Implementation =============
@@ -23,10 +33,10 @@ public:
     virtual void SetVolume(int volume) = 0;
     virtual void SetChannel(int channel) = 0;
 
-    virtual bool GetIsMuted() = 0;
-    virtual bool GetPower() = 0;
-    virtual int GetVolume() = 0;
-    virtual int GetChannel() = 0;
+    virtual bool GetIsMuted() const = 0;
+    virtual bool GetPower() const = 0;
+    virtual int GetVolume() const = 0;
+    virtual int GetChannel()const  = 0;
 };
 
 // ============= Concrete Implementation =============
@@ -40,7 +50,7 @@ public:
             int volume = 1, 
             int channel = 1);
             
-    virtual ~TVDevice() override;   
+    ~TVDevice() override;   
 
     void SetMovie(Movie * movie);
     Movie * GetMovie();
@@ -48,15 +58,15 @@ public:
     void SetIsPlaying(bool isPlaying);
     bool GetIsPlaying();
 
-    virtual void SetIsMuted(bool isMuted) override;
-    virtual void SetPower(bool isPowered) override;
-    virtual void SetVolume(int volume) override;
-    virtual void SetChannel(int channel) override;
+    void SetIsMuted(bool isMuted) override;
+    void SetPower(bool isPowered) override;
+    void SetVolume(int volume) override;
+    void SetChannel(int channel) override;
 
-    virtual bool GetIsMuted() override;
-    virtual bool GetPower() override;
-    virtual int GetVolume() override;
-    virtual int GetChannel() override;
+    bool GetIsMuted() const override;
+    bool GetPower() const override;
+    int GetVolume() const override;
+    int GetChannel() const override;
 
 private:
     Movie * movie;
@@ -76,17 +86,17 @@ public:
                 int volume = 1,
                  int channel = 1);
                  
-    virtual ~RadioDevice() override;
+    ~RadioDevice() override;
 
-    virtual void SetIsMuted(bool isMuted) override;
-    virtual void SetPower(bool isPowered) override;
-    virtual void SetVolume(int volume) override;
-    virtual void SetChannel(int channel) override;
+    void SetIsMuted(bool isMuted) override;
+    void SetPower(bool isPowered) override;
+    void SetVolume(int volume) override;
+    void SetChannel(int channel) override;
 
-    virtual bool GetIsMuted() override;
-    virtual bool GetPower() override;
-    virtual int GetVolume() override;
-    virtual int GetChannel() override;
+    bool GetIsMuted() const override;
+    bool GetPower() const override;
+    int GetVolume() const override;
+    int GetChannel() const override;
 
 private:
     bool isMuted;
@@ -110,7 +120,7 @@ public:
     virtual int ChannelUp(Device * device);
     virtual int ChannelDown(Device * device);
 
-    Device * GetDevice();
+    Device * GetDevice() const;
     void SetDevice(Device * device);
 
 // device needs to be accessible to the derived classes -- used protected
@@ -134,8 +144,7 @@ public:
 
     // tv only features
     bool TogglePlay(Device * device);
-    int FastRewind(Device * device); // rewinds only 10 seconds
-    int Rewind(Device * device);
-    int Play(Device * device);
-    int FastForward(Device * device);
+    double Rewind(Device * device);
+    double FastRewind(Device * device); // rewinds only 10 seconds
+    double FastForward(Device * device);
 };
