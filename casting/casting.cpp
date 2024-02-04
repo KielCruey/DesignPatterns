@@ -1,118 +1,117 @@
 #include "casting.hpp"
 
 // ================ Base ================
-Base::Base() : 
-    baseVariable(0)
+Base::Base(int baseVariable) : 
+    baseVariable(baseVariable)
 {
     std::cout << "Base object created" << std::endl;
 }
 
-Base::~Base() 
-{  
+Base::~Base() {  
     std::cout << "Base object destroyed" << std::endl;
 }
 
-void Base::SomeFunction()
-{
-
+void Base::SomeFunction() {
+    std::cout << "Base -- SomeFunction" << std::endl;
 }
 
-void Base::PrintBaseVariable()
-{
+void Base::PrintBaseVariable() {
     std::cout << "Base Variable: " << this->baseVariable << std::endl;
 }
 
-int Base::GetBaseVariable()
-{ 
+int Base::GetBaseVariable() { 
     return this->baseVariable; 
 }
 
-void Base::SetBaseVariable(int baseVariable)
-{
+void Base::SetBaseVariable(int baseVariable) {
     this->baseVariable = baseVariable;
 }
 
 // ================ Derived ================
-Derived::Derived() :
-    derivedVariable(1)
+Derived::Derived(int derivedVariable) :
+    Base(),
+    derivedVariable(derivedVariable)
 {
     std::cout << "Derived object created" << std::endl;
 }
 
-Derived::~Derived() 
-{
+Derived::~Derived() {
     std::cout << "Derived object destroyed" << std::endl;
 }
 
-void Derived::SomeFunction()
-{
-    std::cout << "SomeFunction()" << std::endl;
+void Derived::SomeFunction() {
+    std::cout << "Derived -- SomeFunction" << std::endl;
 }
 
-void Derived::DerivedFunction()
-{
-    std::cout << "DerivedFunction()" << std::endl;
+void Derived::DerivedFunction() {
+    std::cout << "Derived -- DerivedFunction" << std::endl;
 }  
 
-void Derived::PrintDerivedVariable()
-{
+void Derived::PrintDerivedVariable() {
     std::cout << "Derived Variable: " << this->derivedVariable << std::endl;
 }
 
-int Derived::GetDerivedVariable()
-{
+int Derived::GetDerivedVariable() {
     return this->derivedVariable;
 }
 
-void Derived::SetDerivedVariable(int derivedVariable)
-{
+void Derived::SetDerivedVariable(int derivedVariable) {
     this->derivedVariable = derivedVariable;
 }
 
 // ================ Client Code ================
-Derived * DownCasting(Base * pBase)
-{
+Derived * DownCasting(Base * pBase) {
     Derived * derived = dynamic_cast<Derived *>(pBase);
-    return derived;
+
+    // there's a chance that downcasting can cause a nullptr
+    if(derived) {
+        return derived;
+    }
+    else return nullptr;
 }
 
-Base * UpCasting(Derived * pDerived)
-{
+Base * UpCasting(Derived * pDerived) {
     Base * base = dynamic_cast<Base *>(pDerived);
     return base;
 }
 
-void CheckSameTypes(void * class1, void * class2)
-{
-    if(typeid(class1).name() == typeid(class2).name())
-    {
-        std::cout << "Same types" << std::endl;
+// example will cast nullptr because the definition of the created
+// base doesn't know about the derived part of the hierachy
+static void NullCasingExample() {
+    Base * base = new Base();
+
+    // will return nullptr
+    Derived * derived = DownCasting(base);
+
+    // checks nullptr
+    if (!derived) {
+        delete derived;
+        delete base;
     }
-    else
-    {
-        std::cout << "Different types" << std::endl;
+    else delete base;
+}
+
+static void SuccessfulDownCasting() {
+    Base * base = new Derived(); // possible -- derived class is a base class
+
+    // successful case
+    Derived * derived = DownCasting(base);
+
+    // checks nullptr
+    if (!derived) {
+        delete derived;
+        delete base;
     }
+    else delete base;
 }
 
 // ================ Main ================
 int main()
-{
-    /*
-    Base * base = new Base();
-    base->PrintBaseVariable();
-    Derived * derived = DownCasting(base); // downcasting
-    derived->PrintDerivedVariable();
-    base = UpCasting(derived); // upcasting
-    */
+{  
+    // example of failed cast
+    NullCasingExample();
 
-    Base * base = new Base();
-
-    Derived * derived = new Derived();
-    derived->PrintDerivedVariable();
-    derived->PrintBaseVariable();
-
-    std::cout << typeid(base).name() << std::endl;
-    std::cout << typeid(derived).name() << std::endl;
+    SuccessfulDownCasting();
 
     return 0;
 }

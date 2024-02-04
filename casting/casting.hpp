@@ -3,45 +3,35 @@
 
 class Base
 {
-private:
-    int baseVariable;
-
 public:
-    // ======== special class functions ========
-    Base();
+    Base(int baseVariable = 10);
     virtual ~Base();
 
-    // ======== virtual functions ========
     virtual void SomeFunction();
 
-    // ======== general functions ========
     void PrintBaseVariable();
 
-    // ======== getters/setters ========
     int GetBaseVariable();
     void SetBaseVariable(int baseVariable);
+
+private:
+    int baseVariable;
 };
 
 class Derived : public Base
 {
-private:
-    int derivedVariable;
-
 public:
-    // ======== special class functions ========
-    Derived();
+    Derived(int derivedVariable = 100);
     ~Derived() override;
 
-    // ======== virtual functions ========
-    virtual void SomeFunction() override;
+    void SomeFunction() override;
 
-    // ======== general functions ========
     void DerivedFunction();
-
-    // ======== general functions ========
     void PrintDerivedVariable();
 
-    // ======== getters/setters ========
     int GetDerivedVariable();
     void SetDerivedVariable(int derivedVariable);
+
+private:
+    int derivedVariable;
 };
