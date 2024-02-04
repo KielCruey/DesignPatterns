@@ -1,4 +1,6 @@
-// TVRemote needs this object
+
+// ============= Class Data =============
+// TVRemote needs this object in order to do TVRemote features 
 struct Movie
 {
 public:
@@ -23,6 +25,8 @@ private:
 };
 
 // ============= Implementation =============
+// interface class helps define all the actions the "Abstract" class should define.
+// class should only have a bunch of functional operation's 'blueprints'
 class Device
 {
 public:
@@ -40,6 +44,8 @@ public:
 };
 
 // ============= Concrete Implementation =============
+// concrete classes define member variables and functions.
+// this class should be consumed by the "Abstract" class.
 class TVDevice : public Device
 {
 public:
@@ -106,7 +112,8 @@ private:
 };
 
 // ============= Abstraction =============
-// only put in functions that the abstract class needs to do,
+// class defines the controls and uses the "Implementation" class's variables and functions
+// class delegates its work to the "implementation" class
 class Remote
 {
 public:
@@ -129,6 +136,7 @@ protected:
 };
 
 // ============= Redefined Abstraction =============
+// this class adds more implementation if needed
 class TVRemote : public Remote
 {
 public:

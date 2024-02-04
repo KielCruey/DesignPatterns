@@ -384,7 +384,6 @@ int TVRemote::ChannelDown(Device * device)
     return device->GetChannel();
 }
 
-// ERROR -- why doesn't the return value give the correct value? Does it have something to do with dynamic cast?
 bool TVRemote::TogglePlay(Device * device)
 {
     TVDevice * tvDevice = dynamic_cast<TVDevice *>(device);
