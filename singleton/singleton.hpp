@@ -8,18 +8,16 @@ private:
     Globals(int systemState, int numberOfFiles);
 
     // ========== member variables ==========
-    static Globals * pGlobals;
+    static Globals * pGlobals; // need a pointer that references the unique instance of that class
+    
     int systemState;
     int numberOfFiles;
     
 public:
-    // deleting copy constructor -- can be clone-able
-    Globals(const Globals& obj) = delete; 
-    // deleting assignment operator -- can't use the "=" operator
-    void operator=(const Globals &) = delete;
+    Globals(const Globals& obj) = delete; // deleting copy constructor -- can't be clone-able
+    void operator=(const Globals &) = delete; // deleting assignment operator -- can't use the "=" operator
 
-    // functions calls the private constructor -- effectively is the constructor
-    static Globals * getInstance();
+    static Globals * getInstance(); // functions calls the private constructor -- effectively is the constructor
 
     // ============ getters ============ 
     int GetSystemState();
