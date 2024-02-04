@@ -1,175 +1,108 @@
-#include <iostream>
+#include "builder.hpp"
 
-// ============ THE PRODUCT ============
-/*
-    acts like a normal class, define everything that your "product" has
-*/
-class Car
+// ============ Car class ============
+Car::Car(std::string make, std::string model) :
+    make(make),
+    model(model)
 {
-private:
-    std::string make;
-    std::string model;
+    std::cout << "Constructor -- Car" << std::endl; 
+}
 
-public:
-    Car() 
-    { 
-        this->make = "N/A";
-        this->model = "N/A";
-        std::cout << "Constructor -- Car" << std::endl; 
-    }
+Car::~Car() { 
+    std::cout << "Deconstructor -- Car" << std::endl; 
+}
 
-    Car(std::string make, std::string model)
-    {
-        this->make = make;
-        this->model = model;
-    }
+void Car::printMake() {
+    std::cout << "Make: " + GetMake() << std::endl;
+}
 
-    ~Car() 
-    { 
-        std::cout << "Deconstructor -- Car" << std::endl; 
-    }
+void Car::printModel() {
+    std::cout << "Model: " + GetModel() << std::endl;
+}
 
-    // ============ printing functions ============
-    void printMake()
-    {
-        std::cout << "Make: " + this->make << std::endl;
-    }
+void Car::SetMake(std::string make) {
+    this->make = make;
+}
 
-    void printModel()
-    {
-        std::cout << "Model: " + this->model << std::endl;
-    }
+void Car::SetModel(std::string model) {
+    this->model = model;
+}
 
-    // ============ setters ============
-    void SetMake(std::string make)
-    {
-        this->make = make;
-    }
+std::string Car::GetMake() const {
+    return this->make;
+}
 
-    void SetModel(std::string model)
-    {
-        this->model = model;
-    }
-
-    // ============ getters ============
-    std::string GetMake()
-    {
-        return this->make;
-    }
-
-    std::string GetModel()
-    {
-        return this->model;
-    }
-};
-
-// ============ THE ABSTRACT BUILDER -- INTERFACE ============
-class CarBuilder
-{
-public:
-    virtual ~CarBuilder(){}
-    virtual void ProduceEngine() = 0;
-    virtual void ProduceChassis() = 0;
-    virtual void ProduceTransmission() = 0;
-};
+std::string Car::GetModel() const {
+    return this->model;
+}
 
 // ============ THE CONCRETE BUILDER ============
-class ConcreteCarBuilder : public CarBuilder
+ConcreteCarBuilder::ConcreteCarBuilder(std::string make, std::string model){
+    this->CreateCar(make, model);
+}
+
+ConcreteCarBuilder::~ConcreteCarBuilder() {
+    delete this->car;
+}
+
+void ConcreteCarBuilder::CreateCar(std::string make, std::string model) {
+    SetCar(new Car(make, model));
+}
+
+void ConcreteCarBuilder::ProduceEngine() { 
+    std::cout << "Engine Created! -- Car" << std::endl;
+}
+
+void ConcreteCarBuilder::ProduceChassis() {
+    std::cout << "Chassis Created! -- Car" << std::endl;
+}
+
+void ConcreteCarBuilder::ProduceTransmission() {
+    std::cout << "Transmission Created! -- Car" << std::endl;
+}
+
+void ConcreteCarBuilder::SetCar(Car * car)
 {
-private:
-    Car * car;
+    this->car = car;
+}
 
-public:
-    ConcreteCarBuilder()
-    {
-        this->CreateCar();
-    }
-
-    ConcreteCarBuilder(std::string make, std::string model)
-    {
-        this->CreateCar(make, model);
-    }
-
-    ~ConcreteCarBuilder()
-    {
-        delete this->car;
-    }
-
-    // ============ car constructors ============
-    void CreateCar()
-    {
-        this->car = new Car();
-    }
-
-    void CreateCar(std::string make, std::string model)
-    {
-        this->car = new Car(make, model);
-    }
-
-    // ============ car components builds ============
-    void ProduceEngine()
-    { 
-        std::cout << "Engine Created! -- Car" << std::endl;
-    }
-
-    void ProduceChassis()
-    {
-        std::cout << "Chassis Created! -- Car" << std::endl;
-    }
-
-    void ProduceTransmission()
-    {
-        std::cout << "Transmission Created! -- Car" << std::endl;
-    }
-
-    // ============ getters ============
-    Car * GetCar()
-    {
-        Car * result = this->car;
-        this->CreateCar();
-        return result;
-    }
-};
+Car * ConcreteCarBuilder::GetCar() {
+    Car * result = this->car;
+    CreateCar();
+    return result;
+}
 
 // ============ Director ============
-class CarDirector
+void CarDirector::SetBuilder(CarBuilder * carBuilder)
 {
-private:
-    CarBuilder * carBuilder;
+    this->carBuilder = carBuilder;
+}
 
-public:
-    void SetBuilder(CarBuilder * carBuilder)
-    {
-        this->carBuilder = carBuilder;
-    }
+void CarDirector::BuildMinimalViableCar()
+{
+    this->carBuilder->ProduceChassis();
+}
 
-    // ============ construction functions ============
-    void BuildMinimalViableCar()
-    {
-        this->carBuilder->ProduceChassis();
-    }
-
-    void BuildMaximumViableCar()
-    {
-        this->carBuilder->ProduceEngine();
-        this->carBuilder->ProduceTransmission();
-        this->carBuilder->ProduceChassis();
-    }
-};
+void CarDirector::BuildMaximumViableCar()
+{
+    this->carBuilder->ProduceEngine();
+    this->carBuilder->ProduceTransmission();
+    this->carBuilder->ProduceChassis();
+}
 
 // ============ Client Code ============
 // implemented with the CarDirector class
-void SeasonalProjectCars(CarDirector & carDirector)
+void SeasonalProjectCars(CarDirector * carDirector)
 {
     // concreteCalBuilder makes the car object
     ConcreteCarBuilder * builder = new ConcreteCarBuilder();
     // director calls what type of car 'setting' it should have once assigned a concreteCarBuilder as parameter
-    carDirector.SetBuilder(builder);
+    carDirector->SetBuilder(builder);
 
     // director creating a new "winter" build
     std::cout << "Winter Project Car Built!" << std::endl;
     // carDirector creates a Car object
-    carDirector.BuildMinimalViableCar(); 
+    carDirector->BuildMinimalViableCar(); 
 
     // creating a Car object and assigning the Car object to the "favor" of car created but the concreteCarBuilder
     Car * winterCar = builder->GetCar();
@@ -180,7 +113,7 @@ void SeasonalProjectCars(CarDirector & carDirector)
     // director creating a new "summer" build
     std::cout << "Summer Project Car Built!" << std::endl;
     // carDirector creates a Car object
-    carDirector.BuildMaximumViableCar(); 
+    carDirector->BuildMaximumViableCar(); 
 
     // creating a Car object and assigning the Car object to the "favor" of car created but the concreteCarBuilder
     Car * summerCar = builder->GetCar();
@@ -192,10 +125,10 @@ void SeasonalProjectCars(CarDirector & carDirector)
 }
 
 // used without the CarDirector class
-void ProjectCars(CarDirector & carDirector)
+void ProjectCars(CarDirector * carDirector)
 {
     ConcreteCarBuilder * builder = new ConcreteCarBuilder();
-    carDirector.SetBuilder(builder);
+    carDirector->SetBuilder(builder);
 
     // now created "products" that car will have
     std::cout << "Spring Project Car Built!" << std::endl;
@@ -209,15 +142,15 @@ void ProjectCars(CarDirector & carDirector)
     delete builder;
 }
 
-void CarProject_MakeAndModel(CarDirector & carDirector)
+void CarProject_MakeAndModel(CarDirector * carDirector)
 {
     ConcreteCarBuilder * builder = new ConcreteCarBuilder("Ford", "Mustang");
-    carDirector.SetBuilder(builder);
+    carDirector->SetBuilder(builder);
 
     // director creating a new "summer" build
     std::cout << "Car Built!" << std::endl;
     // carDirector creates a Car object
-    carDirector.BuildMaximumViableCar();
+    carDirector->BuildMaximumViableCar();
 
     // creating a Car object and assigning the Car object to the "favor" of car created but the concreteCarBuilder
     Car * completedCar = builder->GetCar();
@@ -231,9 +164,9 @@ int main()
 {
     CarDirector * director = new CarDirector();
 
-    SeasonalProjectCars(*director);
-    ProjectCars(*director);
-    CarProject_MakeAndModel(*director);
+    SeasonalProjectCars(director);
+    ProjectCars(director);
+    CarProject_MakeAndModel(director);
 
     delete director;
     return 0;
