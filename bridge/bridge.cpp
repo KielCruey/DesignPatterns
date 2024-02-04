@@ -494,7 +494,7 @@ int main()
     delete radioDevice;
     delete radioRemote;
 
-    Movie * movie = new Movie("C++ is Awesome: The Movie", 89.89, 90);
+    Movie * movie = new Movie("C++ is Awesome: The Movie", 50, 90);
     TVDevice * tvDevice = new TVDevice(movie);
     TVRemote * tvRemote = new TVRemote(tvDevice);
  
@@ -504,7 +504,12 @@ int main()
     ChangeVolumeTo(tvRemote, 7);
     ChangeChannelTo(tvRemote, 50);
 
+    // changing movie time
+    tvRemote->FastRewind(tvDevice);
+    std::cout << "Current device: " << tvDevice->GetMovie()->GetCurrentDuration() << std::endl;
     tvRemote->FastForward(tvDevice);
+    std::cout << "Current device: " << tvDevice->GetMovie()->GetCurrentDuration() << std::endl;
+    tvRemote->Rewind(tvDevice);
     std::cout << "Current device: " << tvDevice->GetMovie()->GetCurrentDuration() << std::endl;
 
     delete movie;
