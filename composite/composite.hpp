@@ -1,4 +1,5 @@
 #include <list>
+#include <string>
 
 // ============= Component =============
 // The base Component class declares common operations for both simple and complex objects of a composition.
@@ -21,73 +22,74 @@ public:
 };
 
 // ============= Leaf =============
-class Mouse : public ComputerPart
+class Part
 {
-private:
-
 public:
-    Mouse(/* args */);
+    Part();
+    ~Part();
+
+    std::string SetBrandName();
+    void GetBrandName();
+
+    std::string SetModelName();
+    void GetModelName();
+
+private:
+    std::string BrandName;
+    std::string ModelName;
+};
+
+class Mouse : public ComputerPart, public Part
+{
+public:
+    Mouse();
     ~Mouse();
 };
 
-class Keyboard : public ComputerPart
+class Keyboard : public ComputerPart, public Part
 {
-private:
-
 public:
     Keyboard();
     ~Keyboard();
 };
 
-class Monitor : public ComputerPart
+class Monitor : public ComputerPart, public Part
 {
-private:
-
 public:
     Monitor();
     ~Monitor();
 };
 
-class Speakers : public ComputerPart
+class Speakers : public ComputerPart, public Part
 {
-private:
-    
 public:
     Speakers();
-    ~Speakers();
+    ~Speakers(); 
 };
 
-class SSD : public ComputerPart
+class SSD : public ComputerPart, public Part
 {
-private:
-    
 public:
     SSD();
-    ~SSD();
+    ~SSD(); 
 };
 
-class RAM : public ComputerPart
+class RAM : public ComputerPart, public Part
 {
-private:
-
 public:
     RAM();
-    ~RAM();
+    ~RAM();  
 };
 
-class CPU : public ComputerPart
+class CPU : public ComputerPart, public Part
 {
-private:
-
 public:
     CPU();
-    ~CPU();
+    ~CPU(); 
 };
 
-class GPU : public ComputerPart
+class GPU : public ComputerPart, public Part
 {
-private:
-
 public:
     GPU();
     ~GPU();
@@ -118,8 +120,8 @@ public:
     Tower();
     ~Tower();
 
-    void Add() override;
-    void Remove() override;
+    void Add(ComputerPart * computerPart) override;
+    void Remove(ComputerPart * computerPart) override;
     bool IsComposite() override;
 };
 
@@ -132,7 +134,7 @@ public:
     Motherboard();
     ~Motherboard();
 
-    void Add() override;
-    void Remove() override;
+    void Add(ComputerPart * computerPart) override;
+    void Remove(ComputerPart * computerPart) override;
     bool IsComposite() override;
 };
