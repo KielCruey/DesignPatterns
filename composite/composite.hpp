@@ -2,26 +2,26 @@
 
 // ============= Component =============
 // The base Component class declares common operations for both simple and complex objects of a composition.
-class Computer
+class ComputerPart
 {
-private:
-    Computer * parent;
+protected:
+    ComputerPart * parent;
 
 public:
-    Computer();
-    ~Computer();
-
-    void SetParent(Computer * computer);
-    Computer * GetParent();
+    ComputerPart(ComputerPart * parent = nullptr);
+    ~ComputerPart();
 
     virtual bool IsComposite();
 
-    virtual void Add() = 0;
-    virtual void Remove() = 0;
+    void SetParent(ComputerPart * parent);
+    ComputerPart * GetParent();
+
+    virtual void Add(ComputerPart * computerPart) = 0;
+    virtual void Remove(ComputerPart * computerPart) = 0;
 };
 
 // ============= Leaf =============
-class Mouse : public Computer
+class Mouse : public ComputerPart
 {
 private:
 
@@ -30,7 +30,7 @@ public:
     ~Mouse();
 };
 
-class Keyboard : public Computer
+class Keyboard : public ComputerPart
 {
 private:
 
@@ -39,7 +39,7 @@ public:
     ~Keyboard();
 };
 
-class Monitor : public Computer
+class Monitor : public ComputerPart
 {
 private:
 
@@ -48,7 +48,7 @@ public:
     ~Monitor();
 };
 
-class Speakers : public Computer
+class Speakers : public ComputerPart
 {
 private:
     
@@ -57,7 +57,7 @@ public:
     ~Speakers();
 };
 
-class SSD : public Computer
+class SSD : public ComputerPart
 {
 private:
     
@@ -66,7 +66,7 @@ public:
     ~SSD();
 };
 
-class RAM : public Computer
+class RAM : public ComputerPart
 {
 private:
 
@@ -75,7 +75,7 @@ public:
     ~RAM();
 };
 
-class CPU : public Computer
+class CPU : public ComputerPart
 {
 private:
 
@@ -84,7 +84,7 @@ public:
     ~CPU();
 };
 
-class GPU : public Computer
+class GPU : public ComputerPart
 {
 private:
 
@@ -94,24 +94,25 @@ public:
 };
 
 // ============= Composite =============
-class Peripherals : public Computer
+// The Composite class represents the complex components that may have children.
+class Peripherals : public ComputerPart
 {
 protected: 
-    std::list<Computer *> children;
+    std::list<ComputerPart *> children;
 
 public: 
     Peripherals();
     ~Peripherals();
 
-    void Add() override;
-    void Remove() override;
+    void Add(ComputerPart * computerPart) override;
+    void Remove(ComputerPart * computerPart) override;
     bool IsComposite() override;
 };
 
-class Tower : public Computer
+class Tower : public ComputerPart
 {
 protected: 
-    std::list<Computer *> children;
+    std::list<ComputerPart *> children;
 
 public: 
     Tower();
@@ -122,10 +123,10 @@ public:
     bool IsComposite() override;
 };
 
-class Motherboard : public Computer
+class Motherboard : public ComputerPart
 {
 protected: 
-    std::list<Computer *> children;
+    std::list<ComputerPart *> children;
 
 public: 
     Motherboard();
