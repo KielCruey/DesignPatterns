@@ -14,19 +14,109 @@ ComputerPart::~ComputerPart() {
     std::cout << "ComputerPart destroyed" << std::endl;
 }
 
+// --------------- getters/setters ---------------
+ComputerPart * ComputerPart::GetParent() {
+    return this->parent;
+}
+
+void ComputerPart::SetParent(ComputerPart * parent) {
+    this->parent = parent;
+}
+
+// --------------- virtuals ---------------
 // hard coded because it will have no other value
 bool ComputerPart::IsComposite() {
     return false;
 }
 
-// --------------- getters/setters ---------------
-void ComputerPart::SetParent(ComputerPart * parent) {
-    this->parent = parent;
+void ComputerPart::Print() {
+    std::cout << "Parent: " << GetParent() << std::endl;
 }
 
-ComputerPart * ComputerPart::GetParent() {
-    return this->parent;
+// ============= Leaf =============
+Part::Part(std::string brandName, std::string modelName) :
+    brandName(brandName),
+    modelName(modelName)
+{
+    std::cout << "Part created" << std::endl;
 }
+
+Part::~Part() {
+    std::cout << "Part destroyed" << std::endl;
+}
+
+std::string Part::GetBrandName() {
+    return this->brandName;
+}
+
+std::string Part::GetModelName() {
+    return this->modelName;
+}
+
+void Part::SetBrandName(std::string brandName) {
+    this->brandName = brandName;
+}
+
+void Part::SetModelName(std::string modelName) {
+    this->modelName = modelName;
+}
+
+bool Part::IsComposite() {
+    return false;
+}
+
+void Part::Print() {
+    std::cout << "Brand Name: " << brandName << std::endl;
+    std::cout << "Model Name: " << modelName << std::endl;
+}
+
+// ============= Concrete Leaves =============
+Mouse::Mouse(int dpi) :
+    dpi(dpi)
+{
+    std::cout << "Mouse created" << std::endl;
+}
+
+Mouse::~Mouse() {
+    std::cout << "Mouse destroyed" << std::endl;
+}
+
+int Mouse::GetDPI() {
+    return this->dpi;
+}
+
+void Mouse::SetDPI(int dpi) {
+    this->dpi = dpi;
+}
+
+bool IsComposite() {
+    return false;
+}
+
+void Add(ComputerPart * computerPart) {
+    
+}
+
+void Remove(ComputerPart * computerPart) {
+
+}
+
+void Print() {
+    
+} 
+
+// ------ virtuals from ComputerPart ------
+bool Mouse::IsComposite() {
+    return false;
+}
+
+void Mouse::Add(ComputerPart * computerPart) {
+    
+}
+
+void Mouse::Remove(ComputerPart * computerPart) {
+    
+}  
 
 // ============= Peripherals -- Composite =============
 Peripherals::Peripherals() {

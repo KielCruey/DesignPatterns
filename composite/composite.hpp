@@ -5,94 +5,202 @@
 // The base Component class declares common operations for both simple and complex objects of a composition.
 class ComputerPart
 {
-protected:
-    ComputerPart * parent;
-
 public:
     ComputerPart(ComputerPart * parent = nullptr);
     ~ComputerPart();
-
-    virtual bool IsComposite();
-
-    void SetParent(ComputerPart * parent);
+    
     ComputerPart * GetParent();
+    void SetParent(ComputerPart * parent);
 
-    virtual void Add(ComputerPart * computerPart) = 0;
-    virtual void Remove(ComputerPart * computerPart) = 0;
+    // ------ virtuals ------
+    virtual void Add(ComputerPart * computerPart) {};
+    virtual void Remove(ComputerPart * computerPart) {};
+    virtual bool IsComposite();
+    virtual void Print();
+
+protected:
+    ComputerPart * parent;
 };
 
-// ============= Leaf =============
-class Part
+// ============= "Abstract" Leaf =============
+class Part : public ComputerPart
 {
 public:
-    Part();
+    Part(std::string brandName = "N/A", std::string modelName = "N/A");
     ~Part();
 
-    std::string SetBrandName();
-    void GetBrandName();
+    std::string GetBrandName();
+    std::string GetModelName();
+    void SetBrandName(std::string brandName);
+    void SetModelName(std::string modelName);
 
-    std::string SetModelName();
-    void GetModelName();
+    // ------ virtuals ------
+    virtual bool IsComposite() override;
+    virtual void Print() override;
 
 private:
-    std::string BrandName;
-    std::string ModelName;
+    std::string brandName;
+    std::string modelName;
 };
 
-class Mouse : public ComputerPart, public Part
+// ============= Concrete Leaves =============
+class Mouse : public Part
 {
 public:
-    Mouse();
+    Mouse(int dpi = 1000);
     ~Mouse();
+
+    int GetDPI();
+    void SetDPI(int dpi);
+
+    // ------ virtuals from ComputerPart ------
+    bool IsComposite() override;
+    void Add(ComputerPart * computerPart) override;
+    void Remove(ComputerPart * computerPart) override;
+
+protected:
+    virtual void Print() override;   
+
+private:   
+    int dpi;
 };
 
-class Keyboard : public ComputerPart, public Part
+class Keyboard : public Part
 {
 public:
     Keyboard();
     ~Keyboard();
+
+    bool GetHasClickyKeys();
+    void SetHasClickyKeys(bool HasClickyKeys);
+
+    // ------ virtuals from ComputerPart ------
+    bool IsComposite() override;
+    void Add(ComputerPart * computerPart) override;
+    void Remove(ComputerPart * computerPart) override;
+
+private:   
+    bool hasClickyKeys;
 };
 
-class Monitor : public ComputerPart, public Part
+class Monitor : public Part
 {
 public:
     Monitor();
     ~Monitor();
+
+    int GetLength();
+    void SetLength(int length);
+
+    int GetWidth();
+    void SetWidth(int width);
+
+    // ------ virtuals from ComputerPart ------
+    bool IsComposite() override;
+    void Add(ComputerPart * computerPart) override;
+    void Remove(ComputerPart * computerPart) override;
+
+private:   
+    int length;
+    int width;
 };
 
-class Speakers : public ComputerPart, public Part
+class Speakers : public Part
 {
 public:
     Speakers();
     ~Speakers(); 
+
+    bool GetIsPowered();
+    void SetIsPowered(bool isPowered);
+
+    int GetVolume();
+    void SetVolume(int volume);
+
+    // ------ virtuals from ComputerPart ------
+    bool IsComposite() override;
+    void Add(ComputerPart * computerPart) override;
+    void Remove(ComputerPart * computerPart) override;
+
+private:
+    bool isPowered;
+    int volume;
 };
 
-class SSD : public ComputerPart, public Part
+class SSD : public Part
 {
 public:
     SSD();
     ~SSD(); 
+
+    double GetCurrentStorage();
+    void SetCurrentStorage(double currentStorage);
+
+    double GetTotalStorage();
+    void SetTotalStorage(double currentStorage);
+
+    // ------ virtuals from ComputerPart ------
+    bool IsComposite() override;
+    void Add(ComputerPart * computerPart) override;
+    void Remove(ComputerPart * computerPart) override;
+
+private:
+    double currentStorage;
+    double totalStorage;
 };
 
-class RAM : public ComputerPart, public Part
+class RAM : public Part
 {
 public:
     RAM();
-    ~RAM();  
+    ~RAM(); 
+
+    int GetCapacity();
+    void SetCapacity(int capacity);
+
+    // ------ virtuals from ComputerPart ------
+    bool IsComposite() override;
+    void Add(ComputerPart * computerPart) override;
+    void Remove(ComputerPart * computerPart) override; 
+
+private:
+    int capacity;
 };
 
-class CPU : public ComputerPart, public Part
+class CPU : public Part
 {
 public:
     CPU();
     ~CPU(); 
+
+    int GetCores();
+    void SetCores(int cores);
+
+    // ------ virtuals from ComputerPart ------
+    bool IsComposite() override;
+    void Add(ComputerPart * computerPart) override;
+    void Remove(ComputerPart * computerPart) override;
+
+private:
+    int cores;
 };
 
-class GPU : public ComputerPart, public Part
+class GPU : public Part
 {
 public:
     GPU();
     ~GPU();
+
+    double GetMemory();
+    void SetMemory(double memory);
+
+    // ------ virtuals from ComputerPart ------
+    bool IsComposite() override;
+    void Add(ComputerPart * computerPart) override;
+    void Remove(ComputerPart * computerPart) override;
+
+private:
+    double memory;
 };
 
 // ============= Composite =============
