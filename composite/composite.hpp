@@ -126,7 +126,7 @@ private:
 class SSD : public Part
 {
 public:
-    SSD(double currentStorage, double totalStorage);
+    SSD(double currentStorage = 0, double totalStorage = 0);
     ~SSD(); 
 
     double GetCurrentStorage();
@@ -164,7 +164,7 @@ private:
 class CPU : public Part
 {
 public:
-    CPU(int cores = 2);
+    CPU(int cores = 0);
     ~CPU(); 
 
     int GetCores();
@@ -181,7 +181,7 @@ private:
 class GPU : public Part
 {
 public:
-    GPU(double memory);
+    GPU(double memory = 0);
     ~GPU();
 
     double GetMemory();

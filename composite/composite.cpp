@@ -448,7 +448,7 @@ int main()
 {
     std::cout << "Hello World" << std::endl;
 
-    /*
+    
     // building a computer
     Computer * computer = new Computer();
 
@@ -483,5 +483,4 @@ int main()
     motherboard->Add(gpu);
     
     return 0;
-    */
 }
