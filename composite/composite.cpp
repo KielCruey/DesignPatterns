@@ -342,7 +342,7 @@ Computer::~Computer() {
 
 void Computer::Add(ComputerComponent * computerComponent) {
     children.push_back(computerComponent);
-    computerComponent->SetParent(computerComponent);
+    computerComponent->SetParent(this);
 }
 
 void Computer::Remove(ComputerComponent * computerComponent) {
@@ -370,7 +370,7 @@ Peripherals::~Peripherals() {
 // this Composite class adds an object to its list and assigns that object to its parent Component
 void Peripherals::Add(ComputerComponent * computerComponent) {
     children.push_back(computerComponent);
-    computerComponent->SetParent(computerComponent);
+    computerComponent->SetParent(this);
 }
 
 // this Composite class deletes an object from its list and removes that object from its parent Component
@@ -399,7 +399,7 @@ Tower::~Tower() {
 // this Composite class adds an object to its list and assigns that object to its parent Component
 void Tower::Add(ComputerComponent * computerComponent) {
     children.push_back(computerComponent);
-    computerComponent->SetParent(nullptr);
+    computerComponent->SetParent(this);
 }
 
 // this Composite class deletes an object from its list and removes that object from its parent Component
@@ -427,7 +427,7 @@ Motherboard::~Motherboard() {
 
 void Motherboard::Add(ComputerComponent * computerComponent) {
     children.push_back(computerComponent);
-    computerComponent->SetParent(nullptr);
+    computerComponent->SetParent(this);
 }
 
 void Motherboard::Remove(ComputerComponent * computerComponent) {

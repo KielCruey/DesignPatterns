@@ -16,8 +16,8 @@ public:
     // ------ virtuals ------
     virtual void Add(ComputerComponent * computerComponent) {};
     virtual void Remove(ComputerComponent * computerComponent) {};
-    virtual bool IsComposite() = 0;
-    virtual void Print() = 0;
+    virtual bool IsComposite();
+    virtual void Print();
 
 protected:
     ComputerComponent * parent;
@@ -38,7 +38,7 @@ public:
     // ------ virtuals ------
     virtual void Add(ComputerComponent * computerComponent) {};
     virtual void Remove(ComputerComponent * computerComponent) {};
-    virtual bool IsComposite() = 0;
+    virtual bool IsComposite() override;
     virtual void Print() override;
 
 private:
