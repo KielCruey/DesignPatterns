@@ -24,7 +24,6 @@ void ComputerPart::SetParent(ComputerPart * parent) {
 }
 
 // --------------- virtuals ---------------
-// hard coded because it will have no other value
 bool ComputerPart::IsComposite() {
     return false;
 }
@@ -32,6 +31,7 @@ bool ComputerPart::IsComposite() {
 void ComputerPart::Print() {
     std::cout << "Parent: " << GetParent() << std::endl;
 }
+
 
 // ============= Leaf =============
 Part::Part(std::string brandName, std::string modelName) :
@@ -61,6 +61,7 @@ void Part::SetModelName(std::string modelName) {
     this->modelName = modelName;
 }
 
+// --------------- virtuals ---------------
 bool Part::IsComposite() {
     return false;
 }
@@ -89,34 +90,41 @@ void Mouse::SetDPI(int dpi) {
     this->dpi = dpi;
 }
 
-bool IsComposite() {
-    return false;
-}
-
-void Add(ComputerPart * computerPart) {
-    
-}
-
-void Remove(ComputerPart * computerPart) {
-
-}
-
-void Print() {
-    
-} 
-
-// ------ virtuals from ComputerPart ------
+// ------ virtuals ------
 bool Mouse::IsComposite() {
     return false;
 }
 
-void Mouse::Add(ComputerPart * computerPart) {
-    
+void Mouse::Print() {
+    std::cout << "DPI: " << GetDPI() << std::endl;
+} 
+
+// ============= Computer -- Composite =============
+Computer::Computer() {
+    std::cout << "Computer composite object created" << std::endl;
 }
 
-void Mouse::Remove(ComputerPart * computerPart) {
-    
-}  
+Computer::~Computer() {
+    std::cout << "Computer composite object created" << std::endl;
+}
+
+void Computer::Add(ComputerPart * computerPart) {
+    children.push_back(computerPart);
+    computerPart->SetParent(computerPart);
+}
+
+void Computer::Remove(ComputerPart * computerPart) {
+    children.remove(computerPart);
+    computerPart->SetParent(nullptr);
+}
+
+bool Computer::IsComposite() {
+    return true;
+}
+
+void Computer::Print() {
+
+}
 
 // ============= Peripherals -- Composite =============
 Peripherals::Peripherals() {
@@ -141,6 +149,10 @@ void Peripherals::Remove(ComputerPart * computerPart) {
 
 bool Peripherals::IsComposite() {
     return true;
+}
+
+void Peripherals::Print() {
+
 }
 
 // ============= Tower -- Composite =============
@@ -168,6 +180,10 @@ bool Tower::IsComposite() {
     return true;
 }
 
+void Tower::Print() {
+
+}
+
 // ============= Motherboard -- Composite =============
 Motherboard::Motherboard() {
     std::cout << "Motherboard composite object created" << std::endl;
@@ -191,8 +207,19 @@ bool Motherboard::IsComposite() {
     return true;
 }
 
+void Motherboard::Print() {
+
+}
+
 // ================== Main ==================
 int main()
 {
+    std::cout << "Hello World" << std::endl;
+
+    Part * mouse = new Mouse();
+    Computer * computer = new Computer();
+
+    computer->Add(mouse);
+    
     return 0;
 }

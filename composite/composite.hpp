@@ -1,8 +1,9 @@
 #include <list>
 #include <string>
 
-// ============= Component =============
+// ============= Abstract Component =============
 // The base Component class declares common operations for both simple and complex objects of a composition.
+// In this case, it's a base for the 'leaf' and 'composite' classes
 class ComputerPart
 {
 public:
@@ -15,8 +16,8 @@ public:
     // ------ virtuals ------
     virtual void Add(ComputerPart * computerPart) {};
     virtual void Remove(ComputerPart * computerPart) {};
-    virtual bool IsComposite();
-    virtual void Print();
+    virtual bool IsComposite() = 0;
+    virtual void Print() = 0;
 
 protected:
     ComputerPart * parent;
@@ -35,7 +36,7 @@ public:
     void SetModelName(std::string modelName);
 
     // ------ virtuals ------
-    virtual bool IsComposite() override;
+    virtual bool IsComposite() = 0;
     virtual void Print() override;
 
 private:
@@ -53,10 +54,8 @@ public:
     int GetDPI();
     void SetDPI(int dpi);
 
-    // ------ virtuals from ComputerPart ------
+    // ------ virtuals ------
     bool IsComposite() override;
-    void Add(ComputerPart * computerPart) override;
-    void Remove(ComputerPart * computerPart) override;
 
 protected:
     virtual void Print() override;   
@@ -74,10 +73,8 @@ public:
     bool GetHasClickyKeys();
     void SetHasClickyKeys(bool HasClickyKeys);
 
-    // ------ virtuals from ComputerPart ------
+    // ------ virtuals ------
     bool IsComposite() override;
-    void Add(ComputerPart * computerPart) override;
-    void Remove(ComputerPart * computerPart) override;
 
 private:   
     bool hasClickyKeys;
@@ -95,10 +92,8 @@ public:
     int GetWidth();
     void SetWidth(int width);
 
-    // ------ virtuals from ComputerPart ------
+    // ------ virtuals ------
     bool IsComposite() override;
-    void Add(ComputerPart * computerPart) override;
-    void Remove(ComputerPart * computerPart) override;
 
 private:   
     int length;
@@ -117,10 +112,8 @@ public:
     int GetVolume();
     void SetVolume(int volume);
 
-    // ------ virtuals from ComputerPart ------
+    // ------ virtuals ------
     bool IsComposite() override;
-    void Add(ComputerPart * computerPart) override;
-    void Remove(ComputerPart * computerPart) override;
 
 private:
     bool isPowered;
@@ -139,10 +132,8 @@ public:
     double GetTotalStorage();
     void SetTotalStorage(double currentStorage);
 
-    // ------ virtuals from ComputerPart ------
+    // ------ virtuals ------
     bool IsComposite() override;
-    void Add(ComputerPart * computerPart) override;
-    void Remove(ComputerPart * computerPart) override;
 
 private:
     double currentStorage;
@@ -158,10 +149,8 @@ public:
     int GetCapacity();
     void SetCapacity(int capacity);
 
-    // ------ virtuals from ComputerPart ------
+    // ------ virtuals ------
     bool IsComposite() override;
-    void Add(ComputerPart * computerPart) override;
-    void Remove(ComputerPart * computerPart) override; 
 
 private:
     int capacity;
@@ -176,10 +165,8 @@ public:
     int GetCores();
     void SetCores(int cores);
 
-    // ------ virtuals from ComputerPart ------
+    // ------ virtuals ------
     bool IsComposite() override;
-    void Add(ComputerPart * computerPart) override;
-    void Remove(ComputerPart * computerPart) override;
 
 private:
     int cores;
@@ -194,10 +181,8 @@ public:
     double GetMemory();
     void SetMemory(double memory);
 
-    // ------ virtuals from ComputerPart ------
+    // ------ virtuals ------
     bool IsComposite() override;
-    void Add(ComputerPart * computerPart) override;
-    void Remove(ComputerPart * computerPart) override;
 
 private:
     double memory;
@@ -205,6 +190,22 @@ private:
 
 // ============= Composite =============
 // The Composite class represents the complex components that may have children.
+class Computer : public ComputerPart
+{
+protected: 
+    std::list<ComputerPart *> children;
+
+public: 
+    Computer();
+    ~Computer();
+
+    // ------ virtuals ------
+    void Add(ComputerPart * computerPart) override;
+    void Remove(ComputerPart * computerPart) override;
+    bool IsComposite() override;
+    void Print() override;
+};
+
 class Peripherals : public ComputerPart
 {
 protected: 
@@ -214,9 +215,11 @@ public:
     Peripherals();
     ~Peripherals();
 
+    // ------ virtuals ------
     void Add(ComputerPart * computerPart) override;
     void Remove(ComputerPart * computerPart) override;
     bool IsComposite() override;
+    void Print() override;
 };
 
 class Tower : public ComputerPart
@@ -228,9 +231,11 @@ public:
     Tower();
     ~Tower();
 
+    // ------ virtuals ------
     void Add(ComputerPart * computerPart) override;
     void Remove(ComputerPart * computerPart) override;
     bool IsComposite() override;
+    void Print() override;
 };
 
 class Motherboard : public ComputerPart
@@ -242,7 +247,9 @@ public:
     Motherboard();
     ~Motherboard();
 
+    // ------ virtuals ------
     void Add(ComputerPart * computerPart) override;
     void Remove(ComputerPart * computerPart) override;
     bool IsComposite() override;
+    void Print() override;
 };
