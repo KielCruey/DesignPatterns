@@ -149,7 +149,7 @@ void Monitor::SetLength(int length) {
 }
 
 int Monitor::GetWidth() {
-    this->width;
+    return this->width;
 }
 
 void Monitor::SetWidth(int width) {
