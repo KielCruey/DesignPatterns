@@ -59,7 +59,7 @@ public:
 };
 
 // =========== Abstract Decorator ===========
-class EntitySpecialization
+class EntitySpecialization : public Entity
 {
 public:
     EntitySpecialization(Entity * entity);
@@ -87,13 +87,13 @@ public:
     ~DarkKnight();
 };
 
-class LongBowArcher : public Archer
+class LongBowArcher : public EntitySpecialization
 {
     LongBowArcher(Entity * entity);
     ~LongBowArcher();
 };
 
-class CrossBowArcher : public Archer
+class CrossBowArcher : public EntitySpecialization
 {
     CrossBowArcher(Entity * entity);
     ~CrossBowArcher();

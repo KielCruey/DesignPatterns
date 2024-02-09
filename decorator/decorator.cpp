@@ -40,7 +40,9 @@ void Entity::SetFatigue(int fatigue) {
 }
 
 // =========== Knight ===========
-Knight::Knight() {
+Knight::Knight() :
+    Entity()
+{
     std::cout << "Knight created" << std::endl;
 }
 
@@ -61,7 +63,9 @@ void Knight::Reload() {
 }
 
 // =========== Archer ===========
-Archer::Archer() {
+Archer::Archer() :
+    Entity()
+{
 
 }
 
@@ -81,60 +85,70 @@ void Archer::Reload() {
 
 }
 // =========== Entity Specialization ===========
-EntitySpecialization::EntitySpecialization(Entity * entity) {
+EntitySpecialization::EntitySpecialization(Entity * entity) :
+    Entity(),
+    entity(entity)
+{
     std::cout << "EntitySpecialization created" << std::endl;
 }
 
 EntitySpecialization::~EntitySpecialization() {
-    std::cout << "EntitySpecialization destroyed" << std::endl
+    std::cout << "EntitySpecialization destroyed" << std::endl;
 }
 
 Entity * EntitySpecialization::GetEntity() {
-    this->entity;
+    return this->entity;
 }
 
 void EntitySpecialization::SetEntity(Entity * entity) {
     this->entity = entity;
 }
 
-/*
-// =========== Holy Knight ===========
-HolyKnight::HolyKnight(Entity * entity)
-{
 
+// =========== Holy Knight ===========
+HolyKnight::HolyKnight(Entity * entity) :
+    EntitySpecialization(entity)
+{
+    std::cout << "Holy Knight created" << std::endl;
 }
 
 HolyKnight::~HolyKnight() {
-
+    std::cout << "Holy Knight destroyed" << std::endl;
 }
 
-// =========== Dark Knight ===========
-DarkKnight::DarkKnight(Entity * entity) {
 
+// =========== Dark Knight ===========
+DarkKnight::DarkKnight(Entity * entity) :
+    EntitySpecialization(entity)
+{
+    std::cout << "Dark Knight created" << std::endl;
 }
 
 DarkKnight::~DarkKnight() {
-
+    std::cout << "Dark Knight destroyed" << std::endl;
 }
 
 // =========== Long Bow Archer ===========
-LongBowArcher::LongBowArcher(Entity * entity) {
-
+LongBowArcher::LongBowArcher(Entity * entity) :
+    EntitySpecialization(entity)
+{
+    std::cout << "Long Bow Archer created" << std::endl;
 }
 
 LongBowArcher::~LongBowArcher() {
-
+    std::cout << "Long Bow Archer destroyed" << std::endl;
 }
 
 // =========== Cross Bow Archer ===========
-CrossBowArcher::CrossBowArcher(Entity * entity) {
-
+CrossBowArcher::CrossBowArcher(Entity * entity) :
+    EntitySpecialization(entity)
+{
+    std::cout << "Cross Bow Archer created" << std::endl;
 }
 
 CrossBowArcher::~CrossBowArcher() {
-    
+    std::cout << "Cross Bow Archer destroyed" << std::endl;
 }
-*/
 
 // =========== Main ===========
 int main()
