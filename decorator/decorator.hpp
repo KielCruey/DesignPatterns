@@ -3,7 +3,7 @@
 class Entity
 {
 public:
-    Entity();
+    Entity(int health = 100, int mana = 100, int fatigue = 100);
     virtual ~Entity();
 
     // concrete decorator's virtual responsibilities
@@ -15,8 +15,9 @@ public:
     virtual void EquipSabaton() = 0; // feet
 
     // concrete component's virtual responsibilities
-    virtual void Attack();
-    virtual void Block();
+    virtual void Attack() = 0;
+    virtual void Block() = 0;
+    virtual void Reload() = 0;
 
 
     int GetHealth();
@@ -43,6 +44,7 @@ public:
 
     void Attack() override;
     void Block() override;
+    void Reload() override;
 };
 
 class Archer : public Entity
@@ -53,6 +55,7 @@ public:
 
     void Attack() override;
     void Block() override;
+    void Reload() override;
 };
 
 // =========== Abstract Decorator ===========
@@ -61,6 +64,9 @@ class EntitySpecialization
 public:
     EntitySpecialization(Entity * entity);
     ~EntitySpecialization();
+
+    Entity * GetEntity();
+    void SetEntity(Entity * entity);
 
 protected:
     Entity * entity;
