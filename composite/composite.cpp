@@ -3,10 +3,9 @@
 #include "composite.hpp"  
 
 // ============= Component =============
-ComputerComponent::ComputerComponent(ComputerComponent * parent)
+ComputerComponent::ComputerComponent(ComputerComponent* parent) :
+    parent(parent)
 {
-    SetParent(parent);
-
     std::cout << "ComputerComponent created" << std::endl;
 }
 
@@ -66,12 +65,15 @@ bool Part::IsComposite() {
 }
 
 void Part::Print() {
-    std::cout << "Brand Name: " << brandName << std::endl;
-    std::cout << "Model Name: " << modelName << std::endl;
+    std::cout << "Brand Name: " << GetBrandName() << std::endl;
+    std::cout << "Model Name: " << GetModelName() << std::endl;
 }
 
 // ============= Concrete Leaves -- Mouse =============
-Mouse::Mouse(int dpi) :
+Mouse::Mouse(int dpi,
+                std::string brandName, 
+                std::string modelName) :
+    Part(brandName, modelName),
     dpi(dpi)
 {
     std::cout << "Mouse created" << std::endl;
@@ -95,12 +97,15 @@ bool Mouse::IsComposite() {
 }
 
 void Mouse::Print() {
+    std::cout << "Mouse Stats" << std::endl;
     std::cout << "DPI: " << GetDPI() << std::endl;
 } 
 
 // ============= Concrete Leaf -- Keyboard =============
-Keyboard::Keyboard(bool hasClickyKeys) :
-    Part(),
+Keyboard::Keyboard(bool hasClickyKeys, 
+                    std::string brandName, 
+                    std::string modelName) :
+    Part(brandName, modelName),
     hasClickyKeys(hasClickyKeys)
 {
     std::cout << "Keyboard created" << std::endl;
@@ -124,12 +129,16 @@ bool Keyboard::IsComposite() {
 }
 
 void Keyboard::Print() {
+    std::cout << "Keyboard Stats" << std::endl;
     std::cout << "HasClickyKeys: " << GetHasClickyKeys() << std::endl;
 }
 
 // ============= Concrete Leaf -- Monitor =============
-Monitor::Monitor(double length, double width) :
-    Part(),
+Monitor::Monitor(double length, 
+                double width,
+                std::string brandName,
+                std::string modelName) :
+    Part(brandName, modelName),
     length(length),
     width(width)
 {
@@ -140,19 +149,19 @@ Monitor::~Monitor() {
     std::cout << "Monitor deleted" << std::endl;
 }
 
-int Monitor::GetLength() {
+double Monitor::GetLength() {
     return this->length;
 }
 
-void Monitor::SetLength(int length) {
+void Monitor::SetLength(double length) {
     this->length = length;
 }
 
-int Monitor::GetWidth() {
+double Monitor::GetWidth() {
     return this->width;
 }
 
-void Monitor::SetWidth(int width) {
+void Monitor::SetWidth(double width) {
     this->width = width;
 }
 
@@ -167,8 +176,11 @@ void Monitor::Print() {
 }
 
 // ============= Concrete Leaf -- Speakers =============
-Speakers::Speakers(bool isPowered, int volume) :
-    Part(),
+Speakers::Speakers(bool isPowered, 
+                    int volume,
+                    std::string brandName,
+                    std::string modelName) :
+    Part(brandName, modelName),
     isPowered(isPowered),
     volume(volume)
 {
@@ -201,13 +213,17 @@ bool Speakers::IsComposite() {
 }
 
 void Speakers::Print() {
+    std::cout << "Speakers Stats" << std::endl;
     std::cout << "Speakers Powered: " << GetIsPowered() << std::endl;
     std::cout << "Speakers Volume: " << GetVolume() << std::endl;
 }
 
 // ============= Concrete Leaf -- SSD =============
-SSD::SSD(double currentStorage, double totalStorage) :
-    Part(),
+SSD::SSD(double currentStorage, 
+            double totalStorage,
+            std::string brandName,
+            std::string modelName) :
+    Part(brandName, modelName),
     currentStorage(currentStorage),
     totalStorage(totalStorage)
 {
@@ -240,13 +256,16 @@ bool SSD::IsComposite() {
 }
 
 void SSD::Print() {
+    std::cout << "SSD Stats" << std::endl;
     std::cout << "SSD Current Storage: " << GetCurrentStorage() << std::endl;
     std::cout << "SSD Total Storage: " << GetTotalStorage() << std::endl;
 }
 
 // ============= Concrete Leaf -- RAM =============
-RAM::RAM(double capacity) :
-    Part(),
+RAM::RAM(double capacity,
+            std::string brandName,
+            std::string modelName) :
+    Part(brandName, modelName),
     capacity(capacity)
 {
     std::cout << "RAM created" << std::endl;
@@ -256,11 +275,11 @@ RAM::~RAM() {
     std::cout << "RAM destroyed" << std::endl;
 }
 
-int RAM::GetCapacity() {
+double RAM::GetCapacity() {
     return this->capacity;
 }
 
-void RAM::SetCapacity(int capacity) {
+void RAM::SetCapacity(double capacity) {
     this->capacity = capacity;
 }
 
@@ -270,12 +289,15 @@ bool RAM::IsComposite() {
 }
 
 void RAM::Print() {
-    std::cout << "SSD Capacity: " << GetCapacity() << std::endl;
+    std::cout << "RAM Stats" << std::endl;
+    std::cout << "RAM Capacity: " << GetCapacity() << std::endl;
 }
 
 // ============= Concrete Leaf -- CPU =============
-CPU::CPU(int cores) :
-    Part(),
+CPU::CPU(int cores,
+        std::string brandName,
+        std::string modelName) :
+    Part(brandName, modelName),
     cores(cores)
 {
     std::cout << "CPU created" << std::endl;
@@ -299,12 +321,15 @@ bool CPU::IsComposite() {
 }
 
 void CPU::Print() {
+    std::cout << "CPU Stats" << std::endl;
     std::cout << "CPU Cores: " << GetCores() << std::endl;
 }
 
 // ============= Concrete Leaf -- GPU =============
-GPU::GPU(double memory) :
-    Part(),
+GPU::GPU(double memory,
+        std::string brandName,
+        std::string modelName) :
+    Part(brandName, modelName),
     memory(memory)
 {
     std::cout << "GPU created" << std::endl;
@@ -328,6 +353,7 @@ bool GPU::IsComposite() {
 }
 
 void GPU::Print() {
+    std::cout << "GPU Stats" << std::endl;
     std::cout << "GPU Memory: " << GetMemory() << std::endl;
 }
 
@@ -338,6 +364,10 @@ Computer::Computer() {
 
 Computer::~Computer() {
     std::cout << "Computer composite object created" << std::endl;
+}
+
+std::list<ComputerComponent*> Computer::GetChilden() {
+    return this->children;
 }
 
 void Computer::Add(ComputerComponent * computerComponent) {
@@ -355,7 +385,9 @@ bool Computer::IsComposite() {
 }
 
 void Computer::Print() {
-
+    for (auto i : GetChilden()) {
+         i->Print();
+    }
 }
 
 // ============= Peripherals -- Composite =============
@@ -365,6 +397,11 @@ Peripherals::Peripherals() {
 
 Peripherals::~Peripherals() {
     std::cout << "Peripherals composite object destroyed" << std::endl;
+}
+
+// calls the print function for all the items in the 'children' list
+std::list<ComputerComponent*> Peripherals::GetChilden() {
+    return this->children;
 }
 
 // this Composite class adds an object to its list and assigns that object to its parent Component
@@ -383,8 +420,11 @@ bool Peripherals::IsComposite() {
     return true;
 }
 
+// calls the print function for all the items in the 'children' list
 void Peripherals::Print() {
-
+    for (auto i : GetChilden()) {
+        i->Print();
+    }
 }
 
 // ============= Tower -- Composite =============
@@ -394,6 +434,11 @@ Tower::Tower() {
 
 Tower::~Tower() {
     std::cout << "Tower composite object destroyed" << std::endl;
+}
+
+// calls the print function for all the items in the 'children' list
+std::list<ComputerComponent*> Tower::GetChilden() {
+    return this->children;
 }
 
 // this Composite class adds an object to its list and assigns that object to its parent Component
@@ -412,8 +457,11 @@ bool Tower::IsComposite() {
     return true;
 }
 
+// calls the print function for all the items in the 'children' list
 void Tower::Print() {
-
+    for (auto i : GetChilden()) {
+        i->Print();
+    }
 }
 
 // ============= Motherboard -- Composite =============
@@ -423,6 +471,10 @@ Motherboard::Motherboard() {
 
 Motherboard::~Motherboard() {
     std::cout << "Motherboard composite object destroyed" << std::endl;
+}
+
+std::list<ComputerComponent*> Motherboard::GetChilden() {
+    return this->children;
 }
 
 void Motherboard::Add(ComputerComponent * computerComponent) {
@@ -439,19 +491,16 @@ bool Motherboard::IsComposite() {
     return true;
 }
 
+// calls the print function for all the items in the 'children' list
 void Motherboard::Print() {
-
+    for (auto i : GetChilden()) {
+        i->Print();
+    }
 }
 
-// ================== Main ==================
-int main()
-{
-    std::cout << "Hello World" << std::endl;
-
-    
+// ================== Client Code ==================
+void CreateComputer(Computer * computer) {
     // building a computer
-    Computer * computer = new Computer();
-
     Peripherals * peripherals = new Peripherals();
     Tower * tower = new Tower();
 
@@ -462,25 +511,36 @@ int main()
 
     tower->Add(motherboard);
 
-    Mouse * mouse = new Mouse();
-    Keyboard * keyboard = new Keyboard();
-    Monitor * monitor = new Monitor();
-    Speakers * speakers = new Speakers();
+    Mouse * mouse = new Mouse(1000, "Logitech", "G502 Hero");
+    Keyboard * keyboard = new Keyboard(false, "Cool Master", "Quick Fire");
+    Monitor * monitor = new Monitor(9, 16, "Asus", "42069 Gaming");
+    Speakers* speakers = new Speakers(true, 5, "Adams", "A7V");
 
     peripherals->Add(mouse);
     peripherals->Add(keyboard);
     peripherals->Add(monitor);
     peripherals->Add(speakers);
 
-    SSD * ssd = new SSD();
-    RAM * ram = new RAM();
-    CPU * cpu = new CPU();
-    GPU * gpu = new GPU();
+    SSD * ssd = new SSD(10, 25, "Samsung", "Sandybridge");
+    RAM * ram = new RAM(32, "Corsair", "Vengeance");
+    CPU * cpu = new CPU(8, "AMD", "PM9C1a");
+    GPU * gpu = new GPU(16, "ASUS", "TUF Gaming GeForce RTX");
 
     motherboard->Add(ssd);
     motherboard->Add(ram);
     motherboard->Add(cpu);
     motherboard->Add(gpu);
+}
+
+// ================== Main ==================
+int main()
+{
+    std::cout << "Hello World" << std::endl;
+
+    Computer * computer = new Computer();
+    CreateComputer(computer);
     
+    computer->Print();
+
     return 0;
 }

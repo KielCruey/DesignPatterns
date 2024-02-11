@@ -50,7 +50,9 @@ private:
 class Mouse : public Part
 {
 public:
-    Mouse(int dpi = 1000);
+    Mouse(int dpi = 1000, 
+            std::string brandName = "N/A", 
+            std::string modelName = "N/A");
     ~Mouse();
 
     int GetDPI();
@@ -67,7 +69,9 @@ private:
 class Keyboard : public Part
 {
 public:
-    Keyboard(bool hasClickyKeys = false);
+    Keyboard(bool hasClickyKeys = false, 
+                std::string brandName = "N/A", 
+                std::string modelName = "N/A");
     ~Keyboard();
 
     bool GetHasClickyKeys();
@@ -84,14 +88,18 @@ private:
 class Monitor : public Part
 {
 public:
-    Monitor(double length = 0.0, double width = 0.0);
+    Monitor(double length = 0.0, 
+            double width = 0.0,
+            std::string brandName = "N/A",
+            std::string modelName = "N/A");
+
     ~Monitor();
 
-    int GetLength();
-    void SetLength(int length);
+    double GetLength();
+    void SetLength(double length);
 
-    int GetWidth();
-    void SetWidth(int width);
+    double GetWidth();
+    void SetWidth(double width);
 
     // ------ virtuals ------
     bool IsComposite() override;
@@ -105,7 +113,10 @@ private:
 class Speakers : public Part
 {
 public:
-    Speakers(bool isPowered = false, int volume = 0.0);
+    Speakers(bool isPowered = false, 
+                int volume = 0.0,
+                std::string brandName = "N/A",
+                std::string modelName = "N/A");
     ~Speakers(); 
 
     bool GetIsPowered();
@@ -126,7 +137,10 @@ private:
 class SSD : public Part
 {
 public:
-    SSD(double currentStorage = 0, double totalStorage = 0);
+    SSD(double currentStorage = 0, 
+        double totalStorage = 0,
+        std::string brandName = "N/A",
+        std::string modelName = "N/A");
     ~SSD(); 
 
     double GetCurrentStorage();
@@ -147,11 +161,13 @@ private:
 class RAM : public Part
 {
 public:
-    RAM(double capacity = 0);   // in GB
+    RAM(double capacity = 0,
+        std::string brandName = "N/A",
+        std::string modelName = "N/A");   // in GB
     ~RAM(); 
 
-    int GetCapacity();
-    void SetCapacity(int capacity);
+    double GetCapacity();
+    void SetCapacity(double capacity);
 
     // ------ virtuals ------
     bool IsComposite() override;
@@ -164,7 +180,9 @@ private:
 class CPU : public Part
 {
 public:
-    CPU(int cores = 0);
+    CPU(int cores = 0,
+        std::string brandName = "N/A",
+        std::string modelName = "N/A");
     ~CPU(); 
 
     int GetCores();
@@ -181,7 +199,9 @@ private:
 class GPU : public Part
 {
 public:
-    GPU(double memory = 0);
+    GPU(double memory = 0,
+        std::string brandName = "N/A",
+        std::string modelName = "N/A");
     ~GPU();
 
     double GetMemory();
@@ -206,6 +226,8 @@ public:
     Computer();
     ~Computer();
 
+    std::list<ComputerComponent *> GetChilden();
+
     // ------ virtuals ------
     void Add(ComputerComponent * computerComponent) override;
     void Remove(ComputerComponent * computerComponent) override;
@@ -221,6 +243,8 @@ protected:
 public: 
     Peripherals();
     ~Peripherals();
+
+    std::list<ComputerComponent*> GetChilden();
 
     // ------ virtuals ------
     void Add(ComputerComponent * computerComponent) override;
@@ -238,6 +262,8 @@ public:
     Tower();
     ~Tower();
 
+    std::list<ComputerComponent*> GetChilden();
+
     // ------ virtuals ------
     void Add(ComputerComponent * computerComponent) override;
     void Remove(ComputerComponent * computerComponent) override;
@@ -253,6 +279,8 @@ protected:
 public: 
     Motherboard();
     ~Motherboard();
+
+    std::list<ComputerComponent*> GetChilden();
 
     // ------ virtuals ------
     void Add(ComputerComponent * computerComponent) override;
