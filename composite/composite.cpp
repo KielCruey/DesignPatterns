@@ -14,7 +14,7 @@ ComputerComponent::~ComputerComponent() {
 }
 
 // --------------- getters/setters ---------------
-ComputerComponent * ComputerComponent::GetParent() {
+ComputerComponent * ComputerComponent::GetParent() const {
     return this->parent;
 }
 
@@ -43,11 +43,11 @@ Part::~Part() {
     std::cout << "Part destroyed" << std::endl;
 }
 
-std::string Part::GetBrandName() {
+std::string Part::GetBrandName() const {
     return this->brandName;
 }
 
-std::string Part::GetModelName() {
+std::string Part::GetModelName() const {
     return this->modelName;
 }
 
@@ -83,7 +83,7 @@ Mouse::~Mouse() {
     std::cout << "Mouse destroyed" << std::endl;
 }
 
-int Mouse::GetDPI() {
+int Mouse::GetDPI() const {
     return this->dpi;
 }
 
@@ -115,7 +115,7 @@ Keyboard::~Keyboard() {
     std::cout << "Keyboard destroyed" << std::endl;
 }
 
-bool Keyboard::GetHasClickyKeys() {
+bool Keyboard::GetHasClickyKeys() const {
     return this->hasClickyKeys;
 }
 
@@ -149,16 +149,16 @@ Monitor::~Monitor() {
     std::cout << "Monitor deleted" << std::endl;
 }
 
-double Monitor::GetLength() {
+double Monitor::GetLength() const {
     return this->length;
+}
+
+double Monitor::GetWidth() const {
+    return this->width;
 }
 
 void Monitor::SetLength(double length) {
     this->length = length;
-}
-
-double Monitor::GetWidth() {
-    return this->width;
 }
 
 void Monitor::SetWidth(double width) {
@@ -191,16 +191,16 @@ Speakers::~Speakers() {
     std::cout << "Speakers destroyed" << std::endl;
 }
 
-bool Speakers::GetIsPowered() {
+bool Speakers::GetIsPowered() const {
     return this->isPowered;
+}
+
+int Speakers::GetVolume() const {
+    return this->volume;
 }
 
 void Speakers::SetIsPowered(bool isPowered) {
     this->isPowered = isPowered;
-}
-
-int Speakers::GetVolume() {
-    return this->volume;
 }
 
 void Speakers::SetVolume(int volume) {
@@ -234,16 +234,16 @@ SSD::~SSD() {
     std::cout << "SSD destroyed" << std::endl;
 }
 
-double SSD::GetCurrentStorage() {
+double SSD::GetCurrentStorage() const {
     return this->currentStorage;
+}
+
+double SSD::GetTotalStorage() const {
+    return this->totalStorage;
 }
 
 void SSD::SetCurrentStorage(double currentStorage) {
     this->currentStorage = currentStorage;
-}
-
-double SSD::GetTotalStorage(){
-    return this->totalStorage;
 }
 
 void SSD::SetTotalStorage(double totalStorage) {
@@ -275,7 +275,7 @@ RAM::~RAM() {
     std::cout << "RAM destroyed" << std::endl;
 }
 
-double RAM::GetCapacity() {
+double RAM::GetCapacity() const {
     return this->capacity;
 }
 
@@ -307,7 +307,7 @@ CPU::~CPU() {
     std::cout << "CPU destroyed" << std::endl;
 }
 
-int CPU::GetCores() {
+int CPU::GetCores() const {
     return this->cores;
 }
 
@@ -339,7 +339,7 @@ GPU::~GPU() {
     std::cout << "GPU destroyed" << std::endl;
 }
 
-double GPU::GetMemory() {
+double GPU::GetMemory() const {
     return this->memory;
 }
 
@@ -366,7 +366,7 @@ Computer::~Computer() {
     std::cout << "Computer composite object created" << std::endl;
 }
 
-std::list<ComputerComponent*> Computer::GetChilden() {
+std::list<ComputerComponent*> Computer::GetChilden() const {
     return this->children;
 }
 
@@ -400,7 +400,7 @@ Peripherals::~Peripherals() {
 }
 
 // calls the print function for all the items in the 'children' list
-std::list<ComputerComponent*> Peripherals::GetChilden() {
+std::list<ComputerComponent*> Peripherals::GetChilden() const {
     return this->children;
 }
 
@@ -437,7 +437,7 @@ Tower::~Tower() {
 }
 
 // calls the print function for all the items in the 'children' list
-std::list<ComputerComponent*> Tower::GetChilden() {
+std::list<ComputerComponent*> Tower::GetChilden() const {
     return this->children;
 }
 
@@ -473,7 +473,7 @@ Motherboard::~Motherboard() {
     std::cout << "Motherboard composite object destroyed" << std::endl;
 }
 
-std::list<ComputerComponent*> Motherboard::GetChilden() {
+std::list<ComputerComponent*> Motherboard::GetChilden() const {
     return this->children;
 }
 

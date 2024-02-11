@@ -10,7 +10,7 @@ public:
     ComputerComponent(ComputerComponent * parent = nullptr);
     ~ComputerComponent();
     
-    ComputerComponent * GetParent();
+    ComputerComponent * GetParent() const;
     void SetParent(ComputerComponent * parent);
 
     // ------ virtuals ------
@@ -30,8 +30,8 @@ public:
     Part(std::string brandName = "N/A", std::string modelName = "N/A");
     ~Part();
 
-    std::string GetBrandName();
-    std::string GetModelName();
+    std::string GetBrandName() const;
+    std::string GetModelName() const;
     void SetBrandName(std::string brandName);
     void SetModelName(std::string modelName);
 
@@ -55,7 +55,7 @@ public:
             std::string modelName = "N/A");
     ~Mouse();
 
-    int GetDPI();
+    int GetDPI() const;
     void SetDPI(int dpi);
 
     // ------ virtuals ------
@@ -74,7 +74,7 @@ public:
                 std::string modelName = "N/A");
     ~Keyboard();
 
-    bool GetHasClickyKeys();
+    bool GetHasClickyKeys() const;
     void SetHasClickyKeys(bool HasClickyKeys);
 
     // ------ virtuals ------
@@ -95,10 +95,9 @@ public:
 
     ~Monitor();
 
-    double GetLength();
+    double GetLength() const;
+    double GetWidth() const;
     void SetLength(double length);
-
-    double GetWidth();
     void SetWidth(double width);
 
     // ------ virtuals ------
@@ -119,10 +118,9 @@ public:
                 std::string modelName = "N/A");
     ~Speakers(); 
 
-    bool GetIsPowered();
+    bool GetIsPowered() const;
+    int GetVolume() const;
     void SetIsPowered(bool isPowered);
-
-    int GetVolume();
     void SetVolume(int volume);
 
     // ------ virtuals ------
@@ -143,10 +141,9 @@ public:
         std::string modelName = "N/A");
     ~SSD(); 
 
-    double GetCurrentStorage();
+    double GetCurrentStorage() const;
+    double GetTotalStorage() const;
     void SetCurrentStorage(double currentStorage);
-
-    double GetTotalStorage();
     void SetTotalStorage(double totalStorage);
 
     // ------ virtuals ------
@@ -166,7 +163,7 @@ public:
         std::string modelName = "N/A");   // in GB
     ~RAM(); 
 
-    double GetCapacity();
+    double GetCapacity() const;
     void SetCapacity(double capacity);
 
     // ------ virtuals ------
@@ -185,7 +182,7 @@ public:
         std::string modelName = "N/A");
     ~CPU(); 
 
-    int GetCores();
+    int GetCores() const;
     void SetCores(int cores);
 
     // ------ virtuals ------
@@ -204,7 +201,7 @@ public:
         std::string modelName = "N/A");
     ~GPU();
 
-    double GetMemory();
+    double GetMemory() const;
     void SetMemory(double memory);
 
     // ------ virtuals ------
@@ -226,7 +223,7 @@ public:
     Computer();
     ~Computer();
 
-    std::list<ComputerComponent *> GetChilden();
+    std::list<ComputerComponent *> GetChilden() const;
 
     // ------ virtuals ------
     void Add(ComputerComponent * computerComponent) override;
@@ -244,7 +241,7 @@ public:
     Peripherals();
     ~Peripherals();
 
-    std::list<ComputerComponent*> GetChilden();
+    std::list<ComputerComponent*> GetChilden() const;
 
     // ------ virtuals ------
     void Add(ComputerComponent * computerComponent) override;
@@ -262,7 +259,7 @@ public:
     Tower();
     ~Tower();
 
-    std::list<ComputerComponent*> GetChilden();
+    std::list<ComputerComponent*> GetChilden() const;
 
     // ------ virtuals ------
     void Add(ComputerComponent * computerComponent) override;
@@ -280,7 +277,7 @@ public:
     Motherboard();
     ~Motherboard();
 
-    std::list<ComputerComponent*> GetChilden();
+    std::list<ComputerComponent*> GetChilden() const;
 
     // ------ virtuals ------
     void Add(ComputerComponent * computerComponent) override;
