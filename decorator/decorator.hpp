@@ -18,15 +18,13 @@ public:
     virtual void Attack() = 0;
     virtual void Block() = 0;
     virtual void Reload() = 0;
-
-
+    
     int GetHealth();
-    void SetHealth(int health);
-
     int GetMana();
-    void SetMana(int mana);
-
     int GetFatigue();
+
+    void SetHealth(int health);
+    void SetMana(int mana);
     void SetFatigue(int fatigue);
 
 private:

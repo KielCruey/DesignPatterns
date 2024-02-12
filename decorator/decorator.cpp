@@ -15,33 +15,36 @@ Entity::~Entity() {
     std::cout << "Entity destroyed" << std::endl;
 }
 
-int Entity::GetHealth() {
+int Entity::GetHealth() const {
     return this->health;
 }
 
-void Entity::SetHealth(int health) {
-    this->health = health;
-}
-
-int Entity::GetMana() {
+int Entity::GetMana() const {
     return this->mana;
 }
 
-void Entity::SetMana(int mana) {
-    this->mana = mana;
-}
-
-int Entity::GetFatigue() {
+int Entity::GetFatigue() const {
     return this->fatigue;
 }
 
+void Entity::SetHealth(int health) {
+    if(0 > health) this->health = 0;
+    else this->health = health;
+}
+
+void Entity::SetMana(int mana) {
+    if(0 > mana) this->mana = 0;
+    else this->mana = mana;
+}
+
 void Entity::SetFatigue(int fatigue) {
-    this->fatigue = fatigue;
+    if(0 > fatigue) this->fatigue = 0;
+    else this->fatigue = fatigue;
 }
 
 // =========== Knight ===========
-Knight::Knight() :
-    Entity()
+Knight::Knight(int health = 100, int mana = 100, int fatigue = 100) :
+    Entity(health, mana, fatigue)
 {
     std::cout << "Knight created" << std::endl;
 }
@@ -63,14 +66,14 @@ void Knight::Reload() {
 }
 
 // =========== Archer ===========
-Archer::Archer() :
-    Entity()
+Archer::Archer(int health = 100, int mana = 100, int fatigue = 100) :
+    Entity(health, mana, fatigue)
 {
-
+    std::cout << "Archer created" << std::endl;
 }
 
 Archer::~Archer() {
-
+    std::cout << "Archer destroyed" << std::endl;
 }
 
 void Archer::Attack() {
@@ -96,14 +99,13 @@ EntitySpecialization::~EntitySpecialization() {
     std::cout << "EntitySpecialization destroyed" << std::endl;
 }
 
-Entity * EntitySpecialization::GetEntity() {
+Entity * EntitySpecialization::GetEntity() const {
     return this->entity;
 }
 
 void EntitySpecialization::SetEntity(Entity * entity) {
     this->entity = entity;
 }
-
 
 // =========== Holy Knight ===========
 HolyKnight::HolyKnight(Entity * entity) :
