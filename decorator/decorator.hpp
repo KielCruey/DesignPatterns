@@ -15,13 +15,13 @@ public:
     virtual void EquipSabaton() = 0; // feet
 
     // concrete component's virtual responsibilities
-    virtual void Attack() = 0;
-    virtual void Block() = 0;
+    virtual int Attack(int fatigue) = 0;
+    virtual int Block(int fatigue) = 0;
     virtual void Reload() = 0;
     
-    int GetHealth();
-    int GetMana();
-    int GetFatigue();
+    int GetHealth() const;
+    int GetMana() const;
+    int GetFatigue() const;
 
     void SetHealth(int health);
     void SetMana(int mana);
@@ -37,23 +37,45 @@ private:
 class Knight : public Entity
 {
 public:
-    Knight();
+    Knight(int health = 100, int mana = 100, int fatigue = 100);
     ~Knight();
 
-    void Attack() override;
-    void Block() override;
+    // ---- virtuals ----
+    void EquipArmor() override;
+    void EquipGreaves() override;
+    void EquipHelmet() override;
+    void EquipMainHand() override;
+    void EquipSecondaryHand() override;
+    void EquipSabaton() override;
+
+    int Attack(int fatigue) override;
+    int Block(int fatigue) override;
     void Reload() override;
 };
 
 class Archer : public Entity
 {
 public:
-    Archer();
+    Archer(int arrowsEquip = 0, int health = 100, int mana = 100, int fatigue = 100);
     ~Archer();
 
-    void Attack() override;
-    void Block() override;
+    int GetArrowsEquip() const;
+    void SetArrowsEquip(int ArrowsEquip);
+
+    // ---- virtuals ----
+    void EquipArmor() override;
+    void EquipGreaves() override;
+    void EquipHelmet() override;
+    void EquipMainHand() override;
+    void EquipSecondaryHand() override;
+    void EquipSabaton() override;
+
+    int Attack(int fatigue) override;
+    int Block(int fatigue) override;
     void Reload() override;
+
+private:
+    int arrowsEquip;
 };
 
 // =========== Abstract Decorator ===========
@@ -63,8 +85,11 @@ public:
     EntitySpecialization(Entity * entity);
     ~EntitySpecialization();
 
-    Entity * GetEntity();
+    Entity * GetEntity() const;
     void SetEntity(Entity * entity);
+
+    // ---- virtuals ----
+    virtual void ClassAttack() = 0;
 
 protected:
     Entity * entity;
@@ -76,6 +101,14 @@ class HolyKnight : public EntitySpecialization
 public:
     HolyKnight(Entity * entity);
     ~HolyKnight();
+
+    int GetFaithMagic();
+    void SetFaithMagic(int faithMagic);
+
+    void ClassAttack() override;
+
+private:
+    int faithMagic;
 };
 
 class DarkKnight : public EntitySpecialization
@@ -83,16 +116,28 @@ class DarkKnight : public EntitySpecialization
 public:
     DarkKnight(Entity * entity);
     ~DarkKnight();
+
+    int GetDarkMagic();
+    void SetDarkMagic(int darkMagic);
+
+    void ClassAttack() override;
+
+private:
+    int darkMagic;
 };
 
 class LongBowArcher : public EntitySpecialization
 {
     LongBowArcher(Entity * entity);
     ~LongBowArcher();
+
+    void ClassAttack() override;
 };
 
 class CrossBowArcher : public EntitySpecialization
 {
     CrossBowArcher(Entity * entity);
     ~CrossBowArcher();
+
+    void ClassAttack() override;
 };
