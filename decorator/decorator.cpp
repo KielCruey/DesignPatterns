@@ -66,36 +66,38 @@ Knight::~Knight() {
 }
 
 void Knight::EquipArmor() {
-
+    std::cout << "Armor equipped" << std::endl;
 }
 
 void Knight::EquipGreaves() {
-
+    std::cout << "Greaves equipped" << std::endl;
 }
 
 void Knight::EquipHelmet() {
-
+    std::cout << "Helmet equipped" << std::endl;
 }
 
 void Knight::EquipMainHand() {
-
+    std::cout << "Sword equipped" << std::endl;
 }
 
 void Knight::EquipSecondaryHand() {
-
+    std::cout << "Shield equipped" << std::endl;
 }
 
 void Knight::EquipSabaton() {
-
+    std::cout << "Sabatons equipped" << std::endl;
 }
 
-int Knight::Attack(int fatigue) {
-    SetFatigue(fatigue - ATTACK_FATIGUE);
+int Knight::Attack() {
+    std::cout << "Sword swung" << std::endl;
+    SetFatigue(GetFatigue() - ATTACK_FATIGUE);
     return GetFatigue();
 }
 
-int Knight::Block(int fatigue) {
-    SetFatigue(fatigue - BLOCK_FATIGUE);
+int Knight::Block() {
+    std::cout << "Blocked with shield" << std::endl;
+    SetFatigue(GetFatigue() - BLOCK_FATIGUE);
     return GetFatigue();
 }
 
@@ -124,41 +126,51 @@ void Archer::SetArrowsEquip(int arrowsEquip) {
 }
 
 void Archer::EquipArmor() {
-
+    std::cout << "Armor equipped" << std::endl;
 }
 
 void Archer::EquipGreaves() {
-
+    std::cout << "Greaves equipped" << std::endl;
 }
 
 void Archer::EquipHelmet() {
-
+    std::cout << "Helmet equipped" << std::endl;
 }
 
 void Archer::EquipMainHand() {
-
+    std::cout << "Bow equipped" << std::endl;
 }
 
 void Archer::EquipSecondaryHand() {
-
+    std::cout << "Arrows equipped" << std::endl;
 }
 
 void Archer::EquipSabaton() {
-
+    std::cout << "Sabatons equipped" << std::endl;
 }
 
-int Archer::Attack(int fatigue) {
-    SetFatigue(fatigue - ATTACK_FATIGUE);
+int Archer::Attack() {
+    std::cout << "Shot bow" << std::endl;
+    SetFatigue(GetFatigue() - ATTACK_FATIGUE);
     return GetFatigue();
 }
 
-int Archer::Block(int fatigue) {
-    SetFatigue(fatigue - BLOCK_FATIGUE);
+int Archer::Block() {
+    std::cout << "Archer blocked" << std::endl;
+    SetFatigue(GetFatigue() - BLOCK_FATIGUE);
     return GetFatigue();
 }
 
 void Archer::Reload() {
+    SetArrowsEquip(GetArrowsEquip() - 1);
 
+    if(0 > GetArrowsEquip()) {
+        SetArrowsEquip(0);
+        std::cout << "Insufficient arrows" << std::endl;
+    }
+    else {
+        std::cout << "Reloaded bow and arrow" << std::endl;
+    }
 }
 
 // =========== Entity Specialization ===========
@@ -182,8 +194,9 @@ void EntitySpecialization::SetEntity(Entity * entity) {
 }
 
 // =========== Holy Knight ===========
-HolyKnight::HolyKnight(Entity * entity) :
-    EntitySpecialization(entity)
+HolyKnight::HolyKnight(Entity * entity, int faithMagic) :
+    EntitySpecialization(entity),
+    faithMagic(faithMagic)
 {
     std::cout << "Holy Knight created" << std::endl;
 }
@@ -193,20 +206,59 @@ HolyKnight::~HolyKnight() {
 }
 
 int HolyKnight::GetFaithMagic() {
-
+    return this->faithMagic;
 }
 
 void HolyKnight::SetFaithMagic(int faithMagic) {
-
+    this->faithMagic = faithMagic;
 }
 
 void HolyKnight::ClassAttack() {
+    std::cout << "Holy Knight's Ultimate Attack!" << std::endl;
+}
+
+void HolyKnight::EquipArmor() {
+    std::cout << "Holy Armor equipped" << std::endl;
+}
+
+void HolyKnight::EquipGreaves() {
+    std::cout << "Holy Greaves equipped" << std::endl;
+}
+
+void HolyKnight::EquipHelmet() {
+    std::cout << "Holy Helmet equipped" << std::endl;
+}
+
+void HolyKnight::EquipMainHand() {
+    std::cout << "Holy Sword equipped" << std::endl;
+}
+
+void HolyKnight::EquipSecondaryHand() {
+    std::cout << "Holy Shield equipped" << std::endl;
+}
+
+void HolyKnight::EquipSabaton() {
+    std::cout << "Holy Sabatons equipped" << std::endl;
+}
+
+int HolyKnight::Attack() {
+    std::cout << "Holy attack" << std::endl;
+    return 0;
+}
+
+int HolyKnight::Block() {
+    std::cout << "Holy block" << std::endl;
+    return 0;
+}
+
+void HolyKnight::Reload() {
 
 }
 
 // =========== Dark Knight ===========
-DarkKnight::DarkKnight(Entity * entity) :
-    EntitySpecialization(entity)
+DarkKnight::DarkKnight(Entity * entity, int darkMagic) :
+    EntitySpecialization(entity),
+    darkMagic(darkMagic)
 {
     std::cout << "Dark Knight created" << std::endl;
 }
@@ -216,7 +268,7 @@ DarkKnight::~DarkKnight() {
 }
 
 int DarkKnight::GetDarkMagic() {
-
+    return 0;
 }
 
 void DarkKnight::SetDarkMagic(int darkMagic) {
@@ -260,9 +312,34 @@ void CrossBowArcher::ClassAttack() {
 // =========== Main ===========
 int main()
 {
-    std::cout << "Hello World" << std::endl;
-
     Knight * knight = new Knight();
+    knight->EquipArmor();
+    knight->EquipGreaves();
+    knight->EquipHelmet();
+    knight->EquipMainHand();
+    knight->EquipSecondaryHand();
+    knight->EquipSabaton();
+
+    knight->Attack();
+    knight->Block();
+    knight->Reload();
+
+    Archer * archer = new Archer();
+    archer->EquipArmor();
+    archer->EquipGreaves();
+    archer->EquipHelmet();
+    archer->EquipMainHand();
+    archer->EquipSecondaryHand();
+    archer->EquipSabaton();
+
+    archer->Attack();
+    archer->Block();
+    archer->Reload();
+    
+    HolyKnight * holyKnight = new HolyKnight(knight);
+    holyKnight->GetEntity()->Attack();
+    holyKnight->Attack();
+
 
     return 0;
 }

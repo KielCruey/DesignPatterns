@@ -15,8 +15,8 @@ public:
     virtual void EquipSabaton() = 0; // feet
 
     // concrete component's virtual responsibilities
-    virtual int Attack(int fatigue) = 0;
-    virtual int Block(int fatigue) = 0;
+    virtual int Attack() = 0;
+    virtual int Block() = 0;
     virtual void Reload() = 0;
     
     int GetHealth() const;
@@ -48,15 +48,15 @@ public:
     void EquipSecondaryHand() override;
     void EquipSabaton() override;
 
-    int Attack(int fatigue) override;
-    int Block(int fatigue) override;
+    int Attack() override;
+    int Block() override;
     void Reload() override;
 };
 
 class Archer : public Entity
 {
 public:
-    Archer(int arrowsEquip = 0, int health = 100, int mana = 100, int fatigue = 100);
+    Archer(int arrowsEquip = 100, int health = 100, int mana = 100, int fatigue = 100);
     ~Archer();
 
     int GetArrowsEquip() const;
@@ -70,8 +70,8 @@ public:
     void EquipSecondaryHand() override;
     void EquipSabaton() override;
 
-    int Attack(int fatigue) override;
-    int Block(int fatigue) override;
+    int Attack() override;
+    int Block() override;
     void Reload() override;
 
 private:
@@ -99,13 +99,26 @@ protected:
 class HolyKnight : public EntitySpecialization
 {
 public:
-    HolyKnight(Entity * entity);
+    HolyKnight(Entity * entity = nullptr, int faithMagic = 100);
     ~HolyKnight();
 
     int GetFaithMagic();
     void SetFaithMagic(int faithMagic);
 
     void ClassAttack() override;
+
+
+    void EquipArmor() override;
+    void EquipGreaves() override;
+    void EquipHelmet() override;
+    void EquipMainHand() override;
+    void EquipSecondaryHand() override;
+    void EquipSabaton() override; // feet
+
+    // concrete component's virtual responsibilities
+    int Attack() override;
+    int Block() override;
+    void Reload() override;
 
 private:
     int faithMagic;
@@ -114,7 +127,7 @@ private:
 class DarkKnight : public EntitySpecialization
 {
 public:
-    DarkKnight(Entity * entity);
+    DarkKnight(Entity* entity = nullptr, int darkMagic = 100);
     ~DarkKnight();
 
     int GetDarkMagic();
