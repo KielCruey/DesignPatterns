@@ -36,6 +36,9 @@ For the factor method, there seems to be three ways it is implemented:
 ## Proxy
 [Article](https://cppcodetips.wordpress.com/2017/03/31/proxy-design-pattern-explained-with-c-sample/)
 
+## Move Semantics
+[Article](https://medium.com/@lucianoalmeida1/a-little-bit-about-std-move-efd9d554c09a)
+
 # General Resource
 [Design Pattern Book](https://www.cs.up.ac.za/cs/lmarshall/TDP/TDP.html)
 
