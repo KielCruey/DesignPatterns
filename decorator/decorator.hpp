@@ -154,13 +154,14 @@ private:
 
 class CrossBowArcher : public EntitySpecialization
 {
-    CrossBowArcher(Entity * entity = nullptr, int finessePonts = 100);
+public:
+    CrossBowArcher(Entity * entity = nullptr, int finessePoints = 100);
     ~CrossBowArcher();
 
-    void ClassAttack() override;
-
     int GetFinessePoints() const;
-    void SetFinessePoints(int finessePonts);
+    void SetFinessePoints(int finessePoints);
+
+    void ClassAttack() override;
 
     // from entity class
     void EquipArmor() override;
@@ -176,5 +177,5 @@ class CrossBowArcher : public EntitySpecialization
     void Reload() override;
 
 private:
-    int finessePonts;
+    int finessePoints;
 };

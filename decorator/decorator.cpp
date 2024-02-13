@@ -369,9 +369,9 @@ void DarkKnight::Reload() {
 }
 
 // =========== Cross Bow Archer ===========
-CrossBowArcher::CrossBowArcher(Entity * entity, int finessePonts) :
+CrossBowArcher::CrossBowArcher(Entity * entity, int finessePoints) :
     EntitySpecialization(entity),
-    finessePonts(finessePonts)
+    finessePoints(finessePoints)
 {
     std::cout << "Cross Bow Archer created" << std::endl;
 }
@@ -385,11 +385,11 @@ void CrossBowArcher::ClassAttack() {
 }
 
 int CrossBowArcher::GetFinessePoints() const {
-    return this->finessePonts;
+    return this->finessePoints;
 }
 
-void CrossBowArcher::SetFinessePoints(int finessePonts) {
-    this->finessePonts = finessePonts;
+void CrossBowArcher::SetFinessePoints(int finessePoints) {
+    this->finessePoints = finessePoints;
 }
 
 void CrossBowArcher::EquipArmor() {
@@ -434,7 +434,21 @@ int CrossBowArcher::Block() {
 }
 
 void CrossBowArcher::Reload() {
-    
+    Archer * archer = dynamic_cast<Archer *>(GetEntity());
+
+    if (archer != nullptr) {
+        if (0 > archer->GetArrowsEquip()) {
+            std::cout << "No more arrows, can't reload" << std::endl;
+        }
+        else {
+            std::cout << "Reloaded a cross bow bolt" << std::endl;
+            archer->SetArrowsEquip(archer->GetArrowsEquip() - 1);
+        }
+    }
+    else
+    {
+        // maybe throw an exception?
+    }
 }
 
 // =========== Client Code ===========
@@ -459,10 +473,10 @@ void TestClassSpecialization(EntitySpecialization* specialization) {
 // =========== Main ===========
 int main()
 {
-    Knight* knight = new Knight();
+    Knight * knight = new Knight();
     TestEntity(knight);
 
-    Archer* archer = new Archer();
+    Archer * archer = new Archer();
     TestEntity(archer);
 
     // decorating knight to a holy knight
@@ -471,9 +485,20 @@ int main()
     TestClassSpecialization(holyKnight);
 
     // decorating knight to a dark knight
-    DarkKnight* darkKnight = new DarkKnight(knight);
+    DarkKnight * darkKnight = new DarkKnight(knight);
     TestEntity(darkKnight);
     TestClassSpecialization(darkKnight);
+
+    CrossBowArcher * crossBowArcher = new CrossBowArcher(archer);
+    TestEntity(crossBowArcher);
+    TestClassSpecialization(crossBowArcher);
+
+    delete holyKnight;
+    delete darkKnight;
+    delete crossBowArcher;
+
+    delete knight;
+    delete archer;
 
     return 0;
 }
