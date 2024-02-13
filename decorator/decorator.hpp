@@ -130,7 +130,7 @@ public:
     DarkKnight(Entity* entity = nullptr, int darkMagic = 100);
     ~DarkKnight();
 
-    int GetDarkMagic();
+    int GetDarkMagic() const;
     void SetDarkMagic(int darkMagic);
 
     void ClassAttack() override;
@@ -159,8 +159,8 @@ class CrossBowArcher : public EntitySpecialization
 
     void ClassAttack() override;
 
-    int GetFinessePonts();
-    void SetFinessePonts(int finessePonts);
+    int GetFinessePoints() const;
+    void SetFinessePoints(int finessePonts);
 
     // from entity class
     void EquipArmor() override;

@@ -5,6 +5,8 @@
 const int ATTACK_FATIGUE = 10;
 const int BLOCK_FATIGUE = 10;
 const int FAITH_MAGIC_USED = 5;
+const int DARK_MAGIC_USED = 5;
+const int FINESSE_POINTS_USED = 5;
 
 // =========== Entity ===========
 Entity::Entity(int health, int mana, int fatigue) :
@@ -302,7 +304,7 @@ DarkKnight::~DarkKnight() {
     std::cout << "Dark Knight destroyed" << std::endl;
 }
 
-int DarkKnight::GetDarkMagic() {
+int DarkKnight::GetDarkMagic() const {
     return this->darkMagic;
 }
 
@@ -344,7 +346,7 @@ int DarkKnight::Attack() {
     }
     else {
         std::cout << "Dark attack -- uses blight" << std::endl;
-        SetDarkMagic(GetDarkMagic() - FAITH_MAGIC_USED);
+        SetDarkMagic(GetDarkMagic() - DARK_MAGIC_USED);
     }
 
     return GetDarkMagic();
@@ -356,7 +358,7 @@ int DarkKnight::Block() {
     }
     else {
         std::cout << "Dark block -- terror shield" << std::endl;
-        SetDarkMagic(GetDarkMagic() - FAITH_MAGIC_USED);
+        SetDarkMagic(GetDarkMagic() - DARK_MAGIC_USED);
     }
 
     return GetDarkMagic();
@@ -379,51 +381,60 @@ CrossBowArcher::~CrossBowArcher() {
 }
 
 void CrossBowArcher::ClassAttack() {
-
+    std::cout << "Cross Bow Archers's Ultimate Attack!" << std::endl;
 }
 
-int CrossBowArcher::GetFinessePonts() {
-    return 0;
+int CrossBowArcher::GetFinessePoints() const {
+    return this->finessePonts;
 }
 
-void CrossBowArcher::SetFinessePonts(int finessePonts) {
-
+void CrossBowArcher::SetFinessePoints(int finessePonts) {
+    this->finessePonts = finessePonts;
 }
 
 void CrossBowArcher::EquipArmor() {
-
+    std::cout << "Cross Bow Armor equipped" << std::endl;
 }
 
 void CrossBowArcher::EquipGreaves() {
-
+    std::cout << "Cross Bow Greaves equipped" << std::endl;
 }
 
 void CrossBowArcher::EquipHelmet() {
-
+    std::cout << "Cross Bow Helmet equipped" << std::endl;
 }
 
 void CrossBowArcher::EquipMainHand() {
-
+    std::cout << "Cross Bow equipped" << std::endl;
 }
 
 void CrossBowArcher::EquipSecondaryHand() {
-
+    std::cout << "Cross Bow Arrows equipped" << std::endl;
 }
 
 void CrossBowArcher::EquipSabaton() {
-
+    std::cout << "Cross Bow Sabaton equipped" << std::endl;
 }
 
 int CrossBowArcher::Attack() {
-    return 0;
+    if (0 > GetFinessePoints()) {
+        std::cout << "Insufficient finesse points" << std::endl;
+    }
+    else {
+        std::cout << "Cross Bow Attack -- uses sniper arrow" << std::endl;
+        SetFinessePoints(GetFinessePoints() - FINESSE_POINTS_USED);
+    }
+
+    return GetFinessePoints();
 }
 
 int CrossBowArcher::Block() {
-    return 0;
+    std::cout << "Cross Bow Archer can't block" << std::endl;
+    return GetFinessePoints();
 }
 
 void CrossBowArcher::Reload() {
-
+    
 }
 
 // =========== Client Code ===========
