@@ -1,3 +1,5 @@
+#include <queue>
+
 // =========== Waiter/Chef objects ===========
 class WashCloth
 {
@@ -94,6 +96,41 @@ private:
     Knife* knife;
 };
 
+// =========== Subsystem(s) ===========
+class FrontOfHouse
+{   
+public:
+    FrontOfHouse(Waiter * waiter = nullptr);
+    ~FrontOfHouse();
+
+    Waiter * GetWaiter() const;
+    void SetWaiter(Waiter * waiter);
+
+    void WritesReserveTime();
+    void SeatsGuests();
+    void ReceivesBill();
+
+private:
+    Waiter * waiter;
+};
+
+class BackOfHouse
+{
+public:
+    BackOfHouse(Chef * chef = nullptr);
+    ~BackOfHouse();
+
+    Chef * GetChef() const;
+    void SetChef(Chef * chef);
+
+    void ReceivesOrder();
+    void CompletesOrder();
+    void CallsWaiter();
+
+private:
+    Chef * chef;
+};
+
 class Customer
 {
 public:
@@ -111,38 +148,26 @@ public:
     void RatesRestaurantReview();
 };
 
-// =========== Subsystem(s) ===========
-class FrontOfHouse
-{   
-public:
-    FrontOfHouse();
-    ~FrontOfHouse();
-
-    void WritesReserveTime();
-    void SeatsGuests();
-    void ReceivesBill();
-
-private:
-    Waiter * waiter;
-};
-
-class BackOfHouse
-{
-public:
-    BackOfHouse();
-    ~BackOfHouse();
-
-    void ReceivesOrder();
-    void CompletesOrder();
-    void CallsWaiter();
-
-private:
-    Chef * chef;
-};
-
 // =========== Facade ===========
 class RestaurantFacade
 {
+public:
+    RestaurantFacade(FrontOfHouse * frontOfHouse = nullptr,
+                        BackOfHouse * backOfHouse = nullptr);
+    ~RestaurantFacade();
+
     void AskForReservation();
     void SeatsCustomers();
+
+    FrontOfHouse * GetFrontOfHouse() const;
+    BackOfHouse * GetBackOfHouse() const;
+
+    void SetFrontOfHouse(FrontOfHouse* frontOfHouse);
+    void SetBackOfHouse(BackOfHouse* backOfHouse);
+
+protected:
+    FrontOfHouse * frontOfHouse;
+    BackOfHouse * backOfHouse;
+
+    std::queue<Customer*> customerQueue;
 };
