@@ -102,12 +102,12 @@ public:
     HolyKnight(Entity * entity = nullptr, int faithMagic = 100);
     ~HolyKnight();
 
-    int GetFaithMagic();
+    int GetFaithMagic() const;
     void SetFaithMagic(int faithMagic);
 
     void ClassAttack() override;
 
-
+    // from entity class
     void EquipArmor() override;
     void EquipGreaves() override;
     void EquipHelmet() override;
@@ -135,16 +135,21 @@ public:
 
     void ClassAttack() override;
 
+    // from entity class
+    void EquipArmor() override;
+    void EquipGreaves() override;
+    void EquipHelmet() override;
+    void EquipMainHand() override;
+    void EquipSecondaryHand() override;
+    void EquipSabaton() override; // feet
+
+    // concrete component's virtual responsibilities
+    int Attack() override;
+    int Block() override;
+    void Reload() override;
+
 private:
     int darkMagic;
-};
-
-class LongBowArcher : public EntitySpecialization
-{
-    LongBowArcher(Entity * entity);
-    ~LongBowArcher();
-
-    void ClassAttack() override;
 };
 
 class CrossBowArcher : public EntitySpecialization

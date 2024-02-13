@@ -4,6 +4,7 @@
 
 const int ATTACK_FATIGUE = 10;
 const int BLOCK_FATIGUE = 10;
+const int FAITH_MAGIC_USED = 5;
 
 // =========== Entity ===========
 Entity::Entity(int health, int mana, int fatigue) :
@@ -90,14 +91,28 @@ void Knight::EquipSabaton() {
 }
 
 int Knight::Attack() {
-    std::cout << "Sword swung" << std::endl;
     SetFatigue(GetFatigue() - ATTACK_FATIGUE);
+
+    if (0 > GetFatigue()) {
+        std::cout << "Too Fatigued, Knight didn't attack" << std::endl;
+    }
+    else {
+        std::cout << "Sword swung" << std::endl;
+    }
+
     return GetFatigue();
 }
 
-int Knight::Block() {
-    std::cout << "Blocked with shield" << std::endl;
+int Knight::Block() {  
     SetFatigue(GetFatigue() - BLOCK_FATIGUE);
+
+    if (0 > GetFatigue()) {
+        std::cout << "Too Fatigued, Knight didn't block" << std::endl;
+    }
+    else {
+        std::cout << "Blocked with shield" << std::endl;
+    }
+
     return GetFatigue();
 }
 
@@ -150,14 +165,20 @@ void Archer::EquipSabaton() {
 }
 
 int Archer::Attack() {
-    std::cout << "Shot bow" << std::endl;
     SetFatigue(GetFatigue() - ATTACK_FATIGUE);
+
+    if (0 > GetFatigue()) {
+        std::cout << "Too Fatigued, Archer didn't attack" << std::endl;
+    }
+    else {
+        std::cout << "Shot bow" << std::endl;
+    }
+
     return GetFatigue();
 }
 
 int Archer::Block() {
-    std::cout << "Archer blocked" << std::endl;
-    SetFatigue(GetFatigue() - BLOCK_FATIGUE);
+    std::cout << "Archer don't block" << std::endl;
     return GetFatigue();
 }
 
@@ -205,7 +226,7 @@ HolyKnight::~HolyKnight() {
     std::cout << "Holy Knight destroyed" << std::endl;
 }
 
-int HolyKnight::GetFaithMagic() {
+int HolyKnight::GetFaithMagic() const {
     return this->faithMagic;
 }
 
@@ -242,17 +263,31 @@ void HolyKnight::EquipSabaton() {
 }
 
 int HolyKnight::Attack() {
-    std::cout << "Holy attack" << std::endl;
-    return 0;
+    if (0 > GetFaithMagic()) {
+        std::cout << "Insufficient faith magic" << std::endl;
+    }
+    else {
+        std::cout << "Holy attack -- uses smite" << std::endl;
+        SetFaithMagic(GetFaithMagic() - FAITH_MAGIC_USED);
+    }
+
+    return GetFaithMagic();
 }
 
 int HolyKnight::Block() {
-    std::cout << "Holy block" << std::endl;
-    return 0;
+    if (0 > GetFaithMagic()) {
+        std::cout << "Insufficient faith magic" << std::endl;
+    }
+    else {
+        std::cout << "Holy block -- bubble shield" << std::endl;
+        SetFaithMagic(GetFaithMagic() - FAITH_MAGIC_USED);
+    }
+
+    return GetFaithMagic();
 }
 
 void HolyKnight::Reload() {
-
+    std::cout << "Holy Knight doesn't reload" << std::endl;
 }
 
 // =========== Dark Knight ===========
@@ -279,18 +314,39 @@ void DarkKnight::ClassAttack() {
 
 }
 
-// =========== Long Bow Archer ===========
-LongBowArcher::LongBowArcher(Entity * entity) :
-    EntitySpecialization(entity)
-{
-    std::cout << "Long Bow Archer created" << std::endl;
+void DarkKnight::EquipArmor() {
+
 }
 
-LongBowArcher::~LongBowArcher() {
-    std::cout << "Long Bow Archer destroyed" << std::endl;
+void DarkKnight::EquipGreaves() {
+
 }
 
-void LongBowArcher::ClassAttack() {
+void DarkKnight::EquipHelmet() {
+
+}
+
+void DarkKnight::EquipMainHand() {
+
+}
+
+void DarkKnight::EquipSecondaryHand() {
+
+}
+
+void DarkKnight::EquipSabaton() {
+
+}
+
+int DarkKnight::Attack() {
+    return 0;
+}
+
+int DarkKnight::Block() {
+    return 0;
+}
+
+void DarkKnight::Reload() {
 
 }
 
@@ -309,36 +365,39 @@ void CrossBowArcher::ClassAttack() {
 
 }
 
+// =========== Client Code ===========
+// testing "vanilla" class
+void TestEntity(Entity * entity) {
+    entity->EquipArmor();
+    entity->EquipGreaves();
+    entity->EquipHelmet();
+    entity->EquipMainHand();
+    entity->EquipSecondaryHand();
+    entity->EquipSabaton();
+
+    entity->Attack();
+    entity->Block();
+    entity->Reload();
+}
+
+void TestClassSpecialization(EntitySpecialization* specialization) {
+    specialization->ClassAttack();
+}
+
 // =========== Main ===========
 int main()
 {
-    Knight * knight = new Knight();
-    knight->EquipArmor();
-    knight->EquipGreaves();
-    knight->EquipHelmet();
-    knight->EquipMainHand();
-    knight->EquipSecondaryHand();
-    knight->EquipSabaton();
+    Knight* knight = new Knight();
+    TestEntity(knight);
 
-    knight->Attack();
-    knight->Block();
-    knight->Reload();
+    Archer* archer = new Archer();
+    TestEntity(archer);
 
-    Archer * archer = new Archer();
-    archer->EquipArmor();
-    archer->EquipGreaves();
-    archer->EquipHelmet();
-    archer->EquipMainHand();
-    archer->EquipSecondaryHand();
-    archer->EquipSabaton();
-
-    archer->Attack();
-    archer->Block();
-    archer->Reload();
-    
+    // decorating knight to a holy knight
     HolyKnight * holyKnight = new HolyKnight(knight);
-    holyKnight->GetEntity()->Attack();
-    holyKnight->Attack();
+    TestEntity(holyKnight);
+    TestClassSpecialization(holyKnight);
+
 
 
     return 0;
