@@ -459,5 +459,10 @@ int main()
     TestEntity(holyKnight);
     TestClassSpecialization(holyKnight);
 
+    // decorating knight to a dark knight
+    DarkKnight* darkKnight = new DarkKnight(knight);
+    TestEntity(darkKnight);
+    TestClassSpecialization(darkKnight);
+
     return 0;
 }
