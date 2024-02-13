@@ -1,8 +1,60 @@
+// =========== Waiter/Chef objects ===========
+class WashCloth
+{
+public:
+    WashCloth();
+    ~WashCloth();
+};
+class NotePad
+{
+public:
+    NotePad();
+    ~NotePad();
+};
+
+class Pen
+{
+public:
+    Pen();
+    ~Pen();
+};
+
+class Menu
+{
+public:
+    Menu();
+    ~Menu();
+};
+
+class Knife
+{
+public:
+    Knife();
+    ~Knife();
+};
+
+class Plate
+{
+public:
+    Plate();
+    ~Plate();
+};
+
+class Pan
+{
+public:
+    Pan();
+    ~Pan();
+};
+
 // =========== Subsystem Helper Classes ===========
 class Waiter
 {
 public:
-    Waiter();
+    Waiter(WashCloth * washCloth = nullptr,
+            NotePad * notePad = nullptr,
+            Pen * pen = nullptr,
+            Menu * menu = nullptr);
     ~Waiter();
 
     void CleansTable();
@@ -11,13 +63,22 @@ public:
     void ReceivesCustomerOrders();
     void WritesOrder();
     void SendsOrderToKitchen();
-    void GivesBill();
+    void GivesBill();    
+
+private:
+    WashCloth * washCloth;
+    NotePad * notePad;
+    Pen * pen;
+    Menu * menu;
 };
 
 class Chef
 {
 public:
-    Chef();
+    Chef(WashCloth * washCloth = nullptr,
+            Plate * plate = nullptr,
+            Pan * pan = nullptr,
+            Knife * knife = nullptr);
     ~Chef();
 
     void PreparesFood();
@@ -25,6 +86,12 @@ public:
     void CooksFood();
     void PlatesFood();
     void WashesDishes();
+
+private:
+    WashCloth* washCloth;
+    Plate* plate;
+    Pan* pan;
+    Knife* knife;
 };
 
 class Customer
@@ -44,7 +111,7 @@ public:
     void RatesRestaurantReview();
 };
 
-// =========== Subsystem ===========
+// =========== Subsystem(s) ===========
 class FrontOfHouse
 {   
 public:
@@ -73,7 +140,7 @@ private:
     Chef * chef;
 };
 
-// =========== Subsystem ===========
+// =========== Facade ===========
 class RestaurantFacade
 {
     void AskForReservation();
