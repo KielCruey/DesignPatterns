@@ -303,56 +303,73 @@ DarkKnight::~DarkKnight() {
 }
 
 int DarkKnight::GetDarkMagic() {
-    return 0;
+    return this->darkMagic;
 }
 
 void DarkKnight::SetDarkMagic(int darkMagic) {
-
+    this->darkMagic = darkMagic;
 }
 
 void DarkKnight::ClassAttack() {
-
+    std::cout << "Dark Knight's Ultimate Attack!" << std::endl;
 }
 
 void DarkKnight::EquipArmor() {
-
+    std::cout << "Dark Armor equipped" << std::endl;
 }
 
 void DarkKnight::EquipGreaves() {
-
+    std::cout << "Dark Greaves equipped" << std::endl;
 }
 
 void DarkKnight::EquipHelmet() {
-
+    std::cout << "Dark Helmet equipped" << std::endl;
 }
 
 void DarkKnight::EquipMainHand() {
-
+    std::cout << "Dark Sword equipped" << std::endl;
 }
 
 void DarkKnight::EquipSecondaryHand() {
-
+    std::cout << "Dark Shield equipped" << std::endl;
 }
 
 void DarkKnight::EquipSabaton() {
-
+    std::cout << "Dark Sabaton equipped" << std::endl;
 }
 
 int DarkKnight::Attack() {
-    return 0;
+    if (0 > GetDarkMagic()) {
+        std::cout << "Insufficient dark magic" << std::endl;
+    }
+    else {
+        std::cout << "Dark attack -- uses blight" << std::endl;
+        SetDarkMagic(GetDarkMagic() - FAITH_MAGIC_USED);
+    }
+
+    return GetDarkMagic();
 }
 
 int DarkKnight::Block() {
-    return 0;
+    if (0 > GetDarkMagic()) {
+        std::cout << "Insufficient dark magic" << std::endl;
+    }
+    else {
+        std::cout << "Dark block -- terror shield" << std::endl;
+        SetDarkMagic(GetDarkMagic() - FAITH_MAGIC_USED);
+    }
+
+    return GetDarkMagic();
 }
 
 void DarkKnight::Reload() {
-
+    std::cout << "Dark Knight doesn't reload" << std::endl;
 }
 
 // =========== Cross Bow Archer ===========
-CrossBowArcher::CrossBowArcher(Entity * entity) :
-    EntitySpecialization(entity)
+CrossBowArcher::CrossBowArcher(Entity * entity, int finessePonts) :
+    EntitySpecialization(entity),
+    finessePonts(finessePonts)
 {
     std::cout << "Cross Bow Archer created" << std::endl;
 }
@@ -362,6 +379,50 @@ CrossBowArcher::~CrossBowArcher() {
 }
 
 void CrossBowArcher::ClassAttack() {
+
+}
+
+int CrossBowArcher::GetFinessePonts() {
+    return 0;
+}
+
+void CrossBowArcher::SetFinessePonts(int finessePonts) {
+
+}
+
+void CrossBowArcher::EquipArmor() {
+
+}
+
+void CrossBowArcher::EquipGreaves() {
+
+}
+
+void CrossBowArcher::EquipHelmet() {
+
+}
+
+void CrossBowArcher::EquipMainHand() {
+
+}
+
+void CrossBowArcher::EquipSecondaryHand() {
+
+}
+
+void CrossBowArcher::EquipSabaton() {
+
+}
+
+int CrossBowArcher::Attack() {
+    return 0;
+}
+
+int CrossBowArcher::Block() {
+    return 0;
+}
+
+void CrossBowArcher::Reload() {
 
 }
 
@@ -397,8 +458,6 @@ int main()
     HolyKnight * holyKnight = new HolyKnight(knight);
     TestEntity(holyKnight);
     TestClassSpecialization(holyKnight);
-
-
 
     return 0;
 }

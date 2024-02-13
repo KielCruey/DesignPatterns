@@ -154,8 +154,27 @@ private:
 
 class CrossBowArcher : public EntitySpecialization
 {
-    CrossBowArcher(Entity * entity);
+    CrossBowArcher(Entity * entity = nullptr, int finessePonts = 100);
     ~CrossBowArcher();
 
     void ClassAttack() override;
+
+    int GetFinessePonts();
+    void SetFinessePonts(int finessePonts);
+
+    // from entity class
+    void EquipArmor() override;
+    void EquipGreaves() override;
+    void EquipHelmet() override;
+    void EquipMainHand() override;
+    void EquipSecondaryHand() override;
+    void EquipSabaton() override; // feet
+
+    // concrete component's virtual responsibilities
+    int Attack() override;
+    int Block() override;
+    void Reload() override;
+
+private:
+    int finessePonts;
 };
