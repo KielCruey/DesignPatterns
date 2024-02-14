@@ -106,6 +106,10 @@ void Waiter::SendsOrderToKitchen() {
     std::cout << "Waiter sends ticket to kitchen" << std::endl;
 }
 
+void Waiter::ServesCustomers() {
+    std::cout << "Waiter serves customer" << std::endl;
+}
+
 void Waiter::GivesBill() {
     std::cout << "Waiter gives bill to guests" << std::endl;
 }
@@ -302,10 +306,25 @@ void RestaurantFacade::CreateOrder() {
     GetBackOfHouse()->GetChef()->CooksFood();
     GetBackOfHouse()->GetChef()->PlatesFood();
     GetBackOfHouse()->GetChef()->OrderReady();
+    GetFrontOfHouse()->GetWaiter()->ServesCustomers();
 }
 
-void RestaurantFacade::ThanksCustomers() {
+void RestaurantFacade::CustomerConsumes(Customer* customer) {
+    customer->StartsEating();
+    customer->FinishesEating();
+    
+}
 
+void RestaurantFacade::CustomerCheckout(Customer* customer) {
+    GetFrontOfHouse()->GetWaiter()->GivesBill();
+    customer->PaysBill();
+
+}
+
+void RestaurantFacade::ThanksCustomers(Customer* customer) {
+    customer->LeavesTable();
+    customer->LeavesRestaurant();
+    GetFrontOfHouse()->GetWaiter()->CleansTable();
 }
 
 FrontOfHouse* RestaurantFacade::GetFrontOfHouse() const {
@@ -375,6 +394,11 @@ int main()
     restaurant->RequestsCustomersOrder(girlfriend);
     restaurant->RequestsCustomersOrder(boyfriend);
     restaurant->CreateOrder();
+    restaurant->CustomerConsumes(girlfriend);
+    restaurant->CustomerConsumes(boyfriend);
+    restaurant->CustomerCheckout(girlfriend);
+    restaurant->CustomerCheckout(boyfriend);
+
 
     return 0;
 }

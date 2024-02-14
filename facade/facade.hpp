@@ -65,6 +65,7 @@ public:
     void ReceivesCustomerOrders();
     void WritesOrder();
     void SendsOrderToKitchen();
+    void ServesCustomers();
     void GivesBill();    
 
 private:
@@ -161,7 +162,9 @@ public:
     void SeatsCustomers(int number);
     void RequestsCustomersOrder(Customer* customer);
     void CreateOrder();
-    void ThanksCustomers();
+    void CustomerConsumes(Customer* customer);
+    void CustomerCheckout(Customer* customer);
+    void ThanksCustomers(Customer* customer);
 
     FrontOfHouse * GetFrontOfHouse() const;
     BackOfHouse * GetBackOfHouse() const;
