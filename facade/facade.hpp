@@ -164,7 +164,7 @@ public:
     void CreateOrder();
     void CustomerConsumes(Customer* customer);
     void CustomerCheckout(Customer* customer);
-    void ThanksCustomers(Customer* customer);
+    void ThankCustomers(Customer* customer);
 
     FrontOfHouse * GetFrontOfHouse() const;
     BackOfHouse * GetBackOfHouse() const;

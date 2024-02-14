@@ -312,17 +312,16 @@ void RestaurantFacade::CreateOrder() {
 void RestaurantFacade::CustomerConsumes(Customer* customer) {
     customer->StartsEating();
     customer->FinishesEating();
-    
 }
 
 void RestaurantFacade::CustomerCheckout(Customer* customer) {
     GetFrontOfHouse()->GetWaiter()->GivesBill();
     customer->PaysBill();
-
 }
 
-void RestaurantFacade::ThanksCustomers(Customer* customer) {
+void RestaurantFacade::ThankCustomers(Customer* customer) {
     customer->LeavesTable();
+    std::cout << "Thanks for coming" << std::endl;
     customer->LeavesRestaurant();
     GetFrontOfHouse()->GetWaiter()->CleansTable();
 }
@@ -336,11 +335,11 @@ BackOfHouse* RestaurantFacade::GetBackOfHouse() const {
 }
 
 void RestaurantFacade::SetFrontOfHouse(FrontOfHouse* frontOfHouse) {
-
+    this->frontOfHouse = frontOfHouse;
 }
 
 void RestaurantFacade::SetBackOfHouse(BackOfHouse* backOfHouse) {
-
+    this->backOfHouse = backOfHouse;
 }
 
 void RestaurantFacade::AddCustomer(Customer* customer) {
@@ -391,14 +390,20 @@ int main()
     restaurant->AddCustomer(boyfriend);
 
     restaurant->SeatsCustomers(2);
+
     restaurant->RequestsCustomersOrder(girlfriend);
     restaurant->RequestsCustomersOrder(boyfriend);
+
     restaurant->CreateOrder();
+
     restaurant->CustomerConsumes(girlfriend);
     restaurant->CustomerConsumes(boyfriend);
+
     restaurant->CustomerCheckout(girlfriend);
     restaurant->CustomerCheckout(boyfriend);
 
+    restaurant->ThankCustomers(girlfriend);
+    restaurant->ThankCustomers(boyfriend);
 
     return 0;
 }
