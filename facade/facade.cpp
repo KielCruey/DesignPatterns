@@ -83,31 +83,31 @@ Waiter::~Waiter() {
 }
 
 void Waiter::CleansTable() {
-
+    std::cout << "Waiter cleans tables" << std::endl;
 }
 
 void Waiter::PlacesUtensils() {
-
+    std::cout << "Waiter places utensils down" << std::endl;
 }
 
 void Waiter::GivesMenu() {
-
+    std::cout << "Waiter gives menus to guests" << std::endl;
 }
 
 void Waiter::ReceivesCustomerOrders() {
-
+    std::cout << "Waiter receives food orders from guests" << std::endl;
 }
 
 void Waiter::WritesOrder() {
-
+    std::cout << "Waiter writes down orders" << std::endl;
 }
 
 void Waiter::SendsOrderToKitchen() {
-
+    std::cout << "Waiter sends ticket to kitchen" << std::endl;
 }
 
 void Waiter::GivesBill() {
-
+    std::cout << "Waiter gives bill to guests" << std::endl;
 }
 
 // ======== Chef ========
@@ -128,23 +128,27 @@ Chef::~Chef() {
 }
 
 void Chef::PreparesFood() {
-
+    std::cout << "Chef prepares food" << std::endl;
 }
 
 void Chef::CutsFood() {
-
+    std::cout << "Chef cuts food" << std::endl;
 }
 
 void Chef::CooksFood() {
-
+    std::cout << "Chef cooks food" << std::endl;
 }
 
 void Chef::PlatesFood() {
+    std::cout << "Chef plates food" << std::endl;
+}
 
+void Chef::OrderReady() {
+    std::cout << "'Order is Ready' the Chef yells" << std::endl;
 }
 
 void Chef::WashesDishes() {
-
+    std::cout << "Chef washes dishes" << std::endl;
 }
 
 // ======== FrontOfHouse ========
@@ -170,8 +174,10 @@ void FrontOfHouse::WritesReserveTime() {
 
 }
 
-void FrontOfHouse::SeatsGuests() {
-
+void FrontOfHouse::SeatsGuests(int number) {
+    for (int i = 0; i < number; i++) {
+        std::cout << "Guest seated" << std::endl;
+    }
 }
 
 void FrontOfHouse::ReceivesBill() {
@@ -219,39 +225,39 @@ Customer::~Customer() {
 }
 
 void Customer::EntersRestaurant() {
-
+    std::cout << "Customer enters restaurant and wait for a table" << std::endl;
 }
 
 void Customer::GoesToTable() {
-
+    std::cout << "Customer is seated" << std::endl;
 }
 
 void Customer::PlacesFoodOrder() {
-
+    std::cout << "Customer places order" << std::endl;
 }
 
 void Customer::StartsEating() {
-
+    std::cout << "Customer eats food" << std::endl;
 }
 
 void Customer::FinishesEating() {
-
+    std::cout << "Customer finishes eating" << std::endl;
 }
 
 void Customer::PaysBill() {
-
+    std::cout << "Customer pays bill" << std::endl;
 }
 
 void Customer::LeavesTable() {
-
+    std::cout << "Customer leaves table" << std::endl;
 }
 
 void Customer::LeavesRestaurant() {
-
+    std::cout << "Customer leaves restaurant" << std::endl;
 }
 
 void Customer::RatesRestaurantReview() {
-
+    std::cout << "Customer reviews restaurant" << std::endl;
 }
 
 // ======== RestaurantFacade ========
@@ -271,7 +277,34 @@ void RestaurantFacade::AskForReservation() {
 
 }
 
-void RestaurantFacade::SeatsCustomers() {
+void RestaurantFacade::SeatsCustomers(int number) {
+    // removes people from waiting queue
+    for (int i = 0; i < number; i++) {
+        customerQueue.front()->GoesToTable();
+        RemoveCustomer();
+    }
+
+    GetFrontOfHouse()->SeatsGuests(number);
+    GetFrontOfHouse()->GetWaiter()->PlacesUtensils();
+    GetFrontOfHouse()->GetWaiter()->GivesMenu();
+}
+
+void RestaurantFacade::RequestsCustomersOrder(Customer * customer) {
+    customer->PlacesFoodOrder();
+    GetFrontOfHouse()->GetWaiter()->ReceivesCustomerOrders();
+}
+
+void RestaurantFacade::CreateOrder() {
+    GetBackOfHouse()->GetChef();
+    GetFrontOfHouse()->GetWaiter()->SendsOrderToKitchen();
+    GetBackOfHouse()->GetChef()->PreparesFood();
+    GetBackOfHouse()->GetChef()->CutsFood();
+    GetBackOfHouse()->GetChef()->CooksFood();
+    GetBackOfHouse()->GetChef()->PlatesFood();
+    GetBackOfHouse()->GetChef()->OrderReady();
+}
+
+void RestaurantFacade::ThanksCustomers() {
 
 }
 
@@ -291,18 +324,57 @@ void RestaurantFacade::SetBackOfHouse(BackOfHouse* backOfHouse) {
 
 }
 
+void RestaurantFacade::AddCustomer(Customer* customer) {
+    customerQueue.push(customer);
+}
+
+void RestaurantFacade::RemoveCustomer() {
+    customerQueue.pop();
+}
+
+// ========== Client Code ==========
+Waiter * CreateWaiter() {
+    WashCloth* washCloth = new WashCloth();
+    NotePad* notePad = new NotePad();
+    Pen* pen = new Pen();
+    Menu* menu = new Menu();
+
+    return new Waiter(washCloth, notePad, pen, menu);;
+}
+
+Chef * CreateChef() {
+    WashCloth* washCloth = new WashCloth();
+    Plate* plate = new Plate();
+    Pan* pan = new Pan();
+    Knife* knife = new Knife();
+
+    return new Chef(washCloth, plate, pan, knife);
+}
+
+Customer* CreateCustomer() {
+    return new Customer();
+}
+
 // ======== Main ========
 int main()
 {
-    WashCloth* washCloth = new WashCloth();
-    NotePad * notePad = new NotePad();
-    Pen * pen = new Pen();
-    Menu * menu = new Menu();        
-    Plate * plate = new Plate();
-    Pan * pan = new Pan();
-    Knife * knife = new Knife();
+    Waiter * waiter = CreateWaiter();
+    Chef * chef = CreateChef();
 
-    Waiter * waiter = new Waiter(washCloth, notePad, pen, menu);
+    Customer * girlfriend = CreateCustomer();
+    Customer * boyfriend = CreateCustomer();
+
+    FrontOfHouse * frontOfHouse = new FrontOfHouse(waiter);
+    BackOfHouse * backOfHouse = new BackOfHouse(chef);
+
+    RestaurantFacade * restaurant = new RestaurantFacade(frontOfHouse, backOfHouse);
+    restaurant->AddCustomer(girlfriend);
+    restaurant->AddCustomer(boyfriend);
+
+    restaurant->SeatsCustomers(2);
+    restaurant->RequestsCustomersOrder(girlfriend);
+    restaurant->RequestsCustomersOrder(boyfriend);
+    restaurant->CreateOrder();
 
     return 0;
 }

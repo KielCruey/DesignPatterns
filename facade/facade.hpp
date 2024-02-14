@@ -87,6 +87,7 @@ public:
     void CutsFood();
     void CooksFood();
     void PlatesFood();
+    void OrderReady();
     void WashesDishes();
 
 private:
@@ -107,7 +108,7 @@ public:
     void SetWaiter(Waiter * waiter);
 
     void WritesReserveTime();
-    void SeatsGuests();
+    void SeatsGuests(int number);
     void ReceivesBill();
 
 private:
@@ -157,13 +158,19 @@ public:
     ~RestaurantFacade();
 
     void AskForReservation();
-    void SeatsCustomers();
+    void SeatsCustomers(int number);
+    void RequestsCustomersOrder(Customer* customer);
+    void CreateOrder();
+    void ThanksCustomers();
 
     FrontOfHouse * GetFrontOfHouse() const;
     BackOfHouse * GetBackOfHouse() const;
 
     void SetFrontOfHouse(FrontOfHouse* frontOfHouse);
     void SetBackOfHouse(BackOfHouse* backOfHouse);
+
+    void AddCustomer(Customer * customer);
+    void RemoveCustomer();
 
 protected:
     FrontOfHouse * frontOfHouse;
