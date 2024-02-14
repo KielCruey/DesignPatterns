@@ -482,16 +482,17 @@ int main()
     // decorating knight to a holy knight
     HolyKnight * holyKnight = new HolyKnight(knight);
     TestEntity(holyKnight);
-    TestClassSpecialization(holyKnight);
+    TestClassSpecialization(holyKnight); // wrapping the HolyKnight around the Knight class
 
     // decorating knight to a dark knight
     DarkKnight * darkKnight = new DarkKnight(knight);
     TestEntity(darkKnight);
-    TestClassSpecialization(darkKnight);
+    TestClassSpecialization(darkKnight); // wrapping the DarkKnight around the Knight class
 
+    // decorating archer to a cross bow archer
     CrossBowArcher * crossBowArcher = new CrossBowArcher(archer);
     TestEntity(crossBowArcher);
-    TestClassSpecialization(crossBowArcher);
+    TestClassSpecialization(crossBowArcher); // wrapping the CrossBowArcher around the Archer class
 
     delete holyKnight;
     delete darkKnight;
