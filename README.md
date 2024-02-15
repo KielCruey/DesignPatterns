@@ -38,6 +38,7 @@ For the factor method, there seems to be three ways it is implemented:
 
 ## Move Semantics
 [Article](https://medium.com/@lucianoalmeida1/a-little-bit-about-std-move-efd9d554c09a)
+[Article 2](https://stackoverflow.com/questions/3413470/what-is-stdmove-and-when-should-it-be-used)
 
 # General Resource
 [Design Pattern Book](https://www.cs.up.ac.za/cs/lmarshall/TDP/TDP.html)
