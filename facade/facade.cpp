@@ -2,79 +2,8 @@
 
 #include "facade.hpp"
 
-// ==== WashCloth ====
-WashCloth::WashCloth() {
-    std::cout << "WashCloth created" << std::endl;
-}
-
-WashCloth::~WashCloth() {
-    std::cout << "WashCloth destroyed" << std::endl;
-}
-
-// ==== NotePad ====
-NotePad::NotePad() {
-    std::cout << "NotePad created" << std::endl;
-}
-
-NotePad::~NotePad() {
-    std::cout << "NotePad destroyed" << std::endl;
-}
-
-// ==== Pen ====
-Pen::Pen() {
-    std::cout << "Pen created" << std::endl;
-}
-
-Pen::~Pen() {
-    std::cout << "Pen destroyed" << std::endl;
-}
-
-// ==== Menu ====
-Menu::Menu() {
-    std::cout << "Menu created" << std::endl;
-}
-
-Menu::~Menu() {
-    std::cout << "Menu destroyed" << std::endl;
-}
-
-// ==== Knife ====
-Knife::Knife() {
-    std::cout << "Knife created" << std::endl;
-}
-
-Knife::~Knife() {
-    std::cout << "Knife destroyed" << std::endl;
-}
-
-// ==== Plate ====
-Plate::Plate() {
-    std::cout << "Plate created" << std::endl;
-}
-
-Plate::~Plate() {
-    std::cout << "Plate destroyed" << std::endl;
-}
-
-// ==== Pan ====
-Pan::Pan() {
-    std::cout << "Pan created" << std::endl;
-}
-
-Pan::~Pan() {
-    std::cout << "Pan destroyed" << std::endl;
-}
-
 // ======== Waiter ========
-Waiter::Waiter(WashCloth * washCloth,
-                NotePad * notePad,
-                Pen * pen,
-                Menu * menu) :
-    washCloth(washCloth),
-    notePad(notePad),
-    pen(pen),
-    menu(menu)
-{
+Waiter::Waiter() {
     std::cout << "Waiter created" << std::endl;
 }
 
@@ -115,15 +44,7 @@ void Waiter::GivesBill() {
 }
 
 // ======== Chef ========
-Chef::Chef(WashCloth* washCloth,
-            Plate* plate,
-            Pan* pan,
-            Knife* knife) :
-    washCloth(washCloth),
-    plate(plate),
-    pan(pan),
-    knife(knife)
-{
+Chef::Chef() {
     std::cout << "Chef created" << std::endl;
 }
 
@@ -175,7 +96,7 @@ void FrontOfHouse::SetWaiter(Waiter* waiter) {
 }
 
 void FrontOfHouse::WritesReserveTime() {
-
+    std::cout << "FrontOfHouse writes down guests reservation time" << std::endl;
 }
 
 void FrontOfHouse::SeatsGuests(int number) {
@@ -185,7 +106,7 @@ void FrontOfHouse::SeatsGuests(int number) {
 }
 
 void FrontOfHouse::ReceivesBill() {
-
+    std::cout << "FrontOfHouse receives guests bill" << std::endl;
 }
 
 // ======== BackOfHouse ========
@@ -208,15 +129,14 @@ void BackOfHouse::SetChef(Chef * chef) {
 }
 
 void BackOfHouse::ReceivesOrder() {
-
-}
-
-void BackOfHouse::CompletesOrder() {
-
+    GetChef()->PreparesFood();
+    GetChef()->CutsFood();
+    GetChef()->CooksFood();
+    GetChef()->PlatesFood();
 }
 
 void BackOfHouse::CallsWaiter() {
-
+    GetChef()->OrderReady();
 }
 
 // ======== Customer ========
@@ -226,6 +146,10 @@ Customer::Customer() {
 
 Customer::~Customer() {
     std::cout << "Customer destroyed" << std::endl;
+}
+
+void Customer::CallsForReservation() {
+    std::cout << "Customer calls restaurant to make a reservation" << std::endl;
 }
 
 void Customer::EntersRestaurant() {
@@ -266,7 +190,7 @@ void Customer::RatesRestaurantReview() {
 
 // ======== RestaurantFacade ========
 RestaurantFacade::RestaurantFacade(FrontOfHouse* frontOfHouse,
-                    BackOfHouse* backOfHouse) :
+                                    BackOfHouse* backOfHouse) :
     frontOfHouse(frontOfHouse),
     backOfHouse(backOfHouse)
 {
@@ -277,8 +201,10 @@ RestaurantFacade::~RestaurantFacade() {
     std::cout << "RestaurantFacade destroyed" << std::endl;
 }
 
-void RestaurantFacade::AskForReservation() {
-
+void RestaurantFacade::ChecksForReservation(Customer* customer) {
+    customer->CallsForReservation();
+    GetFrontOfHouse()->WritesReserveTime();
+    std::cout << "RestaurantFacade confirms reservation" << std::endl;
 }
 
 void RestaurantFacade::SeatsCustomers(int number) {
@@ -301,11 +227,8 @@ void RestaurantFacade::RequestsCustomersOrder(Customer * customer) {
 void RestaurantFacade::CreateOrder() {
     GetBackOfHouse()->GetChef();
     GetFrontOfHouse()->GetWaiter()->SendsOrderToKitchen();
-    GetBackOfHouse()->GetChef()->PreparesFood();
-    GetBackOfHouse()->GetChef()->CutsFood();
-    GetBackOfHouse()->GetChef()->CooksFood();
-    GetBackOfHouse()->GetChef()->PlatesFood();
-    GetBackOfHouse()->GetChef()->OrderReady();
+    GetBackOfHouse()->ReceivesOrder();
+    GetBackOfHouse()->CallsWaiter();
     GetFrontOfHouse()->GetWaiter()->ServesCustomers();
 }
 
@@ -317,11 +240,12 @@ void RestaurantFacade::CustomerConsumes(Customer* customer) {
 void RestaurantFacade::CustomerCheckout(Customer* customer) {
     GetFrontOfHouse()->GetWaiter()->GivesBill();
     customer->PaysBill();
+    GetFrontOfHouse()->ReceivesBill();
 }
 
 void RestaurantFacade::ThankCustomers(Customer* customer) {
     customer->LeavesTable();
-    std::cout << "Thanks for coming" << std::endl;
+    std::cout << "Thank you! Come again." << std::endl;
     customer->LeavesRestaurant();
     GetFrontOfHouse()->GetWaiter()->CleansTable();
 }
@@ -352,21 +276,11 @@ void RestaurantFacade::RemoveCustomer() {
 
 // ========== Client Code ==========
 Waiter * CreateWaiter() {
-    WashCloth* washCloth = new WashCloth();
-    NotePad* notePad = new NotePad();
-    Pen* pen = new Pen();
-    Menu* menu = new Menu();
-
-    return new Waiter(washCloth, notePad, pen, menu);;
+    return new Waiter();
 }
 
 Chef * CreateChef() {
-    WashCloth* washCloth = new WashCloth();
-    Plate* plate = new Plate();
-    Pan* pan = new Pan();
-    Knife* knife = new Knife();
-
-    return new Chef(washCloth, plate, pan, knife);
+    return new Chef();
 }
 
 Customer* CreateCustomer() {
@@ -389,6 +303,9 @@ int main()
     restaurant->AddCustomer(girlfriend);
     restaurant->AddCustomer(boyfriend);
 
+    restaurant->ChecksForReservation(girlfriend);
+    restaurant->ChecksForReservation(boyfriend);
+
     restaurant->SeatsCustomers(2);
 
     restaurant->RequestsCustomersOrder(girlfriend);
@@ -404,6 +321,14 @@ int main()
 
     restaurant->ThankCustomers(girlfriend);
     restaurant->ThankCustomers(boyfriend);
+
+    delete waiter;
+    delete chef;
+    delete girlfriend;
+    delete boyfriend;
+    delete frontOfHouse;
+    delete backOfHouse;
+    delete restaurant;
 
     return 0;
 }

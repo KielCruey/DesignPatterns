@@ -1,62 +1,10 @@
 #include <queue>
 
-// =========== Waiter/Chef objects ===========
-class WashCloth
-{
-public:
-    WashCloth();
-    ~WashCloth();
-};
-class NotePad
-{
-public:
-    NotePad();
-    ~NotePad();
-};
-
-class Pen
-{
-public:
-    Pen();
-    ~Pen();
-};
-
-class Menu
-{
-public:
-    Menu();
-    ~Menu();
-};
-
-class Knife
-{
-public:
-    Knife();
-    ~Knife();
-};
-
-class Plate
-{
-public:
-    Plate();
-    ~Plate();
-};
-
-class Pan
-{
-public:
-    Pan();
-    ~Pan();
-};
-
 // =========== Subsystem Helper Classes ===========
 class Waiter
 {
 public:
-    Waiter(WashCloth * washCloth = nullptr,
-            NotePad * notePad = nullptr,
-            Pen * pen = nullptr,
-            Menu * menu = nullptr);
+    Waiter();
     ~Waiter();
 
     void CleansTable();
@@ -67,21 +15,12 @@ public:
     void SendsOrderToKitchen();
     void ServesCustomers();
     void GivesBill();    
-
-private:
-    WashCloth * washCloth;
-    NotePad * notePad;
-    Pen * pen;
-    Menu * menu;
 };
 
 class Chef
 {
 public:
-    Chef(WashCloth * washCloth = nullptr,
-            Plate * plate = nullptr,
-            Pan * pan = nullptr,
-            Knife * knife = nullptr);
+    Chef();
     ~Chef();
 
     void PreparesFood();
@@ -90,12 +29,6 @@ public:
     void PlatesFood();
     void OrderReady();
     void WashesDishes();
-
-private:
-    WashCloth* washCloth;
-    Plate* plate;
-    Pan* pan;
-    Knife* knife;
 };
 
 // =========== Subsystem(s) ===========
@@ -126,7 +59,6 @@ public:
     void SetChef(Chef * chef);
 
     void ReceivesOrder();
-    void CompletesOrder();
     void CallsWaiter();
 
 private:
@@ -139,6 +71,7 @@ public:
     Customer();
     ~Customer();
 
+    void CallsForReservation();
     void EntersRestaurant();
     void GoesToTable();
     void PlacesFoodOrder();
@@ -158,7 +91,7 @@ public:
                         BackOfHouse * backOfHouse = nullptr);
     ~RestaurantFacade();
 
-    void AskForReservation();
+    void ChecksForReservation(Customer* customer);
     void SeatsCustomers(int number);
     void RequestsCustomersOrder(Customer* customer);
     void CreateOrder();
