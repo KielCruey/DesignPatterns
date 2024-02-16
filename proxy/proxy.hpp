@@ -1,6 +1,8 @@
 #include <string>
 #include <iostream>
 #include <iomanip> // setprecision
+#include <chrono>
+
 
 // ========== Helper Classes ==========
 class CreditCardData
@@ -58,7 +60,8 @@ public:
 class Cash : public PaymentType
 {
 public:
-	Cash(double paymentBalance = NULL, double paymentTotal = NULL);
+	Cash(double paymentBalance = NULL, 
+			double paymentTotal = NULL);
 	~Cash() override;
 
 	double CheckBalance() override;
@@ -66,9 +69,8 @@ public:
 
 	double GetPaymentBalance() const;
 	double GetPaymentTotal() const;
-
-	void GetPaymentBalance(double paymentBalance);
-	void GetPaymentTotal(double paymentTotal);
+	void SetPaymentBalance(double paymentBalance);
+	void SetPaymentTotal(double paymentTotal);
 
 private:
 	double paymentBalance;
@@ -86,10 +88,20 @@ public:
 	double CheckBalance() override;
 	double PayAmount(double payment) override;
 
-	bool CheckAuthenticatePayment(CreditCardData* creditCardData);
+	bool CheckPaymentAuthentication(CreditCardData* creditCardData);
+
+	bool CheckValidMonth(CreditCardData* creditCardData);
+	bool CheckValidYear(CreditCardData* creditCardData);
+	bool CheckSecurityCode(CreditCardData* creditCardData);
+	bool CheckCardNumber(CreditCardData* creditCardData);
+	bool CheckFirstName(CreditCardData* creditCardData);
+	bool CheckLastName(CreditCardData* creditCardData);
+	bool CheckCompanyName(CreditCardData* creditCardData);
 
 	Cash * GetCash() const;
+	CreditCardData* GetCreditCardData() const;
 	void SetCash(Cash * cash);
+	void SetCreditCardData(CreditCardData * creditCardData);
 
 private:
 	Cash * cash; // credit card is used to pay cash as payment

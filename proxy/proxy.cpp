@@ -65,11 +65,11 @@ double Cash::GetPaymentTotal() const {
 	return this->paymentTotal;
 }
 
-void Cash::GetPaymentBalance(double paymentBalance) {
+void Cash::SetPaymentBalance(double paymentBalance) {
 	this->paymentBalance = paymentBalance;
 }
 
-void Cash::GetPaymentTotal(double paymentTotal) {
+void Cash::SetPaymentTotal(double paymentTotal) {
 	this->paymentTotal = paymentTotal;
 }
 
@@ -94,7 +94,58 @@ double CreditCard::PayAmount(double payment) {
 	return GetCash()->PayAmount(payment);
 }
 
-bool CreditCard::CheckAuthenticatePayment(CreditCardData* creditCardData) {
+bool CreditCard::CheckPaymentAuthentication(CreditCardData* creditCardData) {
+	bool results;
+
+	if (CheckValidMonth(creditCardData) &&
+		CheckValidYear(creditCardData) &&
+		CheckSecurityCode(creditCardData) &&
+		CheckCardNumber(creditCardData) &&
+		CheckFirstName(creditCardData) &&
+		CheckLastName(creditCardData) &&
+		CheckCompanyName(creditCardData))
+	{
+		results = true;
+	}
+	else results = false;
+
+	return results;
+}
+
+bool CreditCard::CheckValidMonth(CreditCardData* creditCardData) {
+	bool results;
+
+	if (1 <= creditCardData->GetValidMonth() &&
+		creditCardData->GetValidMonth() <= 12)
+	{
+		results = true;
+	}
+	else results = false;
+
+	return results;
+}
+
+bool CreditCard::CheckValidYear(CreditCardData* creditCardData) {
+	return 0;
+}
+
+bool CreditCard::CheckSecurityCode(CreditCardData* creditCardData) {
+	return 0;
+}
+
+bool CreditCard::CheckCardNumber(CreditCardData* creditCardData) {
+	return 0;
+}
+
+bool CreditCard::CheckFirstName(CreditCardData* creditCardData) {
+	return 0;
+}
+
+bool CreditCard::CheckLastName(CreditCardData* creditCardData) {
+	return 0;
+}
+
+bool CreditCard::CheckCompanyName(CreditCardData* creditCardData) {
 	return 0;
 }
 
@@ -102,8 +153,16 @@ Cash * CreditCard::GetCash() const {
 	return this->cash;
 }
 
+CreditCardData * CreditCard::GetCreditCardData() const {
+	return this->creditCardData;
+}
+
 void CreditCard::SetCash(Cash* cash) {
 	this->cash = cash;
+}
+
+void CreditCard::SetCreditCardData(CreditCardData* creditCardData) {
+	this->creditCardData = creditCardData;
 }
 
 // ======= Client Code =======
