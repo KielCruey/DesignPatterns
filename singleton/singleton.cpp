@@ -4,22 +4,15 @@
 #include "singleton.hpp"
 
 // ========== Singleton class ==========
-Globals::Globals(): 
-    systemState(static_cast<int>(state::standardMode)), 
-    numberOfFiles(0) 
+Globals::Globals(int systemState, int numberOfFiles) :
+    systemState(systemState),
+    numberOfFiles(numberOfFiles)
 { }
-
-Globals::Globals(int systemState, int numberOfFiles)
-{
-    this->systemState = systemState;
-    this->numberOfFiles = numberOfFiles;
-}
 
 Globals * Globals::getInstance()
 {
     // checking if no instance of class
-    if (pGlobals == nullptr) 
-    {
+    if (pGlobals == nullptr) {
         std::cout << "Creating a new Globals object" << std::endl;
 
         // We can access private members within the class.
@@ -27,8 +20,7 @@ Globals * Globals::getInstance()
         
         return pGlobals; 
     }
-    else
-    {
+    else {
         std::cout << "Globals object exists, returning existing Globals object" << std::endl;
 
         // if instancePtr != NULL that means the class already has an instance. 
@@ -37,29 +29,24 @@ Globals * Globals::getInstance()
     }
 }
 
-int Globals::GetSystemState()
-{
+int Globals::GetSystemState() {
     return this->systemState;
 }
 
-int Globals::GetNumberOfFiles()
-{
+int Globals::GetNumberOfFiles() {
     return this->numberOfFiles;
 }
 
-void Globals::SetSystemState(int systemState)
-{
+void Globals::SetSystemState(int systemState) {
     this->systemState = systemState;
 }
 
-void Globals::SetNumberOfFiles(int numberOfFiles)
-{
+void Globals::SetNumberOfFiles(int numberOfFiles) {
     this->numberOfFiles = numberOfFiles;
 }
 
 // ========== Client ==========
-void PrintAllGlobals(Globals * globals)
-{
+void PrintAllGlobals(Globals * globals) {
     std::cout << "System State: " << globals->GetSystemState() << std::endl;
     std::cout << "Number of Files: " << globals->GetNumberOfFiles() << std::endl;
 }
@@ -68,8 +55,7 @@ void PrintAllGlobals(Globals * globals)
 // initializing member pointer to itself
 Globals * Globals::pGlobals = nullptr;
 
-int main()
-{
+int main() {
     // directly calling the getInstance() method which act as the constructor
     Globals * pMainGlobals = Globals::getInstance();
 
