@@ -83,7 +83,7 @@ private:
 class ShapeAdapter : public Circle, public Triangle
 {
 public:
-    ShapeAdapter(AbstractShapes * abstractShapes);
+    ShapeAdapter(AbstractShapes * abstractShapes = NULL);
     ~ShapeAdapter();
 
     Triangle * ConvertCircleToTriangle(Circle * circle);
