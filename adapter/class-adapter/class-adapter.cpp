@@ -12,8 +12,7 @@ AbstractShapes::~AbstractShapes()
 }
 
 // ==================== Circle ====================
-Circle::Circle(double radius)
-{
+Circle::Circle(double radius) {
     std::cout << "Circle created" << std::endl;
 
     // populates all private variables
@@ -22,67 +21,55 @@ Circle::Circle(double radius)
     SetPerimeter(CalculatePerimeter());
 }
 
-Circle::~Circle()
-{
+Circle::~Circle() {
     std::cout << "Circle destroyed" << std::endl;
 }
 
-void Circle::print()
-{
+void Circle::print() {
     std::cout << "Circle's variables!" << std::endl;
     std::cout << "radius: " << GetRadius() << std::endl;
     std::cout << "perimeter: " << GetPerimeter() << std::endl;
     std::cout << "area: " << GetArea() << std::endl;
 }
 
-double Circle::CalculateArea() 
-{
+double Circle::CalculateArea() {
     return M_PI * pow(GetRadius(), 2);
 }
 
-double Circle::CalculatePerimeter() 
-{
+double Circle::CalculatePerimeter() {
     return 2 * M_PI * GetRadius(); 
 }
 
-int Circle::GetShapeType()
-{
+int Circle::GetShapeType() {
     return ShapeType::circle;
 }
 
-double Circle::GetArea()
-{
+double Circle::GetArea() {
     return this->area;
 }
 
-double Circle::GetPerimeter()
-{
+double Circle::GetPerimeter() {
     return this->perimeter;
 }
 
-double Circle::GetRadius()
-{
+double Circle::GetRadius() {
     return this->radius;
 }
 
-void Circle::SetArea(double area)
-{
+void Circle::SetArea(double area) {
     this->area = area;
 }
 
-void Circle::SetPerimeter(double perimeter)
-{
+void Circle::SetPerimeter(double perimeter) {
     this->perimeter = perimeter;
 }
 
-void Circle::SetRadius(double radius)
-{
+void Circle::SetRadius(double radius) {
     this->radius = radius;
 }
 
 // ==================== Triangle ====================
-Triangle::Triangle(double side1, double side2, double angleInDegrees)
-{
+Triangle::Triangle(double side1, double side2, double angleInDegrees) {
     std::cout << "Triangle created" << std::endl;
 
     /* given variables */
@@ -103,13 +90,11 @@ Triangle::Triangle(double side1, double side2, double angleInDegrees)
     SetPerimeter(CalculatePerimeter());
 }
 
-Triangle::~Triangle()
-{
+Triangle::~Triangle() {
     std::cout << "Triangle destroyed" << std::endl;
 }
 
-void Triangle::print()
-{
+void Triangle::print() {
     std::cout << "Triangle's variables!" << std::endl;
     std::cout << "side1: " << GetSide1() << std::endl;
     std::cout << "side2: " << GetSide2() << std::endl;
@@ -119,94 +104,79 @@ void Triangle::print()
     std::cout << "area: " << GetArea() << std::endl;
 }
 
-double Triangle::CalculateArea()
-{
+double Triangle::CalculateArea() {
     return GetSide1() * GetSide2() * sin(GetAngle()) / 2 ;
 }
 
-double Triangle::CalculatePerimeter()
-{
+double Triangle::CalculatePerimeter() {
     return GetSide1() + GetSide2() + GetHypotenuse();
 }
 
 // law of cosines -- 2 side and 1 angle given by constructor
-double Triangle::CalculateHypotenuse()
-{
+double Triangle::CalculateHypotenuse() {
     return abs( sqrt( pow(GetSide1(), 2) + pow(GetSide2(), 2) - 2 * GetSide1() * GetSide2() * cos(GetAngle()) ));
 }
 
-double Triangle::ConvertDegreesToRadians(double degrees)
-{
+double Triangle::ConvertDegreesToRadians(double degrees) {
     return degrees * M_PI / 180; // radians
 }
 
-int Triangle::GetShapeType()
-{
+int Triangle::GetShapeType() {
     return ShapeType::triangle;
 }
 
-double Triangle::GetSide1()
-{
+double Triangle::GetSide1() {
     return this->side1;
 }
 
-double Triangle::GetSide2()
-{
+double Triangle::GetSide2() {
     return this->side2;
 }
 
-double Triangle::GetHypotenuse()
-{
+double Triangle::GetHypotenuse() {
     return this->hypotenuse;
 }
 
-double Triangle::GetAngle()
-{
+double Triangle::GetAngle() {
     return this->angle;
 }
 
-double Triangle::GetArea()
-{
+double Triangle::GetArea() {
     return this->area;
 }
 
-double Triangle::GetPerimeter()
-{
+double Triangle::GetPerimeter() {
     return this->perimeter;
 }
 
-void Triangle::SetSide1(double side1)
-{
+void Triangle::SetSide1(double side1) {
     this->side1 = side1;
 }
 
-void Triangle::SetSide2(double side2)
-{
+void Triangle::SetSide2(double side2) {
     this->side2 = side2;
 }
 
-void Triangle::SetHypotenuse(double hypotenuse)
-{
+void Triangle::SetHypotenuse(double hypotenuse) {
     this->hypotenuse = hypotenuse;
 }
 
-void Triangle::SetAngle(double angle)
-{
+void Triangle::SetAngle(double angle) {
     this->angle = angle;
 }
 
-void Triangle::SetArea(double area)
-{
+void Triangle::SetArea(double area) {
     this->area = area;
 }
 
-void Triangle::SetPerimeter(double perimeter)
-{
+void Triangle::SetPerimeter(double perimeter) {
     this->perimeter = perimeter;
 }
 
 // ==================== Adapter ====================
-ShapeAdapter::ShapeAdapter(AbstractShapes * abstractShapes)
+ShapeAdapter::ShapeAdapter(AbstractShapes * abstractShapes) :
+    pTriangle(nullptr),
+    pCircle(nullptr)
 {
     std::cout << "ShapeAdapter created" << std::endl;
 
@@ -228,14 +198,12 @@ ShapeAdapter::ShapeAdapter(AbstractShapes * abstractShapes)
     }
 }
 
-ShapeAdapter::~ShapeAdapter()
-{
+ShapeAdapter::~ShapeAdapter() {
     std::cout << "ShapeAdapter Destroyed" << std::endl;
 }
 
 // the area of the circle helps convert all dimensions of the new triangle
-Triangle * ShapeAdapter::ConvertCircleToTriangle(Circle * circle)
-{
+Triangle * ShapeAdapter::ConvertCircleToTriangle(Circle * circle) {
     double triangleArea = circle->GetArea(); 
     double triangleSideCalculation = sqrt(2 * triangleArea); // Area = a * b / 2 where a = b, because right triangle legs are the same
 
@@ -243,37 +211,31 @@ Triangle * ShapeAdapter::ConvertCircleToTriangle(Circle * circle)
 }
 
 // the area of the triangle helps convert all dimensions of the new circle
-Circle * ShapeAdapter::ConvertTriangleToCircle(Triangle * triangle)
-{
+Circle * ShapeAdapter::ConvertTriangleToCircle(Triangle * triangle) {
     double circleArea = triangle->GetArea();
     double circleRadius = sqrt(circleArea / M_PI); // area = pi * r^2
 
     return new Circle(circleRadius);
 }
 
-void ShapeAdapter::SetCircle(Circle * pCircle)
-{
+void ShapeAdapter::SetCircle(Circle * pCircle) {
     this->pCircle = pCircle;
 }
 
-void ShapeAdapter::SetTriangle(Triangle * pTriangle)
-{
+void ShapeAdapter::SetTriangle(Triangle * pTriangle) {
     this->pTriangle = pTriangle;
 }
     
-Circle * ShapeAdapter::GetCircle()
-{
+Circle * ShapeAdapter::GetCircle() {
     return this->pCircle;
 }
 
-Triangle * ShapeAdapter::GetTriangle()
-{
+Triangle * ShapeAdapter::GetTriangle() {
     return this->pTriangle;
 }
 
 // ==================== Main ====================
-int main()
-{
+int main() {
     Triangle * triangle = new Triangle();
     triangle->print();
 

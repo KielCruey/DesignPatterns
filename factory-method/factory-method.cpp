@@ -5,205 +5,166 @@
 #include "factory-method.hpp"
 
 // ============ animal ============
-AbstractAnimal::~AbstractAnimal()
-{
+AbstractAnimal::~AbstractAnimal() {
     std::cout << "Abstract Animal destroyed" << std::endl;   
 };
 
 // ======= Cow =======
-Cow::Cow() 
-{
+Cow::Cow() {
     std::cout << "I'm a cow!" << std::endl; 
 }
 
-Cow::Cow(std::string name)
-{ 
+Cow::Cow(std::string name) { 
     std::cout << "I'm a cow, and my name is " + name + "!" << std::endl; 
 }
 
-Cow::~Cow() 
-{ 
+Cow::~Cow() { 
     std::cout << "No more cow!" << std::endl; 
 }
 
-std::string Cow::SoundsOfYourPeople() 
-{
+std::string Cow::SoundsOfYourPeople() {
     return "Moo!"; 
 }
 
-void Cow::Sleeps() 
-{ 
+void Cow::Sleeps() { 
     std::cout << "zzZZzz. Counting cows." << std::endl; 
 }
 
-void Cow::Eats() 
-{ 
+void Cow::Eats() { 
     std::cout << "Starts to eat hay." << std::endl; 
 }
 
-
-std::string Cow::GetName() 
-{ 
+std::string Cow::GetName() const { 
     return this->name; 
 }
 
-void Cow::SetName(std::string name) 
-{ 
+void Cow::SetName(std::string name) { 
     this->name = name; 
 }
 
 // ======= Sheep =======
-Sheep::Sheep() 
-{ 
+Sheep::Sheep() { 
     std::cout << "I'm a sheep!" << std::endl; 
 }
 
-Sheep::Sheep(std::string name) 
-{ 
+Sheep::Sheep(std::string name) { 
     std::cout << "I'm a sheep, and my name is " + name + "!" << std::endl; 
 } 
 
-Sheep::~Sheep() 
-{ 
+Sheep::~Sheep() { 
     std::cout << "No more sheep!" << std::endl; 
 }
 
-std::string Sheep::SoundsOfYourPeople() 
-{ 
+std::string Sheep::SoundsOfYourPeople() { 
     return "Baa!"; 
 }
 
-void Sheep::Sleeps()
-{ 
+void Sheep::Sleeps() { 
     std::cout << "zzZZzz. Counting Sheep." << std::endl; 
 }
 
-void Sheep::Eats() 
-{ 
+void Sheep::Eats() { 
     std::cout << "Starts to eat grass." << std::endl; 
 }
 
-std::string Sheep::GetName() 
-{ 
+std::string Sheep::GetName() const { 
     return this->name; 
 }
 
-void Sheep::SetName(std::string name) 
-{ 
+void Sheep::SetName(std::string name) { 
     this->name = name; 
 }
 
 // ======= Pig =======
-Pig::Pig() 
-{ 
+Pig::Pig() { 
     std::cout << "I'm a pig!" << std::endl; 
 }
 
-Pig::Pig(std::string name) 
-{ 
+Pig::Pig(std::string name) { 
     std::cout << "I'm a pig, and my name is " + name + "!" << std::endl; 
 }
 
-Pig::~Pig() 
-{ 
+Pig::~Pig() { 
     std::cout << "No more pig!" << std::endl; 
 }
 
-std::string Pig::SoundsOfYourPeople()  
-{ 
+std::string Pig::SoundsOfYourPeople() { 
     return "Oink!"; 
 }
 
-void Pig::Sleeps()  
-{ 
+void Pig::Sleeps() { 
     std::cout << "zzZZZzz. Counting pigs." << std::endl; 
 }
 
-void Pig::Eats ()  
-{ 
+void Pig::Eats()  { 
     std::cout << "Starts to eat slop." << std::endl; 
 }
 
-std::string Pig::GetName() 
-{ 
+std::string Pig::GetName() const { 
     return this->name; 
 }
 
-void Pig::SetName(std::string name) 
-{ 
+void Pig::SetName(std::string name) { 
     this->name = name; 
 }
 
 // ============ Creator ============
-AnimalCreator::~AnimalCreator() 
-{
+AnimalCreator::~AnimalCreator() {
     std::cout << "AnimalCreator destroyed" << std::endl;
 }
 
-AbstractAnimal * AnimalCreator::CreateAnimal()
-{
+AbstractAnimal * AnimalCreator::CreateAnimal() {
     AbstractAnimal * animal = this->FactoryMethod();
     return animal;
 }
 
-AbstractAnimal * AnimalCreator::CreateAnimal(std::string name)
-{
+AbstractAnimal * AnimalCreator::CreateAnimal(std::string name) {
     AbstractAnimal * animal = this->FactoryMethod(name);
     return animal;
 }
 
 // ============ Cow Creators ============
-ConcreteCowCreator::~ConcreteCowCreator()
-{
+ConcreteCowCreator::~ConcreteCowCreator() {
     std::cout << "ConcreteCowCreator destroyed" << std::endl;
 }
 
-AbstractAnimal * ConcreteCowCreator::FactoryMethod()
-{
+AbstractAnimal * ConcreteCowCreator::FactoryMethod() {
     return new Cow();
 }
 
-AbstractAnimal * ConcreteCowCreator::FactoryMethod(std::string name)
-{
+AbstractAnimal * ConcreteCowCreator::FactoryMethod(std::string name) {
     return new Cow(name);
 }
 
 // ============ Sheep Creators ============
-ConcreteSheepCreator::~ConcreteSheepCreator()
-{
+ConcreteSheepCreator::~ConcreteSheepCreator() {
     std::cout << "ConcreteSheepCreator destroyed" << std::endl;
 }
 
-AbstractAnimal * ConcreteSheepCreator::FactoryMethod()
-{
+AbstractAnimal * ConcreteSheepCreator::FactoryMethod() {
     return new Sheep();
 }
 
-AbstractAnimal * ConcreteSheepCreator::FactoryMethod(std::string name)
-{
+AbstractAnimal * ConcreteSheepCreator::FactoryMethod(std::string name) {
     return new Sheep(name);
 }
 
 // ============ Pig Creators ============
-ConcretePigCreator::~ConcretePigCreator()
-{
+ConcretePigCreator::~ConcretePigCreator() {
     std::cout << "ConcretePigCreator destroyed" << std::endl;
 }
 
-AbstractAnimal* ConcretePigCreator::FactoryMethod()
-{
+AbstractAnimal* ConcretePigCreator::FactoryMethod() {
     return new Pig();
 }
 
-AbstractAnimal * ConcretePigCreator::FactoryMethod(std::string name)
-{
+AbstractAnimal * ConcretePigCreator::FactoryMethod(std::string name) {
     return new Pig(name);
 }
 
 // ============ Client Code ============
 // AnimalCreator knows to create the concrete animals because creator is of type ConcreteCowCreator's "FactoryMethod"
-std::vector<AbstractAnimal *> CreateOneOfEachAnimals_NoNames(AnimalCreator * pAnimalCreator)
-{
+std::vector<AbstractAnimal *> CreateOneOfEachAnimals_NoNames(AnimalCreator * pAnimalCreator) {
     std::vector<AbstractAnimal *> vAnimals;
 
     pAnimalCreator = new ConcreteCowCreator();  
@@ -221,17 +182,14 @@ std::vector<AbstractAnimal *> CreateOneOfEachAnimals_NoNames(AnimalCreator * pAn
     return vAnimals;
 }
 
-void PrintAnimalSounds(std::vector<AbstractAnimal *> v)
-{
+void PrintAnimalSounds(std::vector<AbstractAnimal *> v) {
     for(int i = 0; i < v.size(); i++)
     {
         std::cout << v[i]->SoundsOfYourPeople() << std::endl;
     }
 }
 
-
-std::vector<AbstractAnimal *> CreateOneOfEachAnimals_Names(AnimalCreator * pAnimalCreator)
-{
+std::vector<AbstractAnimal *> CreateOneOfEachAnimals_Names(AnimalCreator * pAnimalCreator) {
     std::vector<AbstractAnimal *> vAnimals;
 
     pAnimalCreator = new ConcreteCowCreator(); 
@@ -250,8 +208,7 @@ std::vector<AbstractAnimal *> CreateOneOfEachAnimals_Names(AnimalCreator * pAnim
 }
 
 // ============ Main ============
-int main()
-{
+int main() {
     AnimalCreator * animalCreator;
     std::vector<AbstractAnimal *> animals_NoNames;
     std::vector<AbstractAnimal *> animals_Names;

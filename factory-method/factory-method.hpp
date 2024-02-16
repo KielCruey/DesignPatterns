@@ -17,18 +17,15 @@ private:
     std::string name;
 
 public:
-    // ======= special class functions =======
     Cow();
     Cow(std::string name);
     ~Cow();
 
-    // ======= overriding base class's functions =======
     std::string SoundsOfYourPeople() override;
     void Sleeps() override;
     void Eats () override;
 
-    // ======= getters/setters =======
-    std::string GetName();
+    std::string GetName() const;
     void SetName(std::string name);
 };
 
@@ -38,18 +35,15 @@ private:
     std::string name;
 
 public:
-    // ======= special class functions =======
     Sheep();
     Sheep(std::string name);
     ~Sheep();
 
-    // ======= overriding base class's functions =======
     std::string SoundsOfYourPeople() override;
     void Sleeps() override;
     void Eats () override;
 
-    // ======= getters/setters =======
-    std::string GetName();
+    std::string GetName() const;
     void SetName(std::string name);
 };
 
@@ -59,18 +53,15 @@ private:
     std::string name;
 
 public:
-    // ======= special class functions =======
     Pig();
     Pig(std::string name);
     ~Pig();
 
-    // ======= overriding base class's functions =======
     std::string SoundsOfYourPeople() override;
     void Sleeps() override;
     void Eats () override;
 
-    // ======= getters/setters =======
-    std::string GetName();
+    std::string GetName() const;
     void SetName(std::string name);
 };
 

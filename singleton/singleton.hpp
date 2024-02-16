@@ -4,8 +4,7 @@ class Globals
 {
 private:
     // creating private constructor, since only static methods can access the constructor only
-    Globals();
-    Globals(int systemState, int numberOfFiles);
+    Globals(int systemState = static_cast<int>(state::standardMode), int numberOfFiles = 0);
 
     // ========== member variables ==========
     static Globals * pGlobals; // need a pointer that references the unique instance of that class
