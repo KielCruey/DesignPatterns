@@ -12,18 +12,22 @@ Outlet::~Outlet() {
     std::cout << "Outlet deleted" << std::endl;
 }
 
-bool Outlet::GetHasRoundHoles() {
+bool Outlet::GetHasRoundHoles() const {
     return this->HasRoundHoles;
 }
 
-int Outlet::GetNumberOfHoles() {
+int Outlet::GetNumberOfHoles() const {
     return this->NumberOfHoles;
 }
 
 // =========== AmericanOutlet ===========
-AmericanOutlet::AmericanOutlet(int VoltageRating) :
+AmericanOutlet::AmericanOutlet(int VoltageRating, 
+                                int FrequencyRating, 
+                                bool HasRoundHoles, 
+                                int NumberOfHoles) :
+    Outlet(HasRoundHoles, NumberOfHoles),
     VoltageRating(VoltageRating),
-    Outlet(false, 3)
+    FrequencyRating(FrequencyRating)
 {
     std::cout << "AmericanOutlet Created" << std::endl;
 }
@@ -32,17 +36,22 @@ AmericanOutlet::~AmericanOutlet() {
     std::cout << "AmericanOutlet deleted" << std::endl;
 }
 
-int AmericanOutlet::GetFrequencyRating() {
+int AmericanOutlet::GetFrequencyRating() const {
     return this->FrequencyRating;
 }
 
-int AmericanOutlet::GetVoltageRating() {
+int AmericanOutlet::GetVoltageRating() const {
     return this->VoltageRating;
 }
 
 // =========== UKOutlet ===========
-UKOutlet::UKOutlet(int VoltageRating, int FrequencyRating) :
-    Outlet(false, 3)
+UKOutlet::UKOutlet(int VoltageRating, 
+                    int FrequencyRating,
+                    bool HasRoundHoles,
+                    int NumberOfHoles) :
+    Outlet(HasRoundHoles, NumberOfHoles),
+    VoltageRating(VoltageRating),
+    FrequencyRating(FrequencyRating)
 {
     std::cout << "UKOutlet created" << std::endl;
 }
@@ -51,17 +60,22 @@ UKOutlet::~UKOutlet() {
     std::cout << "UKOutlet deleted" << std::endl;
 };
 
-int UKOutlet::GetFrequencyRating() {
+int UKOutlet::GetFrequencyRating() const {
     return this->FrequencyRating;
 }
 
-int UKOutlet::GetVoltageRating() {
+int UKOutlet::GetVoltageRating() const {
     return this->VoltageRating;
 }
 
 // =========== JapaneseOutlet ===========
-JapaneseOutlet::JapaneseOutlet(int FrequencyRating, int VoltageRating) :
-    Outlet(true, 50)
+JapaneseOutlet::JapaneseOutlet(int VoltageRating, 
+                                int FrequencyRating,
+                                bool HasRoundHoles,
+                                int NumberOfHoles) :
+    Outlet(HasRoundHoles, NumberOfHoles),
+    FrequencyRating(FrequencyRating),
+    VoltageRating(VoltageRating)
 {
     std::cout << "JapaneseOutlet created" << std::endl;
 }
@@ -70,19 +84,19 @@ JapaneseOutlet::~JapaneseOutlet() {
     std::cout << "JapaneseOutlet deleted" << std::endl;
 }
 
-int JapaneseOutlet::GetFrequencyRating() {
+int JapaneseOutlet::GetFrequencyRating() const {
     return this->FrequencyRating;
 }
 
-int JapaneseOutlet::GetVoltageRating() {
+int JapaneseOutlet::GetVoltageRating() const {
     return this->VoltageRating;
 }
 
 // =========== Plug ===========
-Plug::Plug(int PinCount, bool HasRoundPins) {
-    this->HasRoundPins = HasRoundPins;
-    this->PinCount = PinCount;
-
+Plug::Plug(int PinCount, bool HasRoundPins) :
+    PinCount(PinCount),
+    HasRoundPins(HasRoundPins)
+{
     std::cout << "Plug created" << std::endl;
 }
 
@@ -90,11 +104,11 @@ Plug::~Plug() {
     std::cout << "Plug deleted" << std::endl;
 }
 
-bool Plug::GetHasRoundPins() {
+bool Plug::GetHasRoundPins() const {
     return this->HasRoundPins;
 }
 
-int Plug::GetPinCount() {
+int Plug::GetPinCount() const {
     return this->PinCount;
 }
 
@@ -103,7 +117,6 @@ Adapter::Adapter(Plug * pPlug, Outlet * pOutlet) :
     Outlet(pOutlet->GetHasRoundHoles(), pOutlet->GetNumberOfHoles())
 {
     this->pPlug = pPlug;
-
     std::cout << "Adapter created" << std::endl;
 }
 
@@ -111,17 +124,18 @@ Adapter::~Adapter() {
     std::cout << "Adapter deleted" << std::endl;
 }
 
-std::string Adapter::WhatTypeOfOutletAdapter(Outlet * pOutlet) {
+bool Adapter::CheckNeedsAdapter(Outlet * pOutlet) {
     if(CheckOutletCompatibility(pOutlet)) {
-        return "No Adapter Needed!";
+        std::cout << "No Adapter Needed!" << std::endl;
+        return false;
     }
-    else{
-        return "Adapter Needed!";
+    else {
+        std::cout << "Adapter Needed!" << std::endl;
+        return true;
     }
 }
 
-bool Adapter::CheckOutletCompatibility(Outlet * pOutlet)
-{
+bool Adapter::CheckOutletCompatibility(Outlet * pOutlet) {
     // logic -- checking plug and outlet needs an adapter
     if(pPlug->GetHasRoundPins() == pOutlet->GetHasRoundHoles() 
         && pPlug->GetPinCount() <= pOutlet->GetNumberOfHoles())
@@ -141,15 +155,15 @@ Plug * Adapter::GetPlug() {
 }
 
 // =========== Client code ===========
-void CheckPlugAndOutlet(Plug * pPlug, Outlet * pOutlet) {
+static void CheckPlugAndOutlet(Plug * pPlug, Outlet * pOutlet) {
     // checks if adapter is needed
     Adapter * pAdapter = new Adapter(pPlug, pOutlet);
     bool temp = pAdapter->CheckOutletCompatibility(pOutlet);
-    std::string WhatAdapter = pAdapter->WhatTypeOfOutletAdapter(pOutlet);
+    bool WhatAdapter = pAdapter->CheckNeedsAdapter(pOutlet);
     std::cout << WhatAdapter << std::endl;
 }
 
-// =========== MAIN code ===========
+// =========== Main code ===========
 int main() {
     Plug * pAmericanPlug = new Plug(2, false);
     Plug * pUKPlug = new Plug(3, false);
