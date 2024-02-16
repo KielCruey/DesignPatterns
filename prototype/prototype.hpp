@@ -22,9 +22,7 @@ private:
     int serialNumber;
 
 public:
-    // =========== class special functions ===========
-    RobotPrototype();
-    RobotPrototype(int serialNumber);
+    RobotPrototype(int serialNumber = 0);
     virtual ~RobotPrototype(); // not required for derived classes to override but can
 
     // =========== virtual functions ===========
@@ -36,7 +34,7 @@ public:
 
     // =========== getters/setters ===========
     void SetSerialNumber(int serialNumber);
-    int GetSerialNumber();
+    int GetSerialNumber() const;
 };
 
 // ============== Concrete Product ==============
