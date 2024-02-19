@@ -84,6 +84,9 @@ public:
 	CreditCard(Cash * cash = nullptr, 
 				CreditCardData * creditCardData = nullptr);
 	~CreditCard() override;
+	CreditCard(const CreditCard& creditCard); // copy constructor -- for deep copy
+	CreditCard& operator= (const CreditCard& creditCard); // assignment operator -- for deep copy
+
 
 	double CheckBalance() override;
 	double PayAmount(double payment) override;

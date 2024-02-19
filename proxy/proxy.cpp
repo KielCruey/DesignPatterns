@@ -43,18 +43,20 @@ double Cash::CheckBalance() {
 }
 
 double Cash::PayAmount(double payment) {
-	double leftoverCash = GetPaymentBalance() - payment;
+	double newBalance = GetPaymentBalance() - payment;
 
 	// checks for overpayment, returns overplayment else return no overplayment value
-	if (leftoverCash < 0) {
-		leftoverCash = abs(leftoverCash);
-		std::cout << "Over payment! Returning $" << std::setprecision(2) << leftoverCash << "!" << std::endl;
+	if (newBalance < 0) {
+		newBalance = abs(newBalance);
+		SetPaymentBalance(0);
+		std::cout << "Over payment! Returning $" << std::setprecision(2) << newBalance << "!" << std::endl;
 	}
 	else {
+		SetPaymentBalance(newBalance);
 		std::cout << "Payment received" << std::endl;
 	}
 
-	return leftoverCash;
+	return newBalance;
 }
 
 double Cash::GetPaymentBalance() const {
@@ -84,6 +86,16 @@ CreditCard::CreditCard(Cash* cash, CreditCardData* creditCardData) :
 CreditCard::~CreditCard() {
 	delete cash;
 	std::cout << "CreditCard destroyed" << std::endl;
+}
+
+// copy constructor
+CreditCard::CreditCard(const CreditCard& creditCard) {
+
+}
+
+// assignment contructor
+CreditCard& CreditCard::operator= (const CreditCard& creditCard) {
+	return *this;
 }
 
 double CreditCard::CheckBalance() {
@@ -195,6 +207,11 @@ static double PayBill(PaymentType* paymentType, double amount) {
 	return paymentType->PayAmount(amount);
 }
 
+// overloading function to differentiate if cash is used for payment
+static double PayBill(Cash* paymentType, double amount) {
+	return paymentType->PayAmount(amount);
+}
+
 // ======= Main =======
 int main() {
 	Cash * cash = new Cash(100.00, 500.00);
@@ -206,6 +223,8 @@ int main() {
 	auto creditCardBalance_check = RequestCheckBalance(creditCard);
 	auto paymentRemainding = PayBill(creditCard, 30.00);
 	auto creditCardBalance_postcheck = RequestCheckBalance(creditCard);
+	auto payment = PayBill(cash, 30.00);
+	auto Balance_postcheck = RequestCheckBalance(creditCard);
 
 	return 0;
 }
