@@ -75,7 +75,7 @@ void Cash::SetPaymentTotal(double paymentTotal) {
 
 // ======= Credit Card =======
 CreditCard::CreditCard(Cash* cash, CreditCardData* creditCardData) :
-	cash(cash),
+	cash(new Cash(*cash)),
 	creditCardData(creditCardData)
 {
 	std::cout << "CreditCard created" << std::endl;
@@ -91,7 +91,19 @@ double CreditCard::CheckBalance() {
 }
 
 double CreditCard::PayAmount(double payment) {
-	return GetCash()->PayAmount(payment);
+	double results;
+
+	if (CheckPaymentAuthentication(GetCreditCardData())) {
+		results = GetCash()->PayAmount(payment);
+		GetCash()->SetPaymentBalance(results);
+		std::cout << "Payment authenticated and processing..." << std::endl;
+	}
+	else {
+		results = 0;
+		std::cout << "Payment failed to autenticate!" << std::endl;
+	}
+
+	return results;
 }
 
 bool CreditCard::CheckPaymentAuthentication(CreditCardData* creditCardData) {
@@ -126,27 +138,36 @@ bool CreditCard::CheckValidMonth(CreditCardData* creditCardData) {
 }
 
 bool CreditCard::CheckValidYear(CreditCardData* creditCardData) {
-	return 0;
+	return true;
 }
 
 bool CreditCard::CheckSecurityCode(CreditCardData* creditCardData) {
-	return 0;
+	bool results;
+
+	if (0 <= creditCardData->GetSecurityCode() &&
+		creditCardData->GetSecurityCode() <= 999)
+	{
+		results = true;
+	}
+	else results = false;
+	
+	return results;
 }
 
 bool CreditCard::CheckCardNumber(CreditCardData* creditCardData) {
-	return 0;
+	return true;
 }
 
 bool CreditCard::CheckFirstName(CreditCardData* creditCardData) {
-	return 0;
+	return true;
 }
 
 bool CreditCard::CheckLastName(CreditCardData* creditCardData) {
-	return 0;
+	return true;
 }
 
 bool CreditCard::CheckCompanyName(CreditCardData* creditCardData) {
-	return 0;
+	return true;
 }
 
 Cash * CreditCard::GetCash() const {
@@ -170,7 +191,7 @@ static double RequestCheckBalance(PaymentType * paymentType) {
 	return paymentType->CheckBalance();
 }
 
-static double PayBill(PaymentType* paymentType, int amount) {
+static double PayBill(PaymentType* paymentType, double amount) {
 	return paymentType->PayAmount(amount);
 }
 
@@ -180,8 +201,11 @@ int main() {
 	CreditCardData * creditCardData = new CreditCardData(false, 9, 10, 420, 666999, "John", "Doe", "Capital One");
 	CreditCard * creditCard = new CreditCard(cash, creditCardData);
 
-	auto creditCardBalance = RequestCheckBalance(creditCard);
+	auto creditCardBalance_precheck = RequestCheckBalance(creditCard);
 	auto paymentLeft = PayBill(creditCard, 30.00);
+	auto creditCardBalance_check = RequestCheckBalance(creditCard);
+	auto paymentRemainding = PayBill(creditCard, 30.00);
+	auto creditCardBalance_postcheck = RequestCheckBalance(creditCard);
 
 	return 0;
 }
