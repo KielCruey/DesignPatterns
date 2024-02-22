@@ -88,16 +88,6 @@ CreditCard::~CreditCard() {
 	std::cout << "CreditCard destroyed" << std::endl;
 }
 
-// copy constructor
-CreditCard::CreditCard(const CreditCard& creditCard) {
-
-}
-
-// assignment contructor
-CreditCard& CreditCard::operator= (const CreditCard& creditCard) {
-	return *this;
-}
-
 double CreditCard::CheckBalance() {
 	return GetCash()->CheckBalance();
 }
@@ -221,10 +211,10 @@ int main() {
 	auto creditCardBalance_precheck = RequestCheckBalance(creditCard);
 	auto paymentLeft = PayBill(creditCard, 30.00);
 	auto creditCardBalance_check = RequestCheckBalance(creditCard);
-	auto paymentRemainding = PayBill(creditCard, 30.00);
+	auto paymentRemainding = PayBill(creditCard, 60.00);
 	auto creditCardBalance_postcheck = RequestCheckBalance(creditCard);
-	auto payment = PayBill(cash, 30.00);
-	auto Balance_postcheck = RequestCheckBalance(creditCard);
+
+	delete creditCard;
 
 	return 0;
 }
