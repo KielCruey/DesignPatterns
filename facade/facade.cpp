@@ -137,6 +137,7 @@ void BackOfHouse::ReceivesOrder() {
 
 void BackOfHouse::CallsWaiter() {
     GetChef()->OrderReady();
+    GetChef()->WashesDishes();
 }
 
 // ======== Customer ========
@@ -210,6 +211,7 @@ void RestaurantFacade::ChecksForReservation(Customer* customer) {
 void RestaurantFacade::SeatsCustomers(int number) {
     // removes people from waiting queue
     for (int i = 0; i < number; i++) {
+        customerQueue.front()->EntersRestaurant();
         customerQueue.front()->GoesToTable();
         RemoveCustomer();
     }
@@ -222,6 +224,7 @@ void RestaurantFacade::SeatsCustomers(int number) {
 void RestaurantFacade::RequestsCustomersOrder(Customer * customer) {
     customer->PlacesFoodOrder();
     GetFrontOfHouse()->GetWaiter()->ReceivesCustomerOrders();
+    GetFrontOfHouse()->GetWaiter()->WritesOrder();
 }
 
 void RestaurantFacade::CreateOrder() {
@@ -229,10 +232,10 @@ void RestaurantFacade::CreateOrder() {
     GetFrontOfHouse()->GetWaiter()->SendsOrderToKitchen();
     GetBackOfHouse()->ReceivesOrder();
     GetBackOfHouse()->CallsWaiter();
-    GetFrontOfHouse()->GetWaiter()->ServesCustomers();
 }
 
 void RestaurantFacade::CustomerConsumes(Customer* customer) {
+    GetFrontOfHouse()->GetWaiter()->ServesCustomers();
     customer->StartsEating();
     customer->FinishesEating();
 }
@@ -248,6 +251,7 @@ void RestaurantFacade::ThankCustomers(Customer* customer) {
     std::cout << "Thank you! Come again." << std::endl;
     customer->LeavesRestaurant();
     GetFrontOfHouse()->GetWaiter()->CleansTable();
+    customer->RatesRestaurantReview();
 }
 
 FrontOfHouse* RestaurantFacade::GetFrontOfHouse() const {
@@ -258,6 +262,10 @@ BackOfHouse* RestaurantFacade::GetBackOfHouse() const {
     return this->backOfHouse;
 }
 
+std::queue<Customer*> RestaurantFacade::GetCustomerQueue() const {
+    return this->customerQueue;
+}
+
 void RestaurantFacade::SetFrontOfHouse(FrontOfHouse* frontOfHouse) {
     this->frontOfHouse = frontOfHouse;
 }
@@ -266,12 +274,16 @@ void RestaurantFacade::SetBackOfHouse(BackOfHouse* backOfHouse) {
     this->backOfHouse = backOfHouse;
 }
 
+void RestaurantFacade::GetCustomerQueue(std::queue<Customer*> customerQueue) {
+    this->customerQueue = customerQueue;
+}
+
 void RestaurantFacade::AddCustomer(Customer* customer) {
-    customerQueue.push(customer);
+    GetCustomerQueue().push(customer);
 }
 
 void RestaurantFacade::RemoveCustomer() {
-    customerQueue.pop();
+    GetCustomerQueue().pop();
 }
 
 // ========== Client Code ==========
@@ -287,19 +299,7 @@ Customer* CreateCustomer() {
     return new Customer();
 }
 
-// ======== Main ========
-int main()
-{
-    Waiter * waiter = CreateWaiter();
-    Chef * chef = CreateChef();
-
-    Customer * girlfriend = CreateCustomer();
-    Customer * boyfriend = CreateCustomer();
-
-    FrontOfHouse * frontOfHouse = new FrontOfHouse(waiter);
-    BackOfHouse * backOfHouse = new BackOfHouse(chef);
-
-    RestaurantFacade * restaurant = new RestaurantFacade(frontOfHouse, backOfHouse);
+void ServeCustomers(RestaurantFacade* restaurant, Customer * girlfriend, Customer* boyfriend) {
     restaurant->AddCustomer(girlfriend);
     restaurant->AddCustomer(boyfriend);
 
@@ -321,6 +321,23 @@ int main()
 
     restaurant->ThankCustomers(girlfriend);
     restaurant->ThankCustomers(boyfriend);
+}
+
+// ======== Main ========
+int main()
+{
+    Waiter * waiter = CreateWaiter();
+    Chef * chef = CreateChef();
+
+    Customer * girlfriend = CreateCustomer();
+    Customer * boyfriend = CreateCustomer();
+
+    FrontOfHouse * frontOfHouse = new FrontOfHouse(waiter);
+    BackOfHouse * backOfHouse = new BackOfHouse(chef);
+
+    RestaurantFacade * restaurant = new RestaurantFacade(frontOfHouse, backOfHouse);
+   
+    ServeCustomers(restaurant, girlfriend, boyfriend);
 
     delete waiter;
     delete chef;

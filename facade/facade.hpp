@@ -84,6 +84,8 @@ public:
 };
 
 // =========== Facade ===========
+// The facade class provides a simple interface for helping/supporting other subsystems.
+// Think of the facade class to implements/orchestrates the subsystems functions together in a easy fashion.
 class RestaurantFacade
 {
 public:
@@ -101,9 +103,11 @@ public:
 
     FrontOfHouse * GetFrontOfHouse() const;
     BackOfHouse * GetBackOfHouse() const;
+    std::queue<Customer*> GetCustomerQueue() const;
 
     void SetFrontOfHouse(FrontOfHouse* frontOfHouse);
     void SetBackOfHouse(BackOfHouse* backOfHouse);
+    void GetCustomerQueue(std::queue<Customer*> customerQueue);
 
     void AddCustomer(Customer * customer);
     void RemoveCustomer();
