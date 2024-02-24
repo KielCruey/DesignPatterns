@@ -32,10 +32,9 @@ For the factor method, there seems to be three ways it is implemented:
 ## Chain of Responsibility
 [Article](https://en.wikipedia.org/wiki/Chain-of-responsibility_pattern)
 [Article 2](https://www.vishalchovatiya.com/chain-of-responsibility-design-pattern-in-modern-cpp/)
+
 ## Proxy
 [Article](https://cppcodetips.wordpress.com/2017/03/31/proxy-design-pattern-explained-with-c-sample/)
-
-
 
 # General Resource
 [Design Pattern Book](https://www.cs.up.ac.za/cs/lmarshall/TDP/TDP.html)
@@ -46,6 +45,9 @@ General UML [tutorial](https://www.visual-paradigm.com/guide/uml-unified-modelin
 General UML [tutorial](https://www.drawio.com/blog/sequence-diagrams) on the sequency diagram.
 
 For creating UML, [drawio.com](https://www.drawio.com/) was used. A quick [tutorial](https://www.drawio.com/blog/uml-class-diagrams) on how to create UML diagrams on drawio.com.
+
+# Special Member Functions
+[Article](https://cplusplus.com/doc/tutorial/classes2/#default_constructor)
 
 # Compiling Code
 This [video](https://www.youtube.com/watch?v=3-9sObAg6R0) helps with compiling on VS code.
