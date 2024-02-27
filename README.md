@@ -29,6 +29,9 @@ For the factor method, there seems to be three ways it is implemented:
 ## Facade
 [Article](https://medium.com/@andreaspoyias/design-patterns-a-quick-guide-to-facade-pattern-16e3d2f1bfb6)
 
+## Chain of Responsibility
+[Article](https://en.wikipedia.org/wiki/Chain-of-responsibility_pattern)
+[Article 2](https://www.vishalchovatiya.com/chain-of-responsibility-design-pattern-in-modern-cpp/)
 
 # Compiling Code
 This [video](https://www.youtube.com/watch?v=3-9sObAg6R0) helps with compiling on VS code.
