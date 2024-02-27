@@ -1,3 +1,4 @@
+#include <iostream>
 #include <string>
 
 // ========= Handler =========
@@ -6,10 +7,10 @@ class Handler
 public: 
     virtual ~Handler() = 0;
 
-    virtual void setHandler(Handler * handler) = 0;
+    virtual void setHandler(Handler * nextHandler) = 0;
     virtual Handler * getHandler() = 0;
 
-    virtual std::string Handle() = 0;
+    virtual std::string Handle(std::string command) = 0;
 };
 
 // ========= Base Handler =========
@@ -19,10 +20,10 @@ public:
     BaseHandler(Handler * nextHandler = nullptr);
     virtual ~BaseHandler() override;
 
-    virtual void setHandler(Handler * handler) override;
+    virtual void setHandler(Handler * nextHandler) override;
     virtual Handler * getHandler() override;
 
-    virtual std::string Handle() override;
+    virtual std::string Handle(std::string command) override;
 
 private:
     Handler * nextHandler;
@@ -36,7 +37,7 @@ public:
                      bool hasRobotPelvis = NULL);
     virtual ~RobotBodyHandler() override;
 
-    virtual std::string Handle() override;
+    virtual std::string Handle(std::string command) override;
 
 private:
     bool hasRobotChest;
@@ -52,7 +53,7 @@ public:
                      bool hasRobotLeftLeg = NULL);
     virtual ~RobotLimbHandler() override;
 
-    virtual std::string Handle() override;
+    virtual std::string Handle(std::string command) override;
 
 private:
     bool hasRobotRightArm;
@@ -67,7 +68,7 @@ public:
     RobotCraniumHandler(bool hasRobotCranium = NULL);
     virtual ~RobotCraniumHandler() override;
 
-    virtual std::string Handle() override;
+    virtual std::string Handle(std::string command) override;
 
 private:
     bool hasRobotCranium;
