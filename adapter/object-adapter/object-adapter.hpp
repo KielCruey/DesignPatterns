@@ -4,9 +4,6 @@
 enum NumberOfPinholes { One = 1, Two, Three };
 enum HasRoundPinholes { False = 0, True };
 
-enum AmericanVoltage { Residential = 120, Commercial = 240 };
-enum UKVoltage { Residential = 230, Commercial = 415 };
-
 enum JapaneseVoltage { Residential = 100, Commercial = 200 };
 enum JapaneseHerts { Eastern = 50, Western = 60 };
 const int AMERICAN_HERTS = 60;
@@ -16,51 +13,47 @@ const int UK_HERTS = 50;
 class Outlet
 {
 public:
-    Outlet(bool RoundHoles = HasRoundPinholes::False, 
-            int NumberOfHoles = NumberOfPinholes::Two);
+    Outlet(bool RoundHoles = NULL, 
+           int NumberOfHoles = NULL,
+           int VoltageRating = NULL,
+           int FrequencyRating = NULL);
     virtual ~Outlet();
 
     bool GetHasRoundHoles() const;
     int GetNumberOfHoles() const;
+    int GetVoltageRating() const;
+    int GetFrequencyRating() const;
 
 private:
     bool HasRoundHoles;
     int NumberOfHoles;
+    int VoltageRating;
+    int FrequencyRating;
 };
 
 // =========== Concrete Target ===========
 class AmericanOutlet : public Outlet
 {
 public:
+    enum AmericanVoltage { Residential = 120, Commercial = 240 };
+
     AmericanOutlet(int VoltageRating = AmericanVoltage::Residential, 
                     int FrequencyRating = AMERICAN_HERTS,
                     bool HasRoundHoles = HasRoundPinholes::False,
                     int NumberOfHoles = NumberOfPinholes::Two);
     ~AmericanOutlet();
-
-    int GetVoltageRating() const;
-    int GetFrequencyRating() const;
-
-private:
-    int VoltageRating;
-    int FrequencyRating;
 };
 
 class UKOutlet : public Outlet
 {
 public:
+    enum UKVoltage { Residential = 230, Commercial = 415 };
+
     UKOutlet(int VoltageRating = UKVoltage::Residential, 
                 int FrequencyRating = UK_HERTS,
                 bool HasRoundHoles = HasRoundPinholes::False,
                 int NumberOfHoles = NumberOfPinholes::Three);
     ~UKOutlet();
-
-    int GetFrequencyRating() const;
-    int GetVoltageRating() const;
-
-public:
-    int FrequencyRating;
-    int VoltageRating;
 };
 
 class JapaneseOutlet : public Outlet
@@ -71,13 +64,6 @@ public:
                     bool HasRoundHoles = HasRoundPinholes::True,
                     int NumberOfHoles = NumberOfPinholes::Two);
     ~JapaneseOutlet();
-
-    int GetVoltageRating() const;
-    int GetFrequencyRating() const;
-
-private:
-    int VoltageRating;
-    int FrequencyRating;
 };
 
 // =========== Abstract Adaptee ===========
@@ -105,6 +91,8 @@ private:
 class AmericanPlug : public Plug
 {
 public:
+    enum AmericanVoltage { Residential = 120, Commercial = 240 };
+
     AmericanPlug(int VoltageRating = AmericanVoltage::Residential,
                  int FrequencyRating = AMERICAN_HERTS,
                  int PinCount = NumberOfPinholes::Two, 
@@ -115,6 +103,8 @@ public:
 class UKPlug : public Plug
 {
 public:
+    enum UKVoltage { Residential = 230, Commercial = 415 };
+
     UKPlug(int VoltageRating = UKVoltage::Residential, 
            int FrequencyRating = UK_HERTS,
            int PinCount = NumberOfPinholes::Three, 

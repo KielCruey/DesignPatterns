@@ -1,9 +1,14 @@
 #include "object-adapter.hpp"
 
 // =========== Outlet ===========
-Outlet::Outlet(bool HasRoundHoles, int NumberOfHoles) :
+Outlet::Outlet(bool HasRoundHoles, 
+               int NumberOfHoles, 
+               int VoltageRating,
+               int FrequencyRating) :
     HasRoundHoles(HasRoundHoles),
-    NumberOfHoles(NumberOfHoles)
+    NumberOfHoles(NumberOfHoles),
+    VoltageRating(VoltageRating),
+    FrequencyRating(FrequencyRating)
 {
     std::cout << "Outlet Created" << std::endl;
 }
@@ -20,14 +25,20 @@ int Outlet::GetNumberOfHoles() const {
     return this->NumberOfHoles;
 }
 
+int Outlet::GetFrequencyRating() const {
+    return this->FrequencyRating;
+}
+
+int Outlet::GetVoltageRating() const {
+    return this->VoltageRating;
+}
+
 // =========== AmericanOutlet ===========
 AmericanOutlet::AmericanOutlet(int VoltageRating, 
                                 int FrequencyRating, 
                                 bool HasRoundHoles, 
                                 int NumberOfHoles) :
-    Outlet(HasRoundHoles, NumberOfHoles),
-    VoltageRating(VoltageRating),
-    FrequencyRating(FrequencyRating)
+    Outlet(HasRoundHoles, NumberOfHoles, VoltageRating, FrequencyRating)
 {
     std::cout << "AmericanOutlet Created" << std::endl;
 }
@@ -36,22 +47,12 @@ AmericanOutlet::~AmericanOutlet() {
     std::cout << "AmericanOutlet deleted" << std::endl;
 }
 
-int AmericanOutlet::GetFrequencyRating() const {
-    return this->FrequencyRating;
-}
-
-int AmericanOutlet::GetVoltageRating() const {
-    return this->VoltageRating;
-}
-
 // =========== UKOutlet ===========
 UKOutlet::UKOutlet(int VoltageRating, 
                     int FrequencyRating,
                     bool HasRoundHoles,
                     int NumberOfHoles) :
-    Outlet(HasRoundHoles, NumberOfHoles),
-    VoltageRating(VoltageRating),
-    FrequencyRating(FrequencyRating)
+    Outlet(HasRoundHoles, NumberOfHoles, VoltageRating, FrequencyRating)
 {
     std::cout << "UKOutlet created" << std::endl;
 }
@@ -60,36 +61,18 @@ UKOutlet::~UKOutlet() {
     std::cout << "UKOutlet deleted" << std::endl;
 };
 
-int UKOutlet::GetFrequencyRating() const {
-    return this->FrequencyRating;
-}
-
-int UKOutlet::GetVoltageRating() const {
-    return this->VoltageRating;
-}
-
 // =========== JapaneseOutlet ===========
 JapaneseOutlet::JapaneseOutlet(int VoltageRating, 
                                 int FrequencyRating,
                                 bool HasRoundHoles,
                                 int NumberOfHoles) :
-    Outlet(HasRoundHoles, NumberOfHoles),
-    FrequencyRating(FrequencyRating),
-    VoltageRating(VoltageRating)
+    Outlet(HasRoundHoles, NumberOfHoles, VoltageRating, FrequencyRating)
 {
     std::cout << "JapaneseOutlet created" << std::endl;
 }
 
 JapaneseOutlet::~JapaneseOutlet() {
     std::cout << "JapaneseOutlet deleted" << std::endl;
-}
-
-int JapaneseOutlet::GetFrequencyRating() const {
-    return this->FrequencyRating;
-}
-
-int JapaneseOutlet::GetVoltageRating() const {
-    return this->VoltageRating;
 }
 
 // =========== Plug ===========
