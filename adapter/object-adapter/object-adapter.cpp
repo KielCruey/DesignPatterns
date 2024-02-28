@@ -176,7 +176,9 @@ bool Adapter::CheckNeedsAdapter(Outlet * pOutlet) {
 bool Adapter::CheckOutletCompatibility(Outlet * pOutlet) {
     // logic -- checking plug and outlet needs an adapter
     if(pPlug->GetHasRoundPins() == pOutlet->GetHasRoundHoles() 
-        && pPlug->GetPinCount() <= pOutlet->GetNumberOfHoles())
+        && pPlug->GetPinCount() <= pOutlet->GetNumberOfHoles()
+        && pPlug->GetFrequencyRating() == pOutlet->GetFrequencyRating()
+        && pPlug->GetVoltageRating() == pOutlet->GetVoltageRating())
     {
         return true;
     }
@@ -196,9 +198,8 @@ Plug * Adapter::GetPlug() {
 static void CheckPlugAndOutlet(Plug & pPlug, Outlet & pOutlet) {
     // checks if adapter is needed
     Adapter * pAdapter = new Adapter(&pPlug, &pOutlet);
-    bool temp = pAdapter->CheckOutletCompatibility(&pOutlet);
-    bool WhatAdapter = pAdapter->CheckNeedsAdapter(&pOutlet);
-    std::cout << WhatAdapter << std::endl;
+    bool needsAnAdapter = pAdapter->CheckNeedsAdapter(&pOutlet);
+    std::cout << needsAnAdapter << std::endl;
 }
 
 // =========== Main code ===========
