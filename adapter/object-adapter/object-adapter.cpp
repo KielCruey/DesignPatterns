@@ -123,7 +123,7 @@ AmericanPlug::~AmericanPlug() {
 }
 
 // =========== UKPlug ===========
-UKPlug::UKPlug(int VoltageRating,
+UKPlug::UKPlug(int VoltageRating, 
                int FrequencyRating, 
                int PinCount, 
                bool HasRoundPins) :
@@ -214,6 +214,15 @@ int main() {
 
     CheckPlugAndOutlet(*pAmericanPlug, *pAmericanOutlet);
     CheckPlugAndOutlet(*pAmericanPlug, *pUKOutlet);
+    CheckPlugAndOutlet(*pAmericanPlug, *pJapaneseOutlet);
+
+    CheckPlugAndOutlet(*pUKPlug, *pAmericanOutlet);
+    CheckPlugAndOutlet(*pUKPlug, *pUKOutlet);
+    CheckPlugAndOutlet(*pUKPlug, *pJapaneseOutlet);
+
+    CheckPlugAndOutlet(*pJapanesePlug, *pAmericanOutlet);
+    CheckPlugAndOutlet(*pJapanesePlug, *pUKOutlet);
+    CheckPlugAndOutlet(*pJapanesePlug, *pJapaneseOutlet);
 
     return 0;
 }

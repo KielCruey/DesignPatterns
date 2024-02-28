@@ -3,7 +3,6 @@
 
 enum NumberOfPinholes { One = 1, Two, Three };
 enum HasRoundPinholes { False = 0, True };
-
 enum JapaneseVoltage { Residential = 100, Commercial = 200 };
 enum JapaneseHerts { Eastern = 50, Western = 60 };
 const int AMERICAN_HERTS = 60;
