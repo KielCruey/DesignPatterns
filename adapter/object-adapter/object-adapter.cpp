@@ -175,10 +175,10 @@ bool Adapter::CheckNeedsAdapter(Outlet * pOutlet) {
 
 bool Adapter::CheckOutletCompatibility(Outlet * pOutlet) {
     // logic -- checking plug and outlet needs an adapter
-    if(pPlug->GetHasRoundPins() == pOutlet->GetHasRoundHoles() 
-        && pPlug->GetPinCount() <= pOutlet->GetNumberOfHoles()
-        && pPlug->GetFrequencyRating() == pOutlet->GetFrequencyRating()
-        && pPlug->GetVoltageRating() == pOutlet->GetVoltageRating())
+    if(GetPlug()->GetHasRoundPins() == pOutlet->GetHasRoundHoles()
+        && GetPlug()->GetPinCount() <= pOutlet->GetNumberOfHoles()
+        && GetPlug()->GetFrequencyRating() == pOutlet->GetFrequencyRating()
+        && GetPlug()->GetVoltageRating() == pOutlet->GetVoltageRating())
     {
         return true;
     }
