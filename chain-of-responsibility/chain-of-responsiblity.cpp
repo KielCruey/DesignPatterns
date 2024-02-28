@@ -179,6 +179,7 @@ bool RobotCraniumHandler::getHasRobotCranium() const {
 
 // =========== Client Code ===========
 void HandleTheChain(Handler & handler) {
+    // requesting all the part for a 'completed' robot assembly
     std::vector<std::string> assemblyInstructions = { "Chest", "Pelvis",
                                                      "Right Arm", "Left Arm", "Right Leg", "Left Leg",
                                                      "Cranium" };
