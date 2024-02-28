@@ -86,15 +86,22 @@ private:
 class Plug
 {
 public:
-    Plug(int PinCount, bool HasRoundPins);
+    Plug(int PinCount = NULL, 
+        bool HasRoundPins = NULL,
+        int VoltageRating = NULL,
+        int FrequencyRating = NULL);
     virtual ~Plug();
 
     bool GetHasRoundPins() const;
     int GetPinCount() const;
+    int GetVoltageRating() const;
+    int GetFrequencyRating() const;
 
 private:
     bool HasRoundPins;
     int PinCount;
+    int VoltageRating;
+    int FrequencyRating;
 };
 
 class AmericanPlug : public Plug
@@ -107,13 +114,6 @@ public:
                  int PinCount = NumberOfPinholes::Two, 
                  bool HasRoundPins = HasRoundPinholes::False);
     virtual ~AmericanPlug() override;
-
-    int GetVoltageRating() const;
-    int GetFrequencyRating() const;
-
-private:
-    int VoltageRating;
-    int FrequencyRating;
 };
 
 class UKPlug : public Plug
@@ -126,13 +126,6 @@ public:
            int PinCount = NumberOfPinholes::Three, 
            bool HasRoundPins = HasRoundPinholes::False);
     virtual ~UKPlug() override;
-
-    int GetVoltageRating() const;
-    int GetFrequencyRating() const;
-
-private:
-    int VoltageRating;
-    int FrequencyRating;
 };
 
 class JapanesePlug : public Plug
@@ -146,13 +139,6 @@ public:
                  int PinCount =  NumberOfPinholes::Two, 
                  bool HasRoundPins = HasRoundPinholes::True);
     virtual ~JapanesePlug() override;
-
-    int GetVoltageRating() const;
-    int GetFrequencyRating() const;
-
-private:
-    int VoltageRating;
-    int FrequencyRating;
 };
 
 // =========== Adapter ===========

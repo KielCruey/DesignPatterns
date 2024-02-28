@@ -93,9 +93,14 @@ int JapaneseOutlet::GetVoltageRating() const {
 }
 
 // =========== Plug ===========
-Plug::Plug(int PinCount, bool HasRoundPins) :
+Plug::Plug(int PinCount, 
+           bool HasRoundPins,
+           int VoltageRating,
+           int FrequencyRating) :
     PinCount(PinCount),
-    HasRoundPins(HasRoundPins)
+    HasRoundPins(HasRoundPins),
+    VoltageRating(VoltageRating),
+    FrequencyRating(FrequencyRating)
 {
     std::cout << "Plug created" << std::endl;
 }
@@ -112,14 +117,20 @@ int Plug::GetPinCount() const {
     return this->PinCount;
 }
 
+int Plug::GetVoltageRating() const {
+    return this->VoltageRating;
+}
+
+int Plug::GetFrequencyRating() const {
+    return this->FrequencyRating;
+}
+
 // =========== AmericanPlug ===========
 AmericanPlug::AmericanPlug(int VoltageRating, 
                            int FrequencyRating, 
                            int PinCount, 
                            bool HasRoundPins) :
-    VoltageRating(VoltageRating),
-    FrequencyRating(FrequencyRating),
-    Plug(PinCount, HasRoundPins)
+    Plug(PinCount, HasRoundPins, VoltageRating, FrequencyRating)
 {
     std::cout << "American plug created" << std::endl;
 }
@@ -128,22 +139,12 @@ AmericanPlug::~AmericanPlug() {
     std::cout << "American plug destroyed" << std::endl;
 }
 
-int AmericanPlug::GetVoltageRating() const {
-    return this->VoltageRating;
-}
-
-int AmericanPlug::GetFrequencyRating() const {
-    return this->FrequencyRating;
-}
-
 // =========== UKPlug ===========
-UKPlug::UKPlug(int VoltageRating, 
+UKPlug::UKPlug(int VoltageRating,
                int FrequencyRating, 
                int PinCount, 
                bool HasRoundPins) :
-    VoltageRating(VoltageRating),
-    FrequencyRating(FrequencyRating),
-    Plug(PinCount, HasRoundPins)
+    Plug(PinCount, HasRoundPins, VoltageRating, FrequencyRating)
 {
     std::cout << "UK plug created" << std::endl;
 }
@@ -152,36 +153,18 @@ UKPlug::~UKPlug() {
     std::cout << "UK plug destroyed" << std::endl;
 }
 
-int UKPlug::GetVoltageRating() const {
-    return this->VoltageRating;
-}
-
-int UKPlug::GetFrequencyRating() const {
-    return this->FrequencyRating;
-}
-
 // =========== JapanesePlug ===========
 JapanesePlug::JapanesePlug(int VoltageRating, 
                            int FrequencyRating, 
                            int PinCount,
                            bool HasRoundPins) :
-    VoltageRating(VoltageRating),
-    FrequencyRating(FrequencyRating),
-    Plug(PinCount, HasRoundPins)
+    Plug(PinCount, HasRoundPins, VoltageRating, FrequencyRating)
 {
     std::cout << "Japanese plug created" << std::endl;
 }
 
 JapanesePlug::~JapanesePlug() {
     std::cout << "Japanese plug destroyed" << std::endl;
-}
-
-int JapanesePlug::GetVoltageRating() const {
-    return this->VoltageRating;
-}
-
-int JapanesePlug::GetFrequencyRating() const {
-    return this->FrequencyRating;
 }
 
 // =========== Adapter ===========
