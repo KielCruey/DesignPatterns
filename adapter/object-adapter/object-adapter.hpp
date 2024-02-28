@@ -92,17 +92,20 @@ public:
     bool GetHasRoundPins() const;
     int GetPinCount() const;
 
-
 private:
     bool HasRoundPins;
     int PinCount;
-
 };
 
 class AmericanPlug : public Plug
 {
 public:
-    AmericanPlug(int VoltageRating , int FrequencyRating, int PinCount, bool HasRoundPins);
+    enum AmericanVoltage { Residential = 120, Commercial = 240 };
+
+    AmericanPlug(int VoltageRating = AmericanVoltage::Residential,
+                 int FrequencyRating = AMERICAN_HERTS,
+                 int PinCount = NumberOfPinholes::Two, 
+                 bool HasRoundPins = HasRoundPinholes::False);
     virtual ~AmericanPlug() override;
 
     int GetVoltageRating() const;
@@ -116,7 +119,12 @@ private:
 class UKPlug : public Plug
 {
 public:
-    UKPlug(int VoltageRating, int FrequencyRating, int PinCount, bool HasRoundPins);
+    enum UKVoltage { Residential = 230, Commercial = 415 };
+
+    UKPlug(int VoltageRating = UKVoltage::Residential, 
+           int FrequencyRating = UK_HERTS,
+           int PinCount = NumberOfPinholes::Three, 
+           bool HasRoundPins = HasRoundPinholes::False);
     virtual ~UKPlug() override;
 
     int GetVoltageRating() const;
@@ -130,7 +138,13 @@ private:
 class JapanesePlug : public Plug
 {
 public:
-    JapanesePlug(int VoltageRating, int FrequencyRating, int PinCount, bool HasRoundPins);
+    enum JapaneseVoltage { Residential = 100, Commercial = 200 };
+    enum JapaneseHerts { Eastern = 50, Western = 60 };
+
+    JapanesePlug(int VoltageRating =  JapaneseVoltage::Residential, 
+                 int FrequencyRating = JapaneseHerts::Eastern, 
+                 int PinCount =  NumberOfPinholes::Two, 
+                 bool HasRoundPins = HasRoundPinholes::True);
     virtual ~JapanesePlug() override;
 
     int GetVoltageRating() const;
@@ -140,8 +154,6 @@ private:
     int VoltageRating;
     int FrequencyRating;
 };
-
-
 
 // =========== Adapter ===========
 class Adapter : public Outlet

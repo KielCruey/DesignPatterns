@@ -237,9 +237,9 @@ static void CheckPlugAndOutlet(Plug & pPlug, Outlet & pOutlet) {
 
 // =========== Main code ===========
 int main() {
-    Plug * pAmericanPlug = new Plug(2, false);
-    Plug * pUKPlug = new Plug(3, false);
-    Plug * pJapanesePlug = new Plug(2, true);
+    AmericanPlug * pAmericanPlug = new AmericanPlug();
+    UKPlug * pUKPlug = new UKPlug();
+    JapanesePlug * pJapanesePlug = new JapanesePlug();
     
     AmericanOutlet * pAmericanOutlet = new AmericanOutlet();
     UKOutlet * pUKOutlet = new UKOutlet();
