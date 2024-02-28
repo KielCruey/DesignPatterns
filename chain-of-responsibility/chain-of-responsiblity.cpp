@@ -51,6 +51,10 @@ std::string RobotBodyHandler::Handle(std::string request) {
         setHasRobotChest(false);
         return "Robot's chest assembled!";
     }
+    else if (request == "Pelvis" && getHasRobotPelvis()) {
+        setHasRobotPelvis(false);
+        return "Robot's pelvis assembled!";
+    }
     else {
         return BaseHandler::Handle(request); // defaults to base handler
     }
@@ -60,7 +64,7 @@ void RobotBodyHandler::setHasRobotChest(bool hasRobotChest) {
     this->hasRobotChest = hasRobotChest;
 }
 
-void RobotBodyHandler::setHasRbootPelvis(bool hasRobotPelvis) {
+void RobotBodyHandler::setHasRobotPelvis(bool hasRobotPelvis) {
     this->hasRobotPelvis = hasRobotPelvis;
 }
 
@@ -90,7 +94,26 @@ RobotLimbHandler::~RobotLimbHandler() {
 }
 
 std::string RobotLimbHandler::Handle(std::string request) {
-    return request;
+
+    if (request == "Right Arm" && getHasRobotRightArm()) {
+        setHasRobotRightArm(false);
+        return "Robot's right arm assembled!";
+    }
+    else if (request == "Left Arm" && getHasRobotLeftArm()) {
+        setHasRobotLeftArm(false);
+        return "Robot's left arm assembled!";
+    }
+    else if (request == "Right Leg" && getHasRobotRightLeg()) {
+        setHasRobotRightLeg(false);
+        return "Robot's right leg assembled!";
+    }
+    else if (request == "Left Leg" && getHasRobotLeftLeg()) {
+        setHasRobotLeftLeg(false);
+        return "Robot's left leg assembled!";
+    }
+    else {
+        return BaseHandler::Handle(request); // defaults to base handler
+    }
 }
 
 void RobotLimbHandler::setHasRobotRightArm(bool hasRobotRightArm) {
@@ -137,7 +160,13 @@ RobotCraniumHandler::~RobotCraniumHandler() {
 }
 
 std::string RobotCraniumHandler::Handle(std::string request) {
-    return request;
+    if (request == "Cranium" && getHasRobotCranium()) {
+        setHasRobotCranium(false);
+        return "Robot's cranium assembled!";
+    }
+    else {
+        return BaseHandler::Handle(request);
+    }
 }
 
 void RobotCraniumHandler::setHasRobotCranium(bool hasRobotCranium) {
@@ -149,14 +178,30 @@ bool RobotCraniumHandler::getHasRobotCranium() const {
 }
 
 // =========== Client Code ===========
+void HandleTheChain(Handler & handler) {
+    std::vector<std::string> assemblyInstructions = { "Chest", "Pelvis",
+                                                     "Right Arm", "Left Arm", "Right Leg", "Left Leg",
+                                                     "Cranium" };
 
+    for (auto& i : assemblyInstructions) {
+        auto assemblyResults = handler.Handle(i);
+        std::cout << assemblyResults << std::endl;
+    }
+}
 
 // =========== Main ===========
 int main() {
-    //RobotBodyHandler * bodyHandler = new RobotBodyHandler(true, true);
-    //RobotLimbHandler * limbHandler = new RobotLimbHandler(true, true, true, true);
-    //RobotCraniumHandler * craniumHandler = new RobotCraniumHandler(true);
+    RobotBodyHandler * bodyHandler = new RobotBodyHandler(true, true);
+    RobotLimbHandler * limbHandler = new RobotLimbHandler(true, true, true, true);
+    RobotCraniumHandler * craniumHandler = new RobotCraniumHandler(true);
 
+    bodyHandler->setNext(limbHandler)->setNext(craniumHandler);
+
+    HandleTheChain(*bodyHandler);
+
+    delete bodyHandler;
+    delete limbHandler;
+    delete craniumHandler;
 
     return 0;
 }

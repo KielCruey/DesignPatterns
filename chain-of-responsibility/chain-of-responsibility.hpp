@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 
 // ========= Handler =========
 class Handler 
@@ -37,7 +38,7 @@ public:
     virtual std::string Handle(std::string request) override;
 
     void setHasRobotChest(bool hasRobotChest);
-    void setHasRbootPelvis(bool hasRobotPelvis);
+    void setHasRobotPelvis(bool hasRobotPelvis);
     bool getHasRobotChest() const;
     bool getHasRobotPelvis() const;
 
