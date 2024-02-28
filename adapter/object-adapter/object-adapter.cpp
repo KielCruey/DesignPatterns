@@ -210,7 +210,7 @@ int main() {
     
     AmericanOutlet * pAmericanOutlet = new AmericanOutlet();
     UKOutlet * pUKOutlet = new UKOutlet();
-    JapaneseOutlet * pJapaneseOutlet = new JapaneseOutlet(60);
+    JapaneseOutlet * pJapaneseOutlet = new JapaneseOutlet();
 
     CheckPlugAndOutlet(*pAmericanPlug, *pAmericanOutlet);
     CheckPlugAndOutlet(*pAmericanPlug, *pUKOutlet);
