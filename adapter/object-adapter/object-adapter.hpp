@@ -4,6 +4,11 @@
 enum NumberOfPinholes { One = 1, Two, Three };
 enum HasRoundPinholes { False = 0, True };
 
+enum AmericanVoltage { Residential = 120, Commercial = 240 };
+enum UKVoltage { Residential = 230, Commercial = 415 };
+
+enum JapaneseVoltage { Residential = 100, Commercial = 200 };
+enum JapaneseHerts { Eastern = 50, Western = 60 };
 const int AMERICAN_HERTS = 60;
 const int UK_HERTS = 50;
 
@@ -27,8 +32,6 @@ private:
 class AmericanOutlet : public Outlet
 {
 public:
-    enum AmericanVoltage { Residential = 120, Commercial = 240 };
-
     AmericanOutlet(int VoltageRating = AmericanVoltage::Residential, 
                     int FrequencyRating = AMERICAN_HERTS,
                     bool HasRoundHoles = HasRoundPinholes::False,
@@ -46,8 +49,6 @@ private:
 class UKOutlet : public Outlet
 {
 public:
-    enum UKVoltage { Residential = 230, Commercial = 415 };
-
     UKOutlet(int VoltageRating = UKVoltage::Residential, 
                 int FrequencyRating = UK_HERTS,
                 bool HasRoundHoles = HasRoundPinholes::False,
@@ -65,9 +66,6 @@ public:
 class JapaneseOutlet : public Outlet
 {
 public:
-    enum JapaneseVoltage { Residential = 100, Commercial = 200 };
-    enum JapaneseHerts { Eastern = 50, Western = 60 };
-
     JapaneseOutlet(int VoltageRating = JapaneseVoltage::Residential, 
                     int FrequencyRating = JapaneseHerts::Eastern,
                     bool HasRoundHoles = HasRoundPinholes::True,
@@ -107,8 +105,6 @@ private:
 class AmericanPlug : public Plug
 {
 public:
-    enum AmericanVoltage { Residential = 120, Commercial = 240 };
-
     AmericanPlug(int VoltageRating = AmericanVoltage::Residential,
                  int FrequencyRating = AMERICAN_HERTS,
                  int PinCount = NumberOfPinholes::Two, 
@@ -119,8 +115,6 @@ public:
 class UKPlug : public Plug
 {
 public:
-    enum UKVoltage { Residential = 230, Commercial = 415 };
-
     UKPlug(int VoltageRating = UKVoltage::Residential, 
            int FrequencyRating = UK_HERTS,
            int PinCount = NumberOfPinholes::Three, 
@@ -131,9 +125,6 @@ public:
 class JapanesePlug : public Plug
 {
 public:
-    enum JapaneseVoltage { Residential = 100, Commercial = 200 };
-    enum JapaneseHerts { Eastern = 50, Western = 60 };
-
     JapanesePlug(int VoltageRating =  JapaneseVoltage::Residential, 
                  int FrequencyRating = JapaneseHerts::Eastern, 
                  int PinCount =  NumberOfPinholes::Two, 
