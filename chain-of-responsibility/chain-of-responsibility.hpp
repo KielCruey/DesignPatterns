@@ -5,13 +5,8 @@
 class Handler 
 {
 public: 
-    virtual ~Handler() = 0;
-
-    virtual void setHandler(Handler * nextHandler) = 0;
-    virtual Handler * getHandler() = 0;
-
     virtual Handler * setNext(Handler * handler) = 0; // function chains the next handling check
-    virtual std::string Handle(std::string command) = 0;
+    virtual std::string Handle(std::string request) = 0;
 };
 
 // ========= Base Handler =========
@@ -19,13 +14,13 @@ class BaseHandler : public Handler
 {
 public: 
     BaseHandler(Handler * nextHandler = nullptr);
-    virtual ~BaseHandler() override;
-
-    virtual void setHandler(Handler * nextHandler) override;
-    virtual Handler * getHandler() override;
+    virtual ~BaseHandler();
 
     virtual Handler * setNext(Handler * handler) override;
-    virtual std::string Handle(std::string command) override;
+    virtual std::string Handle(std::string request) override;
+
+    void setHandler(Handler* nextHandler);
+    Handler* getHandler() const;
 
 private:
     Handler * nextHandler;
@@ -35,12 +30,16 @@ private:
 class RobotBodyHandler : public BaseHandler 
 {
 public: 
-    RobotBodyHandler(bool hasRobotChest = NULL,
+    RobotBodyHandler(bool hasRobotChest = NULL, 
                      bool hasRobotPelvis = NULL);
     virtual ~RobotBodyHandler() override;
 
-    virtual Handler * setNext(Handler * handler) override;
-    virtual std::string Handle(std::string command) override;
+    virtual std::string Handle(std::string request) override;
+
+    void setHasRobotChest(bool hasRobotChest);
+    void setHasRbootPelvis(bool hasRobotPelvis);
+    bool getHasRobotChest() const;
+    bool getHasRobotPelvis() const;
 
 private:
     bool hasRobotChest;
@@ -56,8 +55,16 @@ public:
                      bool hasRobotLeftLeg = NULL);
     virtual ~RobotLimbHandler() override;
 
-    virtual Handler * setNext(Handler * handler) override;
-    virtual std::string Handle(std::string command) override;
+    virtual std::string Handle(std::string request) override;
+
+    void setHasRobotRightArm(bool hasRobotRightArm);
+    void setHasRobotLeftArm(bool hasRobotLeftArm);
+    void setHasRobotRightLeg(bool hasRobotRightLeg);
+    void setHasRobotLeftLeg(bool hasRobotLeftLeg);
+    bool getHasRobotRightArm() const;
+    bool getHasRobotLeftArm() const;
+    bool getHasRobotRightLeg() const;
+    bool getHasRobotLeftLeg() const;
 
 private:
     bool hasRobotRightArm;
@@ -72,8 +79,10 @@ public:
     RobotCraniumHandler(bool hasRobotCranium = NULL);
     virtual ~RobotCraniumHandler() override;
 
-    virtual Handler * setNext(Handler * handler) override;
-    virtual std::string Handle(std::string command) override;
+    virtual std::string Handle(std::string request) override;
+
+    void setHasRobotCranium(bool hasRobotCranium);
+    bool getHasRobotCranium() const;
 
 private:
     bool hasRobotCranium;
