@@ -82,20 +82,66 @@ private:
     int FrequencyRating;
 };
 
-// =========== Adaptee ===========
+// =========== Abstract Adaptee ===========
 class Plug
 {
 public:
     Plug(int PinCount, bool HasRoundPins);
-    ~Plug();
+    virtual ~Plug();
 
     bool GetHasRoundPins() const;
     int GetPinCount() const;
 
+
 private:
     bool HasRoundPins;
     int PinCount;
+
 };
+
+class AmericanPlug : public Plug
+{
+public:
+    AmericanPlug(int VoltageRating , int FrequencyRating, int PinCount, bool HasRoundPins);
+    virtual ~AmericanPlug() override;
+
+    int GetVoltageRating() const;
+    int GetFrequencyRating() const;
+
+private:
+    int VoltageRating;
+    int FrequencyRating;
+};
+
+class UKPlug : public Plug
+{
+public:
+    UKPlug(int VoltageRating, int FrequencyRating, int PinCount, bool HasRoundPins);
+    virtual ~UKPlug() override;
+
+    int GetVoltageRating() const;
+    int GetFrequencyRating() const;
+
+private:
+    int VoltageRating;
+    int FrequencyRating;
+};
+
+class JapanesePlug : public Plug
+{
+public:
+    JapanesePlug(int VoltageRating, int FrequencyRating, int PinCount, bool HasRoundPins);
+    virtual ~JapanesePlug() override;
+
+    int GetVoltageRating() const;
+    int GetFrequencyRating() const;
+
+private:
+    int VoltageRating;
+    int FrequencyRating;
+};
+
+
 
 // =========== Adapter ===========
 class Adapter : public Outlet
