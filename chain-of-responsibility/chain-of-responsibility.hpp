@@ -10,6 +10,7 @@ public:
     virtual void setHandler(Handler * nextHandler) = 0;
     virtual Handler * getHandler() = 0;
 
+    virtual Handler * setNext(Handler * handler) = 0; // function chains the next handling check
     virtual std::string Handle(std::string command) = 0;
 };
 
@@ -23,6 +24,7 @@ public:
     virtual void setHandler(Handler * nextHandler) override;
     virtual Handler * getHandler() override;
 
+    virtual Handler * setNext(Handler * handler) override;
     virtual std::string Handle(std::string command) override;
 
 private:
@@ -37,6 +39,7 @@ public:
                      bool hasRobotPelvis = NULL);
     virtual ~RobotBodyHandler() override;
 
+    virtual Handler * setNext(Handler * handler) override;
     virtual std::string Handle(std::string command) override;
 
 private:
@@ -53,6 +56,7 @@ public:
                      bool hasRobotLeftLeg = NULL);
     virtual ~RobotLimbHandler() override;
 
+    virtual Handler * setNext(Handler * handler) override;
     virtual std::string Handle(std::string command) override;
 
 private:
@@ -68,6 +72,7 @@ public:
     RobotCraniumHandler(bool hasRobotCranium = NULL);
     virtual ~RobotCraniumHandler() override;
 
+    virtual Handler * setNext(Handler * handler) override;
     virtual std::string Handle(std::string command) override;
 
 private:
