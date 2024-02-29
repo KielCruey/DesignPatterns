@@ -7,8 +7,13 @@ public:
 	TV();
 	~TV();
 
+	// commands (from invoker) that the TV responds to
 	void powerOn();
 	void powerOff();
+	void volumeUp();
+	void volumeDown();
+	void channelUp();
+	void channelDown();
 };
 
 // ============ AbstractCommand ============
@@ -22,10 +27,13 @@ public:
 class PowerOn : public TVCommand
 {
 public:
-	PowerOn();
+	PowerOn(TV * tv = nullptr);
 	~PowerOn();
 
 	virtual void execute() override;
+
+	void setTV();
+	TV * getTV();
 
 protected:
 	TV * tv;
@@ -34,10 +42,13 @@ protected:
 class PowerOff : public TVCommand
 {
 public:
-	PowerOff();
+	PowerOff(TV * tv = nullptr);
 	~PowerOff();
 
 	virtual void execute() override;
+
+	void setTV();
+	TV * getTV();
 
 protected:
 	TV * tv;
@@ -46,10 +57,13 @@ protected:
 class VolumeUp : public TVCommand
 {
 public:
-	VolumeUp();
+	VolumeUp(TV * tv = nullptr);
 	~VolumeUp();
 
 	virtual void execute() override;
+
+	void setTV();
+	TV * getTV();
 
 protected:
 	TV * tv;
@@ -58,10 +72,13 @@ protected:
 class VolumeDown : public TVCommand
 {
 public:
-	VolumeDown();
+	VolumeDown(TV * tv = nullptr);
 	~VolumeDown();
 
 	virtual void execute() override;
+
+	void setTV();
+	TV * getTV();
 
 protected:
 	TV * tv;
@@ -70,10 +87,13 @@ protected:
 class ChannelUp : public TVCommand
 {
 public:
-	ChannelUp();
+	ChannelUp(TV * tv = nullptr);
 	~ChannelUp();
 
 	virtual void execute() override;
+
+	void setTV();
+	TV * getTV();
 
 protected:
 	TV * tv;
@@ -82,10 +102,13 @@ protected:
 class ChannelDown : public TVCommand
 {
 public:
-	ChannelDown();
+	ChannelDown(TV * tv = nullptr);
 	~ChannelDown();
 
 	virtual void execute() override;
+
+	void setTV();
+	TV * getTV();
 
 protected:
 	TV * tv;
@@ -101,8 +124,11 @@ public:
 	TVCommand * getTVCommand() const;
 	void setCommand(TVCommand * tvCommand);
 
-	void command();
+	void command() const;
 
-private:
+	void setTVCommand(TVCommand* tvCommand);
+	TVCommand * getTVCommand();
+
+protected:
 	TVCommand * tvCommand;
 };

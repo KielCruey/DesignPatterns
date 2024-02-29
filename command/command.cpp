@@ -1,5 +1,10 @@
 #include "command.hpp"
 
+// ============ Static Functions ============
+static void printToConsole(std::string string) {
+	std::cout << string << std::endl;
+}
+
 // ============ TV ============
 TV::TV() {
 
@@ -10,11 +15,27 @@ TV::~TV() {
 }
 
 void TV::powerOn() {
-	std::cout << "TV is powered on!" << std::endl;
+	printToConsole("TV is powered on!");
 }
 
 void TV::powerOff() {
-	std::cout << "TV is powered off!" << std::endl;
+	printToConsole("TV is powered off!");
+}
+
+void TV::volumeUp() {
+	printToConsole("TV volumed up!");
+}
+
+void TV::volumeDown() {
+	printToConsole("TV volumed down!");
+}
+
+void TV::channelUp() {
+	printToConsole("TV channeled up!");
+}
+
+void TV::channelDown() {
+	printToConsole("TV channeled down!");
 }
 
 // ============ TVCommand ============
@@ -23,9 +44,9 @@ TVCommand::~TVCommand() {
 }
 
 // ============ PowerOn ============
-PowerOn::PowerOn() {
-
-}
+PowerOn::PowerOn(TV * tv) :
+	tv(tv)
+{ }
 
 PowerOn::~PowerOn() {
 
@@ -35,10 +56,18 @@ void PowerOn::execute() {
 	tv->powerOn();
 }
 
-// ============ PowerOff ============
-PowerOff::PowerOff() {
-
+void PowerOn::setTV() {
+	this->tv = tv;
 }
+
+TV * PowerOn::getTV() {
+	return this->tv;
+}
+
+// ============ PowerOff ============
+PowerOff::PowerOff(TV * tv) :
+	tv(tv)
+{ }
 
 PowerOff::~PowerOff() {
 
@@ -48,10 +77,18 @@ void PowerOff::execute() {
 	tv->powerOff();
 }
 
-// ============ VolumeUp ============
-VolumeUp::VolumeUp() {
-
+void PowerOff::setTV() {
+	this->tv = tv;
 }
+
+TV * PowerOff::getTV() {
+	return this->tv;
+}
+
+// ============ VolumeUp ============
+VolumeUp::VolumeUp(TV * tv) :
+	tv(tv)
+{ }
 
 VolumeUp::~VolumeUp() {
 
@@ -61,10 +98,18 @@ void VolumeUp::execute() {
 
 }
 
-// ============ VolumeDown ============
-VolumeDown::VolumeDown() {
-
+void VolumeUp::setTV() {
+	this->tv = tv;
 }
+
+TV * VolumeUp::getTV() {
+	return this->tv;
+}
+
+// ============ VolumeDown ============
+VolumeDown::VolumeDown(TV * tv) :
+	tv(tv)
+{ }
 
 VolumeDown::~VolumeDown() {
 
@@ -74,10 +119,18 @@ void VolumeDown::execute() {
 
 }
 
-// ============ ChannelUp ============
-ChannelUp::ChannelUp() {
-
+void VolumeDown::setTV() {
+	this->tv = tv;
 }
+
+TV * VolumeDown::getTV() {
+	return this->tv;
+}
+
+// ============ ChannelUp ============
+ChannelUp::ChannelUp(TV * tv) :
+	tv(tv)
+{ }
 
 ChannelUp::~ChannelUp() {
 
@@ -87,10 +140,18 @@ void ChannelUp::execute() {
 
 }
 
-// ============ ChannelDown ============
-ChannelDown::ChannelDown() {
-
+void ChannelUp::setTV() {
+	this->tv = tv;
 }
+
+TV * ChannelUp::getTV() {
+	return this->tv;
+}
+
+// ============ ChannelDown ============
+ChannelDown::ChannelDown(TV * tv) :
+	tv(tv)
+{ }
 
 ChannelDown::~ChannelDown() {
 
@@ -98,6 +159,14 @@ ChannelDown::~ChannelDown() {
 
 void ChannelDown::execute() {
 
+}
+
+void ChannelDown::setTV() {
+	this->tv = tv;
+}
+
+TV * ChannelDown::getTV() {
+	return this->tv;
 }
 
 // ============ Invoker ============
@@ -117,10 +186,24 @@ void TVRemote::setCommand(TVCommand* tvCommand) {
 	this->tvCommand = tvCommand;
 }
 
-void TVRemote::command() {
+void TVRemote::command() const {
 	getTVCommand()->execute();
 }
 
+void TVRemote::setTVCommand(TVCommand* tvCommand) {
+	this->tvCommand = tvCommand;
+}
+
+TVCommand * TVRemote::getTVCommand() {
+	return this->tvCommand;
+}
+
+
+// ============ Client Code ============
+static void tvCommand(TVRemote * tvRemote, TVCommand * tvCommand) {
+	tvRemote->setCommand(tvCommand);
+	tvRemote->command();
+}
 // ============ Main ============
 int main() {
 	// receiver
@@ -140,8 +223,12 @@ int main() {
 	TVRemote * tvRemote = new TVRemote();
 
 	// execute
-	tvRemote->setCommand(powerOn);
-	tvRemote->command();
+	tvCommand(tvRemote, powerOn);
+	tvCommand(tvRemote, powerOff);
+	tvCommand(tvRemote, volumeUp);
+	tvCommand(tvRemote, volumeDown);
+	tvCommand(tvRemote, channelUp);
+	tvCommand(tvRemote, channelDown);
 
 	return 0;
 }
