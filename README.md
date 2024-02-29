@@ -57,5 +57,8 @@ For creating UML, [drawio.com](https://www.drawio.com/) was used. A quick [tutor
 
 [Move Semantics](https://irkos.org/cpp/move/)
 
+## Command
+[Article](https://www.bogotobogo.com/DesignPatterns/command.php)
+
 # Compiling Code
 This [video](https://www.youtube.com/watch?v=3-9sObAg6R0) helps with compiling on VS code.
