@@ -10,10 +10,6 @@ TV::TV() {
 
 }
 
-TV::~TV() {
-
-}
-
 void TV::powerOn() {
 	printToConsole("TV is powered on!");
 }
@@ -38,19 +34,10 @@ void TV::channelDown() {
 	printToConsole("TV channeled down!");
 }
 
-// ============ TVCommand ============
-TVCommand::~TVCommand() {
-
-}
-
 // ============ PowerOn ============
 PowerOn::PowerOn(TV * tv) :
 	tv(tv)
 { }
-
-PowerOn::~PowerOn() {
-
-}
 
 void PowerOn::execute() {
 	tv->powerOn();
@@ -69,10 +56,6 @@ PowerOff::PowerOff(TV * tv) :
 	tv(tv)
 { }
 
-PowerOff::~PowerOff() {
-
-}
-
 void PowerOff::execute() {
 	tv->powerOff();
 }
@@ -89,10 +72,6 @@ TV * PowerOff::getTV() {
 VolumeUp::VolumeUp(TV * tv) :
 	tv(tv)
 { }
-
-VolumeUp::~VolumeUp() {
-
-}
 
 void VolumeUp::execute() {
 
@@ -111,10 +90,6 @@ VolumeDown::VolumeDown(TV * tv) :
 	tv(tv)
 { }
 
-VolumeDown::~VolumeDown() {
-
-}
-
 void VolumeDown::execute() {
 
 }
@@ -131,10 +106,6 @@ TV * VolumeDown::getTV() {
 ChannelUp::ChannelUp(TV * tv) :
 	tv(tv)
 { }
-
-ChannelUp::~ChannelUp() {
-
-}
 
 void ChannelUp::execute() {
 
@@ -153,10 +124,6 @@ ChannelDown::ChannelDown(TV * tv) :
 	tv(tv)
 { }
 
-ChannelDown::~ChannelDown() {
-
-}
-
 void ChannelDown::execute() {
 
 }
@@ -171,10 +138,6 @@ TV * ChannelDown::getTV() {
 
 // ============ Invoker ============
 TVRemote::TVRemote() {
-
-}
-
-TVRemote::~TVRemote() {
 
 }
 
@@ -197,7 +160,6 @@ void TVRemote::setTVCommand(TVCommand* tvCommand) {
 TVCommand * TVRemote::getTVCommand() {
 	return this->tvCommand;
 }
-
 
 // ============ Client Code ============
 static void tvCommand(TVRemote * tvRemote, TVCommand * tvCommand) {

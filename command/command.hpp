@@ -20,7 +20,7 @@ public:
 class TVCommand 
 {
 public:
-	virtual ~TVCommand();
+	virtual ~TVCommand() = default;
 	virtual void execute() = 0;
 };
 
@@ -28,7 +28,7 @@ class PowerOn : public TVCommand
 {
 public:
 	PowerOn(TV * tv = nullptr);
-	~PowerOn();
+	~PowerOn() = default;
 
 	virtual void execute() override;
 
@@ -43,7 +43,7 @@ class PowerOff : public TVCommand
 {
 public:
 	PowerOff(TV * tv = nullptr);
-	~PowerOff();
+	~PowerOff() = default;
 
 	virtual void execute() override;
 
@@ -58,7 +58,7 @@ class VolumeUp : public TVCommand
 {
 public:
 	VolumeUp(TV * tv = nullptr);
-	~VolumeUp();
+	~VolumeUp() = default;
 
 	virtual void execute() override;
 
@@ -73,7 +73,7 @@ class VolumeDown : public TVCommand
 {
 public:
 	VolumeDown(TV * tv = nullptr);
-	~VolumeDown();
+	~VolumeDown() = default;
 
 	virtual void execute() override;
 
@@ -88,7 +88,7 @@ class ChannelUp : public TVCommand
 {
 public:
 	ChannelUp(TV * tv = nullptr);
-	~ChannelUp();
+	~ChannelUp() = default;
 
 	virtual void execute() override;
 
@@ -103,7 +103,7 @@ class ChannelDown : public TVCommand
 {
 public:
 	ChannelDown(TV * tv = nullptr);
-	~ChannelDown();
+	~ChannelDown() = default;
 
 	virtual void execute() override;
 
@@ -119,7 +119,7 @@ class TVRemote
 {
 public:
 	TVRemote();
-	~TVRemote();
+	~TVRemote() = default;
 
 	TVCommand * getTVCommand() const;
 	void setCommand(TVCommand * tvCommand);
