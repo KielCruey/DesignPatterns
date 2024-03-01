@@ -62,5 +62,13 @@ For creating UML, [drawio.com](https://www.drawio.com/) was used. A quick [tutor
 ## Command
 [Article](https://www.bogotobogo.com/DesignPatterns/command.php)
 
+## Iterator
+[Article](https://medium.com/geekculture/iterator-design-pattern-in-c-42caec84bfc)
+[Article 2](https://www.vishalchovatiya.com/iterator-design-pattern-in-modern-cpp/)
+
+## General Resources
+[Design Patters](https://refactoring.guru/)
+[Source Making](https://sourcemaking.com/)
+
 # Compiling Code
 This [video](https://www.youtube.com/watch?v=3-9sObAg6R0) helps with compiling on VS code.
