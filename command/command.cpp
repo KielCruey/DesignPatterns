@@ -11,13 +11,23 @@ TV::TV(bool isPowered) :
 { }
 
 void TV::powerOn() {
-	setIsPowered(true);
-	printToConsole("TV is powered on!");
+	if (getIsPowered())	{
+		printToConsole("TV is ALREADY powered on!");
+	}
+	else {
+		setIsPowered(true);
+		printToConsole("TV is powered on!");
+	}
 }
 
 void TV::powerOff() {
-	setIsPowered(false);
-	printToConsole("TV is powered off!");
+	if (!getIsPowered()) {
+		printToConsole("TV is already off!");
+	}
+	else {
+		setIsPowered(false);
+		printToConsole("TV is powered off!");
+	}
 }
 
 void TV::volumeUp() {
@@ -182,29 +192,16 @@ static void tvCommand(TVRemote * tvRemote, TVCommand * tvCommand) {
 }
 // ============ Main ============
 int main() {
-	// receiver
-	TV * tv = new TV();
-
-	// concrete commands
-	PowerOn* powerOn = new PowerOn();
-	PowerOff * powerOff = new PowerOff();
-
-	VolumeUp* volumeUp = new VolumeUp();
-	VolumeDown * volumeDown = new VolumeDown();
-
-	ChannelUp * channelUp = new ChannelUp();
-	ChannelDown * channelDown = new ChannelDown();
-
-	// invoker
-	TVRemote * tvRemote = new TVRemote();
+	TV * tv = new TV(); // receiver
+	TVRemote * tvRemote = new TVRemote(); // invoker
 
 	// execute
-	tvCommand(tvRemote, powerOn);
-	tvCommand(tvRemote, volumeUp);
-	tvCommand(tvRemote, volumeDown);
-	tvCommand(tvRemote, channelUp);
-	tvCommand(tvRemote, channelDown);
-	tvCommand(tvRemote, powerOff);
+	tvCommand(tvRemote, new PowerOn(tv));
+	tvCommand(tvRemote, new VolumeUp(tv));
+	tvCommand(tvRemote, new VolumeDown(tv));
+	tvCommand(tvRemote, new ChannelUp(tv));
+	tvCommand(tvRemote, new ChannelDown(tv));
+	tvCommand(tvRemote, new PowerOff(tv));
 
 	return 0;
 }
