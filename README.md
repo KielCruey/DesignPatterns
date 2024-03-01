@@ -33,5 +33,9 @@ For the factor method, there seems to be three ways it is implemented:
 [Article](https://en.wikipedia.org/wiki/Chain-of-responsibility_pattern)
 [Article 2](https://www.vishalchovatiya.com/chain-of-responsibility-design-pattern-in-modern-cpp/)
 
+
+# General Resource
+[Design Pattern Book](https://www.cs.up.ac.za/cs/lmarshall/TDP/TDP.html)
+
 # Compiling Code
 This [video](https://www.youtube.com/watch?v=3-9sObAg6R0) helps with compiling on VS code.
