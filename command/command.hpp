@@ -4,7 +4,7 @@
 class TV
 {
 public:
-	TV();
+	TV(bool isPowered = false);
 	~TV() = default;
 
 	// commands (from invoker) that the TV responds to
@@ -14,6 +14,12 @@ public:
 	void volumeDown();
 	void channelUp();
 	void channelDown();
+
+	void setIsPowered(bool isPowered);
+	bool getIsPowered() const;
+
+private:
+	bool isPowered;
 };
 
 // ============ AbstractCommand ============
@@ -118,7 +124,7 @@ protected:
 class TVRemote
 {
 public:
-	TVRemote();
+	TVRemote(TVCommand* tvCommand = nullptr);
 	~TVRemote() = default;
 
 	TVCommand * getTVCommand() const;
