@@ -5,7 +5,7 @@ class TV
 {
 public:
 	TV();
-	~TV();
+	~TV() = default;
 
 	// commands (from invoker) that the TV responds to
 	void powerOn();
