@@ -1,5 +1,10 @@
 #include "proxy.hpp"
 
+// =======  =======
+static void printToConsole(std::string toConsole) {
+	std::cout << toConsole << std::endl;
+}
+
 // ======= Time =======
 Time::Time() {
 	const std::chrono::time_point now{ std::chrono::system_clock::now() };
@@ -8,10 +13,12 @@ Time::Time() {
 	SetDay(static_cast<unsigned>(ymd.day()));
 	SetMonth(static_cast<unsigned>(ymd.month()));
 	SetYear(static_cast<int>(ymd.year()));
+
+	printToConsole("Time created");
 }
 
 Time::~Time() {
-
+	printToConsole("Time destroyed");
 }
 
 // ======= CreditCardData =======
@@ -32,11 +39,11 @@ CreditCardData::CreditCardData(bool isPaymentAuthenticated,
 	lastName(lastName),
 	companyName(companyName)
 {
-	std::cout << "Credit Card Data created" << std::endl;
+	printToConsole("Credit Card Data created");
 }
 
 CreditCardData::~CreditCardData() {
-	std::cout << "Credit Card Data destroyed" << std::endl;
+	printToConsole("Credit Card Data destroyed");
 }
 
 // ======= Cash =======
@@ -44,11 +51,11 @@ Cash::Cash(double paymentBalance, double paymentTotal) :
 	paymentBalance(paymentBalance),
 	paymentTotal(paymentTotal)
 {
-	std::cout << "Cash created" << std::endl;
+	printToConsole("Cash created");
 }
 
 Cash::~Cash() {
-	std::cout << "Cash destroyed" << std::endl;
+	printToConsole("Cash destroyed");
 }
 
 double Cash::CheckBalance() {
@@ -67,7 +74,7 @@ double Cash::PayAmount(double payment, Time * time) {
 	}
 	else {
 		SetPaymentBalance(newBalance);
-		std::cout << "Payment received" << std::endl;
+		printToConsole("Payment received");
 	}
 
 	return newBalance;
@@ -81,12 +88,13 @@ CreditCard::CreditCard(Cash * cash,
 	creditCardData(creditCardData),
 	time(time)
 {
-	std::cout << "CreditCard created" << std::endl;
+	printToConsole("CreditCard created");
 }
 
 CreditCard::~CreditCard() {
 	delete cash;
-	std::cout << "CreditCard destroyed" << std::endl;
+
+	printToConsole("CreditCard destroyed");
 }
 
 double CreditCard::CheckBalance() {
@@ -103,7 +111,7 @@ double CreditCard::PayAmount(double payment, Time * time) {
 	}
 	else {
 		results = 0;
-		std::cout << "Payment failed to autenticate!" << std::endl;
+		printToConsole("Payment failed to autenticate!");
 	}
 
 	return results;
@@ -186,6 +194,7 @@ static double PayBill(PaymentType* paymentType, double amount, Time * time) {
 static double PayBill(Cash* paymentType, double amount, Time * time) {
 	return paymentType->PayAmount(amount, time);
 }
+
 
 // ======= Main =======
 int main() {
