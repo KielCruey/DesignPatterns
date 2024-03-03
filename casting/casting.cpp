@@ -70,11 +70,6 @@ static Derived * DownCasting(Base * pBase) {
     else return nullptr;
 }
 
-static Base * UpCasting(Derived * pDerived) {
-    Base * base = dynamic_cast<Base *>(pDerived);
-    return base;
-}
-
 // example will cast nullptr because the definition of the created
 // base doesn't know about the derived part of the hierachy
 static void NullCasingExample() {
@@ -113,12 +108,18 @@ static void SuccessfulDownCasting() {
     }
 }
 
+static void SuccessfullUpCasting() {
+    Derived * derived = new Derived();
+
+    Base* base = static_cast<Base*>(derived);
+}
+
 // ================ Main ================
 /**
 * The point of this program is to help with understanding the dynamic_cast<>() function in C++.
 * When working with dynamic casting, there are two forms: upcasting and downcasting.
-* For upcasting (going from derived class to base class), this is a safe process. Meaning doing it doesn't cause any potential issues.
-* However with downcasing (going from base class to derived class), there's a possibility for this process to return a nullptr.
+* For upcasting (going from derived class to base class), this is a safe process and uses static_cast<>() function. Meaning doing it doesn't cause any potential issues.
+* However with downcasing (going from base class to derived class) ands uses dynamic_cast<>(), there's a possibility for this process to return a nullptr.
 */
 int main()
 {  
@@ -126,6 +127,8 @@ int main()
     NullCasingExample();
 
     SuccessfulDownCasting();
+
+    SuccessfullUpCasting();
 
     return 0;
 }
