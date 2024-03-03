@@ -15,11 +15,11 @@ void Base::SomeFunction() {
     std::cout << "Base -- SomeFunction" << std::endl;
 }
 
-void Base::PrintBaseVariable() {
+void Base::PrintBaseVariable() const {
     std::cout << "Base Variable: " << this->baseVariable << std::endl;
 }
 
-int Base::GetBaseVariable() { 
+int Base::GetBaseVariable() const {
     return this->baseVariable; 
 }
 
@@ -47,11 +47,11 @@ void Derived::DerivedFunction() {
     std::cout << "Derived -- DerivedFunction" << std::endl;
 }  
 
-void Derived::PrintDerivedVariable() {
+void Derived::PrintDerivedVariable() const {
     std::cout << "Derived Variable: " << this->derivedVariable << std::endl;
 }
 
-int Derived::GetDerivedVariable() {
+int Derived::GetDerivedVariable() const {
     return this->derivedVariable;
 }
 
@@ -60,7 +60,7 @@ void Derived::SetDerivedVariable(int derivedVariable) {
 }
 
 // ================ Client Code ================
-Derived * DownCasting(Base * pBase) {
+static Derived * DownCasting(Base * pBase) {
     Derived * derived = dynamic_cast<Derived *>(pBase);
 
     // there's a chance that downcasting can cause a nullptr
@@ -70,7 +70,7 @@ Derived * DownCasting(Base * pBase) {
     else return nullptr;
 }
 
-Base * UpCasting(Derived * pDerived) {
+static Base * UpCasting(Derived * pDerived) {
     Base * base = dynamic_cast<Base *>(pDerived);
     return base;
 }
@@ -88,7 +88,11 @@ static void NullCasingExample() {
         delete derived;
         delete base;
     }
-    else delete base;
+    else {
+        derived->PrintBaseVariable();
+        derived->PrintDerivedVariable();
+        delete base;
+    }
 }
 
 static void SuccessfulDownCasting() {
@@ -99,13 +103,23 @@ static void SuccessfulDownCasting() {
 
     // checks nullptr
     if (!derived) {
-        delete derived;
+        delete derived; // must delete derived object before base object
         delete base;
     }
-    else delete base;
+    else {
+        derived->PrintBaseVariable();
+        derived->PrintDerivedVariable();
+        delete base;
+    }
 }
 
 // ================ Main ================
+/**
+* The point of this program is to help with understanding the dynamic_cast<>() function in C++.
+* When working with dynamic casting, there are two forms: upcasting and downcasting.
+* For upcasting (going from derived class to base class), this is a safe process. Meaning doing it doesn't cause any potential issues.
+* However with downcasing (going from base class to derived class), there's a possibility for this process to return a nullptr.
+*/
 int main()
 {  
     // example of failed cast

@@ -9,9 +9,9 @@ public:
 
     virtual void SomeFunction();
 
-    void PrintBaseVariable();
+    void PrintBaseVariable() const;
 
-    int GetBaseVariable();
+    int GetBaseVariable() const;
     void SetBaseVariable(int baseVariable);
 
 private:
@@ -27,9 +27,9 @@ public:
     void SomeFunction() override;
 
     void DerivedFunction();
-    void PrintDerivedVariable();
+    void PrintDerivedVariable() const;
 
-    int GetDerivedVariable();
+    int GetDerivedVariable() const;
     void SetDerivedVariable(int derivedVariable);
 
 private:
