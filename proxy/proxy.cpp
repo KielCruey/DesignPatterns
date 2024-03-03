@@ -21,6 +21,29 @@ Time::~Time() {
 	printToConsole("Time destroyed");
 }
 
+// ======= CreditCardOwnerData =======
+CreditCardOwnerData::CreditCardOwnerData(int validMonth,
+										 int validYear,
+										 int securityCode,
+										 int cardNumber,
+										 std::string firstName,
+										 std::string lastName,
+										 std::string companyName) :
+	validMonth(validMonth),
+	validYear(validYear),
+	securityCode(securityCode),
+	cardNumber(cardNumber),
+	firstName(firstName),
+	lastName(lastName),
+	companyName(companyName)
+{
+	printToConsole("CreditCardOwnerData created");
+}
+
+CreditCardOwnerData::~CreditCardOwnerData() {
+	printToConsole("CreditCardOwnerData destroyed");
+}
+
 // ======= CreditCardData =======
 CreditCardData::CreditCardData(bool isPaymentAuthenticated,
 								int validMonth,
@@ -118,8 +141,6 @@ double CreditCard::PayAmount(double payment, Time * time) {
 }
 
 bool CreditCard::CheckPaymentAuthentication(CreditCardData * creditCardData, Time * time) {
-	bool results;
-
 	if (CheckValidMonth(creditCardData, time) &&
 		CheckValidYear(creditCardData, time) &&
 		CheckSecurityCode(creditCardData) &&
@@ -128,41 +149,38 @@ bool CreditCard::CheckPaymentAuthentication(CreditCardData * creditCardData, Tim
 		CheckLastName(creditCardData) &&
 		CheckCompanyName(creditCardData))
 	{
-		results = true;
+		return true;
 	}
-	else results = false;
-
-	return results;
+	else 
+		return false;
 }
 
 bool CreditCard::CheckValidMonth(CreditCardData* creditCardData, Time* time) {
-	bool results;
-
 	if (1 <= creditCardData->GetValidMonth() &&
 		creditCardData->GetValidMonth() <= 12)
 	{
-		results = true;
+		return true;
 	}
-	else results = false;
-
-	return results;
+	else 
+		return false;
 }
 
-bool CreditCard::CheckValidYear(CreditCardData* creditCardData, Time* time) {
-	return true;
+bool CreditCard::CheckValidYear(CreditCardData* creditCardData, Time * time) {
+
+	if (time->GetYear() <= creditCardData->GetValidYear()) 
+		return true;
+	else 
+		return false;
 }
 
 bool CreditCard::CheckSecurityCode(CreditCardData* creditCardData) {
-	bool results;
-
 	if (0 <= creditCardData->GetSecurityCode() &&
 		creditCardData->GetSecurityCode() <= 999)
 	{
-		results = true;
+		return true;
 	}
-	else results = false;
-	
-	return results;
+	else 
+		return false;
 }
 
 bool CreditCard::CheckCardNumber(CreditCardData* creditCardData) {
@@ -201,7 +219,7 @@ int main() {
 	Time * time = new Time();
 
 	Cash * cash = new Cash(100.00, 500.00);
-	CreditCardData * creditCardData = new CreditCardData(false, 9, 10, 420, 123456, "John", "Doe", "Capital One");
+	CreditCardData * creditCardData = new CreditCardData(false, 9, 2026, 420, 123456, "John", "Doe", "Capital One");
 	CreditCard * creditCard = new CreditCard(cash, creditCardData, time);
 
 	auto creditCardBalance_precheck = RequestCheckBalance(creditCard);

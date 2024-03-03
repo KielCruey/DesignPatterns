@@ -23,6 +23,63 @@ inline void Time::SetYear(int year) {
 	this->year = year;
 }
 
+// ======= CreditCardOwnerData =======
+inline int CreditCardOwnerData::GetValidMonth() const {
+
+}
+
+inline int CreditCardOwnerData::GetValidYear() const {
+
+}
+
+inline int CreditCardOwnerData::GetSecurityCode() const {
+
+}
+
+inline int CreditCardOwnerData::GetCardNumber() const {
+
+}
+
+inline std::string CreditCardOwnerData::GetFirstName() const {
+
+}
+
+inline std::string CreditCardOwnerData::GetLastName() const {
+
+}
+
+inline std::string CreditCardOwnerData::GetCompany() const {
+
+}
+
+inline void CreditCardOwnerData::SetValidMonth(int validMonth) {
+
+}
+
+inline void CreditCardOwnerData::SetValidYear(int validYear) {
+
+}
+
+inline void CreditCardOwnerData::SetSecurityCode(int securityCode) {
+
+}
+
+inline void CreditCardOwnerData::SetCardNumber(int cardNumber) {
+
+}
+
+inline void CreditCardOwnerData::SetFirstName(std::string firstName) {
+
+}
+
+inline void CreditCardOwnerData::SetLastName(std::string lastName) {
+
+}
+
+inline void CreditCardOwnerData::SetCompany(std::string companyName) {
+
+}
+
 // ======= CreditCardData =======
 inline bool CreditCardData::GetisPaymentAuthenticated() const { 
 	return this->isPaymentAuthenticated; 
