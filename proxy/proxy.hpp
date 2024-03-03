@@ -3,6 +3,23 @@
 #include <iomanip> // setprecision
 #include <chrono>
 
+class Time {
+public:
+	Time();
+	~Time();
+
+	inline int GetDay() const;
+	inline int GetMonth() const;
+	inline int GetYear() const;
+	inline void SetDay(int day);
+	inline void SetMonth(int month);
+	inline void SetYear(int year);
+
+private:
+	int day;
+	int month;
+	int year;
+};
 
 // ========== Helper Classes ==========
 class CreditCardData
@@ -53,7 +70,7 @@ class PaymentType
 public:
 	virtual ~PaymentType() {};
 	virtual double CheckBalance() = 0;
-	virtual double PayAmount(double payment) = 0;
+	virtual double PayAmount(double payment, Time * time) = 0;
 };
 
 // ======= Real Subject =======
@@ -65,10 +82,11 @@ public:
 	~Cash() override;
 
 	double CheckBalance() override;
-	double PayAmount(double payment) override;
+	double PayAmount(double payment, Time * time) override;
 
 	inline double GetPaymentBalance() const;
 	inline double GetPaymentTotal() const;
+
 	inline void SetPaymentBalance(double paymentBalance);
 	inline void SetPaymentTotal(double paymentTotal);
 
@@ -82,31 +100,34 @@ class CreditCard : public PaymentType
 {
 public:
 	CreditCard(Cash * cash = nullptr, 
-				CreditCardData * creditCardData = nullptr);
+				CreditCardData * creditCardData = nullptr,
+				Time * time = nullptr);
 	~CreditCard() override;
 
 	double CheckBalance() override;
-	double PayAmount(double payment) override;
+	double PayAmount(double payment, Time * time) override;
 
-	bool CheckPaymentAuthentication(CreditCardData* creditCardData);
-
-	bool CheckValidMonth(CreditCardData* creditCardData);
-	bool CheckValidYear(CreditCardData* creditCardData);
+	bool CheckPaymentAuthentication(CreditCardData* creditCardData, Time * time);
+	bool CheckValidMonth(CreditCardData* creditCardData, Time * time);
+	bool CheckValidYear(CreditCardData* creditCardData, Time * time);
 	bool CheckSecurityCode(CreditCardData* creditCardData);
 	bool CheckCardNumber(CreditCardData* creditCardData);
 	bool CheckFirstName(CreditCardData* creditCardData);
 	bool CheckLastName(CreditCardData* creditCardData);
 	bool CheckCompanyName(CreditCardData* creditCardData);
 
-	Cash * GetCash() const;
-	CreditCardData* GetCreditCardData() const;
-	void SetCash(Cash * cash);
-	void SetCreditCardData(CreditCardData * creditCardData);
+	inline Cash * GetCash() const;
+	inline CreditCardData * GetCreditCardData() const;
+	inline Time * GetTime();
 
-private:
+	inline void SetCash(Cash * cash);
+	inline void SetCreditCardData(CreditCardData * creditCardData);
+	inline void SetTime(Time * time);
+
+protected:
 	Cash * cash; // credit card is used to pay cash as payment
 	CreditCardData * creditCardData;
+	Time * time; // 
 };
-
 
 #include "proxy.inl"

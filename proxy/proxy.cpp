@@ -1,5 +1,19 @@
 #include "proxy.hpp"
 
+// ======= Time =======
+Time::Time() {
+	const std::chrono::time_point now{ std::chrono::system_clock::now() };
+	const std::chrono::year_month_day ymd{ std::chrono::floor<std::chrono::days>(now) };
+
+	SetDay(static_cast<unsigned>(ymd.day()));
+	SetMonth(static_cast<unsigned>(ymd.month()));
+	SetYear(static_cast<int>(ymd.year()));
+}
+
+Time::~Time() {
+
+}
+
 // ======= CreditCardData =======
 CreditCardData::CreditCardData(bool isPaymentAuthenticated,
 								int validMonth,
@@ -42,7 +56,7 @@ double Cash::CheckBalance() {
 	return this->paymentBalance;
 }
 
-double Cash::PayAmount(double payment) {
+double Cash::PayAmount(double payment, Time * time) {
 	double newBalance = GetPaymentBalance() - payment;
 
 	// checks for overpayment, returns overplayment else return no overplayment value
@@ -60,9 +74,12 @@ double Cash::PayAmount(double payment) {
 }
 
 // ======= Credit Card =======
-CreditCard::CreditCard(Cash* cash, CreditCardData* creditCardData) :
+CreditCard::CreditCard(Cash * cash, 
+						CreditCardData * creditCardData, 
+						Time * time) :
 	cash(new Cash(*cash)),
-	creditCardData(creditCardData)
+	creditCardData(creditCardData),
+	time(time)
 {
 	std::cout << "CreditCard created" << std::endl;
 }
@@ -76,11 +93,11 @@ double CreditCard::CheckBalance() {
 	return GetCash()->CheckBalance();
 }
 
-double CreditCard::PayAmount(double payment) {
+double CreditCard::PayAmount(double payment, Time * time) {
 	double results;
 
-	if (CheckPaymentAuthentication(GetCreditCardData())) {
-		results = GetCash()->PayAmount(payment);
+	if (CheckPaymentAuthentication(GetCreditCardData(), time)) {
+		results = GetCash()->PayAmount(payment, time);
 		GetCash()->SetPaymentBalance(results);
 		std::cout << "Payment authenticated and processing..." << std::endl;
 	}
@@ -92,11 +109,11 @@ double CreditCard::PayAmount(double payment) {
 	return results;
 }
 
-bool CreditCard::CheckPaymentAuthentication(CreditCardData* creditCardData) {
+bool CreditCard::CheckPaymentAuthentication(CreditCardData * creditCardData, Time * time) {
 	bool results;
 
-	if (CheckValidMonth(creditCardData) &&
-		CheckValidYear(creditCardData) &&
+	if (CheckValidMonth(creditCardData, time) &&
+		CheckValidYear(creditCardData, time) &&
 		CheckSecurityCode(creditCardData) &&
 		CheckCardNumber(creditCardData) &&
 		CheckFirstName(creditCardData) &&
@@ -110,7 +127,7 @@ bool CreditCard::CheckPaymentAuthentication(CreditCardData* creditCardData) {
 	return results;
 }
 
-bool CreditCard::CheckValidMonth(CreditCardData* creditCardData) {
+bool CreditCard::CheckValidMonth(CreditCardData* creditCardData, Time* time) {
 	bool results;
 
 	if (1 <= creditCardData->GetValidMonth() &&
@@ -123,7 +140,7 @@ bool CreditCard::CheckValidMonth(CreditCardData* creditCardData) {
 	return results;
 }
 
-bool CreditCard::CheckValidYear(CreditCardData* creditCardData) {
+bool CreditCard::CheckValidYear(CreditCardData* creditCardData, Time* time) {
 	return true;
 }
 
@@ -156,48 +173,35 @@ bool CreditCard::CheckCompanyName(CreditCardData* creditCardData) {
 	return true;
 }
 
-Cash * CreditCard::GetCash() const {
-	return this->cash;
-}
-
-CreditCardData * CreditCard::GetCreditCardData() const {
-	return this->creditCardData;
-}
-
-void CreditCard::SetCash(Cash* cash) {
-	this->cash = cash;
-}
-
-void CreditCard::SetCreditCardData(CreditCardData* creditCardData) {
-	this->creditCardData = creditCardData;
-}
-
 // ======= Client Code =======
 static double RequestCheckBalance(PaymentType * paymentType) {
 	return paymentType->CheckBalance();
 }
 
-static double PayBill(PaymentType* paymentType, double amount) {
-	return paymentType->PayAmount(amount);
+static double PayBill(PaymentType* paymentType, double amount, Time * time) {
+	return paymentType->PayAmount(amount, time);
 }
 
 // overloading function to differentiate if cash is used for payment
-static double PayBill(Cash* paymentType, double amount) {
-	return paymentType->PayAmount(amount);
+static double PayBill(Cash* paymentType, double amount, Time * time) {
+	return paymentType->PayAmount(amount, time);
 }
 
 // ======= Main =======
 int main() {
+	Time * time = new Time();
+
 	Cash * cash = new Cash(100.00, 500.00);
-	CreditCardData * creditCardData = new CreditCardData(false, 9, 10, 420, 666999, "John", "Doe", "Capital One");
-	CreditCard * creditCard = new CreditCard(cash, creditCardData);
+	CreditCardData * creditCardData = new CreditCardData(false, 9, 10, 420, 123456, "John", "Doe", "Capital One");
+	CreditCard * creditCard = new CreditCard(cash, creditCardData, time);
 
 	auto creditCardBalance_precheck = RequestCheckBalance(creditCard);
-	auto paymentLeft = PayBill(creditCard, 30.00);
+	auto paymentLeft = PayBill(creditCard, 30.00, time);
 	auto creditCardBalance_check = RequestCheckBalance(creditCard);
-	auto paymentRemainding = PayBill(creditCard, 60.00);
+	auto paymentRemainding = PayBill(creditCard, 60.00, time);
 	auto creditCardBalance_postcheck = RequestCheckBalance(creditCard);
 
+	delete time;
 	delete creditCard;
 
 	return 0;

@@ -1,34 +1,59 @@
+// ======= Time =======
+inline int Time::GetDay() const {
+	return this->day;
+}
+
+inline int Time::GetMonth() const {
+	return this->month;
+}
+
+inline int Time::GetYear() const {
+	return this->year;
+}
+
+inline void Time::SetDay(int day) {
+	this->day = day;
+}
+
+inline void Time::SetMonth(int month) {
+	this->month = month;
+}
+
+inline void Time::SetYear(int year) {
+	this->year = year;
+}
+
 // ======= CreditCardData =======
 inline bool CreditCardData::GetisPaymentAuthenticated() const { 
-	return isPaymentAuthenticated; 
+	return this->isPaymentAuthenticated; 
 }
 
 inline int CreditCardData::GetValidMonth() const { 
-	return validMonth; 
+	return this->validMonth;
 }
 
 inline int CreditCardData::GetValidYear() const { 
-	return validYear; 
+	return this->validYear;
 }
 
 inline int CreditCardData::GetSecurityCode() const { 
-	return securityCode; 
+	return this->securityCode;
 }
 
 inline int CreditCardData::GetCardNumber() const { 
-	return cardNumber; 
+	return this->cardNumber;
 }
 
 inline std::string CreditCardData::GetFirstName() const { 
-	return firstName; 
+	return this->firstName;
 }
 
 inline std::string CreditCardData::GetLastName() const { 
-	return lastName; 
+	return this->lastName;
 }
 
 inline std::string CreditCardData::GetCompany() const { 
-	return companyName; 
+	return this->companyName;
 }
 
 inline void CreditCardData::SetisPaymentAuthenticated(bool isPaymentAuthenticated) { 
@@ -89,10 +114,18 @@ inline CreditCardData* CreditCard::GetCreditCardData() const {
 	return this->creditCardData;
 }
 
+inline Time* CreditCard::GetTime() {
+	return this->time;
+}
+
 inline void CreditCard::SetCash(Cash* cash) {
 	this->cash = cash;
 }
 
 inline void CreditCard::SetCreditCardData(CreditCardData* creditCardData) {
 	this->creditCardData = creditCardData;
+}
+
+inline void CreditCard::SetTime(Time* time) {
+	this->time = time;
 }
