@@ -59,22 +59,6 @@ double Cash::PayAmount(double payment) {
 	return newBalance;
 }
 
-double Cash::GetPaymentBalance() const {
-	return this->paymentBalance;
-}
-
-double Cash::GetPaymentTotal() const {
-	return this->paymentTotal;
-}
-
-void Cash::SetPaymentBalance(double paymentBalance) {
-	this->paymentBalance = paymentBalance;
-}
-
-void Cash::SetPaymentTotal(double paymentTotal) {
-	this->paymentTotal = paymentTotal;
-}
-
 // ======= Credit Card =======
 CreditCard::CreditCard(Cash* cash, CreditCardData* creditCardData) :
 	cash(new Cash(*cash)),

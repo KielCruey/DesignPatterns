@@ -18,23 +18,23 @@ public:
 					std::string companyName = nullptr);
 	~CreditCardData();
 
-	bool GetisPaymentAuthenticated() const { return isPaymentAuthenticated; }
-	int GetValidMonth() const { return validMonth; }
-	int GetValidYear() const { return validYear; }
-	int GetSecurityCode() const { return securityCode; }
-	int GetCardNumber() const { return cardNumber; }
-	std::string GetFirstName() const { return firstName; }
-	std::string GetLastName() const { return lastName; }
-	std::string GetCompany() const { return companyName; }
+	inline bool GetisPaymentAuthenticated() const;
+	inline int GetValidMonth() const;
+	inline int GetValidYear() const;
+	inline int GetSecurityCode() const;
+	inline int GetCardNumber() const;
+	inline std::string GetFirstName() const;
+	inline std::string GetLastName() const;
+	inline std::string GetCompany() const;
 
-	void SetisPaymentAuthenticated(bool isPaymentAuthenticated) { this->isPaymentAuthenticated = isPaymentAuthenticated; }
-	void SetValidMonth(int validMonth) { this->validMonth = validMonth; }
-	void SetValidYear(int validYear) { this->validYear = validYear; }
-	void SetSecurityCode(int securityCode) { this->securityCode = securityCode; }
-	void SetCardNumber(int cardNumber) { this->cardNumber = cardNumber; }
-	void SetFirstName(std::string firstName) { this->firstName = firstName; }
-	void SetLastName(std::string lastName) { this->lastName = lastName; }
-	void SetCompany(std::string companyName) { this->companyName = companyName; }
+	inline void SetisPaymentAuthenticated(bool isPaymentAuthenticated);
+	inline void SetValidMonth(int validMonth);
+	inline void SetValidYear(int validYear);
+	inline void SetSecurityCode(int securityCode);
+	inline void SetCardNumber(int cardNumber);
+	inline void SetFirstName(std::string firstName);
+	inline void SetLastName(std::string lastName);
+	inline void SetCompany(std::string companyName);
 
 private:
 	bool isPaymentAuthenticated;
@@ -67,10 +67,10 @@ public:
 	double CheckBalance() override;
 	double PayAmount(double payment) override;
 
-	double GetPaymentBalance() const;
-	double GetPaymentTotal() const;
-	void SetPaymentBalance(double paymentBalance);
-	void SetPaymentTotal(double paymentTotal);
+	inline double GetPaymentBalance() const;
+	inline double GetPaymentTotal() const;
+	inline void SetPaymentBalance(double paymentBalance);
+	inline void SetPaymentTotal(double paymentTotal);
 
 private:
 	double paymentBalance;
@@ -107,3 +107,6 @@ private:
 	Cash * cash; // credit card is used to pay cash as payment
 	CreditCardData * creditCardData;
 };
+
+
+#include "proxy.inl"
