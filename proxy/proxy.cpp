@@ -22,15 +22,11 @@ Time::~Time() {
 }
 
 // ======= CreditCardOwnerData =======
-CreditCardOwnerData::CreditCardOwnerData(int validMonth,
-										 int validYear,
-										 int securityCode,
+CreditCardOwnerData::CreditCardOwnerData(int securityCode,
 										 int cardNumber,
 										 std::string firstName,
 										 std::string lastName,
 										 std::string companyName) :
-	validMonth(validMonth),
-	validYear(validYear),
 	securityCode(securityCode),
 	cardNumber(cardNumber),
 	firstName(firstName),
@@ -204,12 +200,12 @@ static double RequestCheckBalance(PaymentType * paymentType) {
 	return paymentType->CheckBalance();
 }
 
-static double PayBill(PaymentType* paymentType, double amount, Time * time) {
+static double PayBill(PaymentType* paymentType, double amount, Time * time, CreditCardOwnerData* creditCardOwnerData) {
 	return paymentType->PayAmount(amount, time);
 }
 
 // overloading function to differentiate if cash is used for payment
-static double PayBill(Cash* paymentType, double amount, Time * time) {
+static double PayBill(Cash* paymentType, double amount, Time * time, CreditCardOwnerData* creditCardOwnerData) {
 	return paymentType->PayAmount(amount, time);
 }
 
@@ -219,13 +215,14 @@ int main() {
 	Time * time = new Time();
 
 	Cash * cash = new Cash(100.00, 500.00);
+	CreditCardOwnerData * creditCardOwnerData = new CreditCardOwnerData(420, 123456, "John", "Doe", "Capital One");
 	CreditCardData * creditCardData = new CreditCardData(false, 9, 2026, 420, 123456, "John", "Doe", "Capital One");
 	CreditCard * creditCard = new CreditCard(cash, creditCardData, time);
 
 	auto creditCardBalance_precheck = RequestCheckBalance(creditCard);
-	auto paymentLeft = PayBill(creditCard, 30.00, time);
+	auto paymentLeft = PayBill(creditCard, 30.00, time, creditCardOwnerData);
 	auto creditCardBalance_check = RequestCheckBalance(creditCard);
-	auto paymentRemainding = PayBill(creditCard, 60.00, time);
+	auto paymentRemainding = PayBill(creditCard, 60.00, time, creditCardOwnerData);
 	auto creditCardBalance_postcheck = RequestCheckBalance(creditCard);
 
 	delete time;

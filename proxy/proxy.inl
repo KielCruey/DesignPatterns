@@ -24,48 +24,32 @@ inline void Time::SetYear(int year) {
 }
 
 // ======= CreditCardOwnerData =======
-inline int CreditCardOwnerData::GetValidMonth() const {
-
-}
-
-inline int CreditCardOwnerData::GetValidYear() const {
-
-}
-
 inline int CreditCardOwnerData::GetSecurityCode() const {
-
+	return 0;
 }
 
 inline int CreditCardOwnerData::GetCardNumber() const {
-
+	return 0;
 }
 
 inline std::string CreditCardOwnerData::GetFirstName() const {
-
+	return "";
 }
 
 inline std::string CreditCardOwnerData::GetLastName() const {
-
+	return "";
 }
 
 inline std::string CreditCardOwnerData::GetCompany() const {
-
-}
-
-inline void CreditCardOwnerData::SetValidMonth(int validMonth) {
-
-}
-
-inline void CreditCardOwnerData::SetValidYear(int validYear) {
-
+	return "";
 }
 
 inline void CreditCardOwnerData::SetSecurityCode(int securityCode) {
-
+	this->securityCode = securityCode;
 }
 
 inline void CreditCardOwnerData::SetCardNumber(int cardNumber) {
-
+	this->cardNumber = cardNumber;
 }
 
 inline void CreditCardOwnerData::SetFirstName(std::string firstName) {

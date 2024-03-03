@@ -24,25 +24,19 @@ private:
 class CreditCardOwnerData
 {
 public:
-	CreditCardOwnerData(int validMonth = NULL,
-						int validYear = NULL,
-						int securityCode = NULL,
+	CreditCardOwnerData(int securityCode = NULL,
 						int cardNumber = NULL,
 						std::string firstName = nullptr,
 						std::string lastName = nullptr,
 						std::string companyName = nullptr);
 	~CreditCardOwnerData();
 
-	inline int GetValidMonth() const;
-	inline int GetValidYear() const;
 	inline int GetSecurityCode() const;
 	inline int GetCardNumber() const;
 	inline std::string GetFirstName() const;
 	inline std::string GetLastName() const;
 	inline std::string GetCompany() const;
 
-	inline void SetValidMonth(int validMonth);
-	inline void SetValidYear(int validYear);
 	inline void SetSecurityCode(int securityCode);
 	inline void SetCardNumber(int cardNumber);
 	inline void SetFirstName(std::string firstName);
@@ -50,8 +44,6 @@ public:
 	inline void SetCompany(std::string companyName);
 
 private: 
-	int validMonth;
-	int validYear;
 	int securityCode;
 	int cardNumber;
 	std::string firstName;
