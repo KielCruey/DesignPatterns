@@ -8,24 +8,20 @@ public:
     Car(std::string make = "N/A", std::string model = "N/A");
     ~Car();
 
-    // ============ printing functions ============
-    void printMake();
-    void printModel();
+    void printMake() const;
+    void printModel() const;
 
-    // ============ setters ============
-    void SetMake(std::string make);
-    void SetModel(std::string model);
-
-    // ============ getters ============
-    std::string GetMake() const;
-    std::string GetModel() const;
+    inline void SetMake(std::string make);
+    inline void SetModel(std::string model);
+    inline std::string GetMake() const;
+    inline std::string GetModel() const;
 
 private:
     std::string make;
     std::string model;
 };
 
-// ============ THE ABSTRACT BUILDER -- INTERFACE ============
+// ============ Abstract Builder ============
 class CarBuilder
 {
 public:
@@ -35,7 +31,7 @@ public:
     virtual void ProduceTransmission() = 0;
 };
 
-// ============ THE CONCRETE BUILDER ============
+// ============ Concrete Builder ============
 class ConcreteCarBuilder : public CarBuilder
 {
 public:
@@ -51,8 +47,8 @@ public:
     void ProduceTransmission();
 
     // ============ getters/setters ============
-    void SetCar(Car * car);
-    Car * GetCar();
+    inline void SetCar(Car * car);
+    inline Car * GetCar();
     
 private:
     Car * car;
@@ -62,7 +58,7 @@ private:
 class CarDirector
 {
 public:
-    void SetBuilder(CarBuilder * carBuilder);
+    inline void SetBuilder(CarBuilder * carBuilder);
 
     // ============ construction functions ============
     // functions that help create a "recipe" for the director to trigger the builder
@@ -72,3 +68,5 @@ public:
 private:
     CarBuilder * carBuilder;
 };
+
+#include "builder.inl"
