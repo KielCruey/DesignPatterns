@@ -5,18 +5,18 @@ struct Movie
 {
 public:
     Movie(std::string name, 
-            double currentDuration, 
-            double totalDuration);
+          double currentDuration, 
+          double totalDuration);
 
     ~Movie();
 
-    void SetName(std::string name);
-    void SetCurrentDuration(double currentDuration);
-    void SetTotalDuration(double totalDuration);
+    inline void SetName(std::string name);
+    inline void SetCurrentDuration(double currentDuration);
+    inline void SetTotalDuration(double totalDuration);
 
-    std::string GetName() const;
-    double GetCurrentDuration() const;
-    double GetTotalDuration() const;
+    inline std::string GetName() const;
+    inline double GetCurrentDuration() const;
+    inline double GetTotalDuration() const;
 
 private:
     std::string name;
@@ -58,21 +58,22 @@ public:
             
     ~TVDevice() override;   
 
-    void SetMovie(Movie * movie);
-    Movie * GetMovie();
+    inline void SetMovie(Movie * movie);
+    inline void SetIsPlaying(bool isPlaying);
 
-    void SetIsPlaying(bool isPlaying);
-    bool GetIsPlaying();
+    inline Movie * GetMovie();
+    inline bool GetIsPlaying();
 
-    void SetIsMuted(bool isMuted) override;
-    void SetPower(bool isPowered) override;
-    void SetVolume(int volume) override;
-    void SetChannel(int channel) override;
+    // virtual overrides
+    inline void SetIsMuted(bool isMuted) override;
+    inline void SetPower(bool isPowered) override;
+    inline void SetVolume(int volume) override;
+    inline void SetChannel(int channel) override;
 
-    bool GetIsMuted() const override;
-    bool GetPower() const override;
-    int GetVolume() const override;
-    int GetChannel() const override;
+    inline bool GetIsMuted() const override;
+    inline bool GetPower() const override;
+    inline int GetVolume() const override;
+    inline int GetChannel() const override;
 
 private:
     Movie * movie;
@@ -94,15 +95,15 @@ public:
                  
     ~RadioDevice() override;
 
-    void SetIsMuted(bool isMuted) override;
-    void SetPower(bool isPowered) override;
-    void SetVolume(int volume) override;
-    void SetChannel(int channel) override;
+    inline void SetIsMuted(bool isMuted) override;
+    inline void SetPower(bool isPowered) override;
+    inline void SetVolume(int volume) override;
+    inline void SetChannel(int channel) override;
 
-    bool GetIsMuted() const override;
-    bool GetPower() const override;
-    int GetVolume() const override;
-    int GetChannel() const override;
+    inline bool GetIsMuted() const override;
+    inline bool GetPower() const override;
+    inline int GetVolume() const override;
+    inline int GetChannel() const override;
 
 private:
     bool isMuted;
@@ -127,8 +128,8 @@ public:
     virtual int ChannelUp(Device * device);
     virtual int ChannelDown(Device * device);
 
-    Device * GetDevice() const;
-    void SetDevice(Device * device);
+    inline Device * GetDevice() const;
+    inline void SetDevice(Device * device);
 
 // device needs to be accessible to the derived classes -- used protected
 protected:
@@ -156,3 +157,5 @@ public:
     double FastRewind(Device * device); // rewinds only 10 seconds
     double FastForward(Device * device);
 };
+
+#include "bridge.inl"
