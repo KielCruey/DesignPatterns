@@ -150,10 +150,14 @@ bool CreditCard::CheckPaymentAuthentication(CreditCardData * creditCardData,
 		CheckLastName(creditCardData, creditCardOwnerData) &&
 		CheckCompanyName(creditCardData, creditCardOwnerData))
 	{
+		printToConsole("Success: Credit Card Payment Proccessed!");
 		return true;
 	}
-	else 
+	else {
+		printToConsole("Failed: Credit Card Payment Denied!");
 		return false;
+	}
+		
 }
 
 bool CreditCard::CheckValidMonth(CreditCardData * creditCardData,
@@ -231,12 +235,12 @@ static double RequestCheckBalance(PaymentType * paymentType) {
 	return paymentType->CheckBalance();
 }
 
-static double PayBill(PaymentType* paymentType, double amount, Time * time, CreditCardOwnerData* creditCardOwnerData) {
+static double PayBill(PaymentType * paymentType, double amount, Time * time, CreditCardOwnerData* creditCardOwnerData) {
 	return paymentType->PayAmount(amount, time, creditCardOwnerData);
 }
 
 // overloading function to differentiate if cash is used for payment
-static double PayBill(Cash* paymentType, double amount, Time * time, CreditCardOwnerData* creditCardOwnerData) {
+static double PayBill(Cash * paymentType, double amount, Time * time, CreditCardOwnerData* creditCardOwnerData) {
 	return paymentType->PayAmount(amount, time, creditCardOwnerData);
 }
 
@@ -256,7 +260,10 @@ int main() {
 	auto creditCardBalance_postcheck = RequestCheckBalance(creditCard);
 
 	delete time;
+	delete cash;
+	delete creditCardOwnerData;
+	delete creditCardData;
 	delete creditCard;
-
+	
 	return 0;
 }
