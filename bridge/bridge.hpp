@@ -61,8 +61,8 @@ public:
     inline void SetMovie(Movie * movie);
     inline void SetIsPlaying(bool isPlaying);
 
-    inline Movie * GetMovie();
-    inline bool GetIsPlaying();
+    inline Movie * GetMovie() const;
+    inline bool GetIsPlaying() const;
 
     // virtual overrides
     inline void SetIsMuted(bool isMuted) override;

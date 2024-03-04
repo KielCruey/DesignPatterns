@@ -29,7 +29,7 @@ inline void TVDevice::SetMovie(Movie* movie) {
 }
 
 void TVDevice::SetIsPlaying(bool isPlaying) {
-    this->isPlaying;
+    this->isPlaying = isPlaying;
 }
 
 inline void TVDevice::SetIsMuted(bool isMuted) {
@@ -48,11 +48,11 @@ inline void TVDevice::SetChannel(int channel) {
     this->channel = channel;
 }
 
-inline Movie* TVDevice::GetMovie() {
+inline Movie* TVDevice::GetMovie() const {
     return this->movie;
 }
 
-inline bool TVDevice::GetIsPlaying() {
+inline bool TVDevice::GetIsPlaying() const {
     return this->isPlaying;
 }
 
