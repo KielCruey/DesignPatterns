@@ -50,14 +50,6 @@ void TV::channelDown() {
 	else			    printToConsole("TV not powered -- can't decrease the channel!");
 }
 
-void TV::setIsPowered(bool isPowered) {
-	this->isPowered = isPowered;
-}
-
-bool TV::getIsPowered() const {
-	return this->isPowered;
-}
-
 // ============ PowerOn ============
 PowerOn::PowerOn(TV * tv) :
 	tv(tv)
@@ -65,14 +57,6 @@ PowerOn::PowerOn(TV * tv) :
 
 void PowerOn::execute() {
 	getTV()->powerOn();
-}
-
-void PowerOn::setTV() {
-	this->tv = tv;
-}
-
-TV * PowerOn::getTV() {
-	return this->tv;
 }
 
 // ============ PowerOff ============
@@ -84,14 +68,6 @@ void PowerOff::execute() {
 	getTV()->powerOff();
 }
 
-void PowerOff::setTV() {
-	this->tv = tv;
-}
-
-TV * PowerOff::getTV() {
-	return this->tv;
-}
-
 // ============ VolumeUp ============
 VolumeUp::VolumeUp(TV * tv) :
 	tv(tv)
@@ -99,14 +75,6 @@ VolumeUp::VolumeUp(TV * tv) :
 
 void VolumeUp::execute() {
 	getTV()->volumeUp();
-}
-
-void VolumeUp::setTV() {
-	this->tv = tv;
-}
-
-TV * VolumeUp::getTV() {
-	return this->tv;
 }
 
 // ============ VolumeDown ============
@@ -118,14 +86,6 @@ void VolumeDown::execute() {
 	getTV()->volumeDown();
 }
 
-void VolumeDown::setTV() {
-	this->tv = tv;
-}
-
-TV * VolumeDown::getTV() {
-	return this->tv;
-}
-
 // ============ ChannelUp ============
 ChannelUp::ChannelUp(TV * tv) :
 	tv(tv)
@@ -135,14 +95,6 @@ void ChannelUp::execute() {
 	getTV()->channelUp();
 }
 
-void ChannelUp::setTV() {
-	this->tv = tv;
-}
-
-TV * ChannelUp::getTV() {
-	return this->tv;
-}
-
 // ============ ChannelDown ============
 ChannelDown::ChannelDown(TV * tv) :
 	tv(tv)
@@ -150,14 +102,6 @@ ChannelDown::ChannelDown(TV * tv) :
 
 void ChannelDown::execute() {
 	getTV()->channelDown();
-}
-
-void ChannelDown::setTV() {
-	this->tv = tv;
-}
-
-TV * ChannelDown::getTV() {
-	return this->tv;
 }
 
 // ============ Invoker ============
@@ -175,14 +119,6 @@ void TVRemote::setCommand(TVCommand* tvCommand) {
 
 void TVRemote::command() const {
 	getTVCommand()->execute();
-}
-
-void TVRemote::setTVCommand(TVCommand* tvCommand) {
-	this->tvCommand = tvCommand;
-}
-
-TVCommand * TVRemote::getTVCommand() {
-	return this->tvCommand;
 }
 
 // ============ Client Code ============

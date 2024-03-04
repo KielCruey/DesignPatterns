@@ -15,8 +15,8 @@ public:
 	void channelUp();
 	void channelDown();
 
-	void setIsPowered(bool isPowered);
-	bool getIsPowered() const;
+	inline void setIsPowered(bool isPowered);
+	inline bool getIsPowered() const;
 
 private:
 	bool isPowered;
@@ -38,8 +38,8 @@ public:
 
 	virtual void execute() override;
 
-	void setTV();
-	TV * getTV();
+	inline void setTV();
+	inline TV * getTV();
 
 protected:
 	TV * tv;
@@ -53,8 +53,8 @@ public:
 
 	virtual void execute() override;
 
-	void setTV();
-	TV * getTV();
+	inline void setTV();
+	inline TV * getTV();
 
 protected:
 	TV * tv;
@@ -68,8 +68,8 @@ public:
 
 	virtual void execute() override;
 
-	void setTV();
-	TV * getTV();
+	inline void setTV();
+	inline TV * getTV();
 
 protected:
 	TV * tv;
@@ -83,8 +83,8 @@ public:
 
 	virtual void execute() override;
 
-	void setTV();
-	TV * getTV();
+	inline void setTV();
+	inline TV * getTV();
 
 protected:
 	TV * tv;
@@ -98,8 +98,8 @@ public:
 
 	virtual void execute() override;
 
-	void setTV();
-	TV * getTV();
+	inline void setTV();
+	inline TV * getTV();
 
 protected:
 	TV * tv;
@@ -113,8 +113,8 @@ public:
 
 	virtual void execute() override;
 
-	void setTV();
-	TV * getTV();
+	inline void setTV();
+	inline TV * getTV();
 
 protected:
 	TV * tv;
@@ -132,9 +132,11 @@ public:
 
 	void command() const;
 
-	void setTVCommand(TVCommand* tvCommand);
-	TVCommand * getTVCommand();
+	inline void setTVCommand(TVCommand* tvCommand);
+	inline TVCommand * getTVCommand();
 
 protected:
 	TVCommand * tvCommand;
 };
+
+#include "command.inl"
