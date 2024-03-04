@@ -46,7 +46,7 @@ General UML [tutorial](https://www.visual-paradigm.com/guide/uml-unified-modelin
 
 General UML [tutorial](https://www.drawio.com/blog/sequence-diagrams) on the sequency diagram.
 
-About UML ["arrow" relationships](https://www.gleek.io/blog/class-diagram-arrows).
+[Article](https://www.gleek.io/blog/class-diagram-arrows) about UML "arrow" relationships. Another [Article](https://paulrumyancev.medium.com/uml-class-diagram-arrows-guide-37e4b1bb11e) 
 
 For creating UML, [drawio.com](https://www.drawio.com/) was used. A quick [tutorial](https://www.drawio.com/blog/uml-class-diagrams) on how to create UML diagrams on drawio.com.
 
