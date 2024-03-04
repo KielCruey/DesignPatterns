@@ -1,6 +1,6 @@
-#include <io s t ream>
+#include <iostream>
 #include "RobustDoubleWrapper.hpp"
-using namespace s t d ;
+using namespace std ;
 
 RobustDoubleWrapper::RobustDoubleWrapper() : 
     value(0) 

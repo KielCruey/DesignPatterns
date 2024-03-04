@@ -1,4 +1,5 @@
 #include "RobustDoubleWrapper.hpp"
+
 class AnotherPrinter
 {
 public:
