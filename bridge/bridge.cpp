@@ -23,43 +23,11 @@ Movie::Movie(std::string name = "How to Code", double currentDuration = 0, doubl
     std::cout << "Movie created" << std::endl;
 }
 
-Movie::~Movie()
-{
+Movie::~Movie() {
     std::cout << "Movie destroyed" << std::endl;
 }
 
-void Movie::SetName(std::string name)
-{
-    this->name = name;
-}
-
-void Movie::SetCurrentDuration(double currentDuration)
-{
-    this->currentDuration = currentDuration;
-}
-
-void Movie::SetTotalDuration(double totalDuration)
-{
-    this->totalDuration = totalDuration;
-}
-
-std::string Movie::GetName() const
-{
-    return this->name;
-}
-
-double Movie::GetCurrentDuration() const
-{
-    return this->currentDuration;
-}
- 
-double Movie::GetTotalDuration() const
-{
-    return this->totalDuration;
-}
-
 // ============= TVDevice =============
-// --------- special class functions ---------
 TVDevice::TVDevice(Movie * movie, bool isPlaying, bool isMuted, bool isPowered, int volume, int channel) :
     movie(movie),
     isPlaying(isPlaying),
@@ -71,75 +39,11 @@ TVDevice::TVDevice(Movie * movie, bool isPlaying, bool isMuted, bool isPowered, 
     std::cout << "TV Device created" << std::endl;
 }
 
-TVDevice::~TVDevice()
-{
+TVDevice::~TVDevice() {
     std::cout << "TV Device destroyed" << std::endl;
 }
 
-// --------- setters ---------
-void TVDevice::SetMovie(Movie * movie)
-{
-    this->movie = movie;
-}
-
-void TVDevice::SetIsPlaying(bool isPlaying)
-{
-    this->isPlaying;
-}
-
-void TVDevice::SetIsMuted(bool isMuted)
-{
-    this->isMuted = isMuted;
-}
-
-void TVDevice::SetPower(bool isPowered)
-{
-    this->isPowered = isPowered;
-}
-
-void TVDevice::SetVolume(int volume)
-{
-    this->volume = volume;
-}
-
-void TVDevice::SetChannel(int channel) 
-{
-    this->channel = channel;
-}
-
-// --------- getters ---------
-Movie * TVDevice::GetMovie()
-{
-    return this->movie;
-}
-
-bool TVDevice::GetIsPlaying()
-{
-    return this->isPlaying;
-}
-
-bool TVDevice::GetIsMuted() const
-{
-    return this->isMuted;
-}
-
-bool TVDevice::GetPower() const
-{
-    return this->isPowered;
-}
-
-int TVDevice::GetVolume() const
-{
-    return this->volume;
-}
-
-int TVDevice::GetChannel() const
-{
-    return this->channel;
-}
-
 // ============= RadioDevice =============
-// --------- special class functions ---------
 RadioDevice::RadioDevice(bool isMuted, bool isPowered, int volume, int channel) :
     isPowered(isPowered),
     volume(volume),
@@ -148,77 +52,28 @@ RadioDevice::RadioDevice(bool isMuted, bool isPowered, int volume, int channel) 
     std::cout << "Radio Device created" << std::endl;
 }
 
-RadioDevice::~RadioDevice()
-{
+RadioDevice::~RadioDevice() {
     std::cout << "Radio Device destroyed" << std::endl;
 }
 
-// --------- setters ---------
-void RadioDevice::SetIsMuted(bool isMuted)
-{
-    this->isMuted = isMuted;
-}
-
-void RadioDevice::SetPower(bool isPowered)
-{
-    this->isPowered = isPowered;
-}
-
-void RadioDevice::SetVolume(int volume)
-{
-    this->volume = volume;
-}
-
-void RadioDevice::SetChannel(int channel)
-{
-    this->channel  = channel;
-}
-
-// --------- getters ---------
-bool RadioDevice::GetIsMuted() const
-{
-    return this->isMuted;
-}
-
-bool RadioDevice::GetPower() const
-{
-    return this->isPowered;
-}
-
-int RadioDevice::GetVolume() const
-{
-    return this->volume;
-}
-
-int RadioDevice::GetChannel() const
-{
-    return this->channel;
-}
-
 // ============= Abstraction =============
-// --------- special class functions ---------
 Remote::Remote(Device * device) :
     device(device)
 {
     std::cout << "Remote Device created" << std::endl;
 }
 
-Remote::~Remote()
-{
+Remote::~Remote() {
     std::cout << "Remote Device destroyed" << std::endl;
 }
 
-// --------- general functions ---------
 // turns the power on/off
-bool Remote::TogglePower(Device * device)
-{
-    if(device->GetPower())
-    {
+bool Remote::TogglePower(Device * device) {
+    if(device->GetPower()) {
         device->SetPower(State::OFF);
         std::cout << "Remote Device is OFF" << std::endl;
     }
-    else
-    {
+    else {
         device->SetPower(State::ON);
         std::cout << "Remote Device is ON" << std::endl;
     }
@@ -227,15 +82,12 @@ bool Remote::TogglePower(Device * device)
 }
 
 // turns the volume on/off
-bool Remote::ToggleMute(Device * device)
-{
-    if(device->GetIsMuted())
-    {
+bool Remote::ToggleMute(Device * device) {
+    if(device->GetIsMuted()) {
         device->SetIsMuted(State::OFF);
         std::cout << "Remote Device is UNMUTED" << std::endl;
     }
-    else
-    {
+    else {
         device->SetIsMuted(State::ON);
         std::cout << "Remote Device is MUTED" << std::endl;
     }
@@ -246,8 +98,7 @@ bool Remote::ToggleMute(Device * device)
 // increases volume by one and check if not over maximum volume
 int Remote::VolumeUp(Device * device)
 {
-    if(device->GetVolume() < MAXIMUM_VOLUME)
-    {
+    if(device->GetVolume() < MAXIMUM_VOLUME) {
         device->SetVolume(device->GetVolume() + 1);
     }
 
@@ -255,10 +106,8 @@ int Remote::VolumeUp(Device * device)
 }   
 
 // decreases volume by one and check if not over minimum volume
-int Remote::VolumeDown(Device * device)
-{
-    if(device->GetVolume() > MINIMUM_VOLUME)
-    {
+int Remote::VolumeDown(Device * device) {
+    if(device->GetVolume() > MINIMUM_VOLUME) {
         device->SetVolume(device->GetVolume() - 1);
     }
 
@@ -266,10 +115,8 @@ int Remote::VolumeDown(Device * device)
 }
 
 // increases channel by one and check if not over maximum channel
-int Remote::ChannelUp(Device * device)
-{
-    if(device->GetChannel() < MAXIMUM_CHANNEL)
-    {
+int Remote::ChannelUp(Device * device) {
+    if(device->GetChannel() < MAXIMUM_CHANNEL) {
         device->SetChannel(device->GetChannel() + 1);
     }
 
@@ -277,50 +124,31 @@ int Remote::ChannelUp(Device * device)
 }
 
 // decrease channel by one and check if not over minimum channel
-int Remote::ChannelDown(Device * device)
-{
-    if(device->GetChannel() > MINIMUM_CHANNEL)
-    {
+int Remote::ChannelDown(Device * device) {
+    if(device->GetChannel() > MINIMUM_CHANNEL) {
         device->SetChannel(device->GetChannel() - 1);
     }
 
     return device->GetChannel();
 }
 
-// --------- getters/setters ---------
-Device * Remote::GetDevice() const
-{
-    return this->device;
-}
-
-void Remote::SetDevice(Device * device)
-{
-    this->device = device;
-}
-
 // ============= Redefined Abstraction =============
-// --------- special class functions ---------
 TVRemote::TVRemote(Device * device) :
     Remote(device)
 {
     std::cout << "TV Remote Device created" << std::endl;
 }
 
-TVRemote::~TVRemote()
-{
+TVRemote::~TVRemote() {
     std::cout << "TV Remote Device destroyed" << std::endl;
 }
 
-// --------- general functions ---------
-bool TVRemote::TogglePower(Device * device)
-{
-    if(device->GetPower())
-    {
+bool TVRemote::TogglePower(Device * device) {
+    if(device->GetPower()) {
         device->SetPower(State::OFF);
         std::cout << "TV Remote Device is OFF" << std::endl;
     }
-    else
-    {
+    else {
         device->SetPower(State::ON);
         std::cout << "TV Remote Device is ON" << std::endl;
     }
@@ -330,13 +158,11 @@ bool TVRemote::TogglePower(Device * device)
 
 bool TVRemote::ToggleMute(Device * device)
 {
-    if(device->GetIsMuted())
-    {
+    if(device->GetIsMuted()) {
         device->SetIsMuted(State::OFF);
         std::cout << "Remote Device is UNMUTED" << std::endl;
     }
-    else
-    {
+    else {
         device->SetIsMuted(State::ON);
         std::cout << "Remote Device is MUTED" << std::endl;
     }
@@ -346,8 +172,7 @@ bool TVRemote::ToggleMute(Device * device)
 
 int TVRemote::VolumeUp(Device * device)
 {
-    if(device->GetVolume() < MAXIMUM_VOLUME)
-    {
+    if(device->GetVolume() < MAXIMUM_VOLUME) {
         device->SetVolume(device->GetVolume() + 1);
     }
 
@@ -356,28 +181,23 @@ int TVRemote::VolumeUp(Device * device)
 
 int TVRemote::VolumeDown(Device * device)
 {
-    if(device->GetVolume() > MINIMUM_VOLUME)
-    {
+    if(device->GetVolume() > MINIMUM_VOLUME) {
         device->SetVolume(device->GetVolume() - 1);
     }
 
     return device->GetVolume();
 }
 
-int TVRemote::ChannelUp(Device * device)
-{
-    if(device->GetChannel() < MAXIMUM_CHANNEL)
-    {
+int TVRemote::ChannelUp(Device * device) {
+    if(device->GetChannel() < MAXIMUM_CHANNEL) {
         device->SetChannel(device->GetChannel() + 1);
     }
 
     return device->GetChannel();
 }
 
-int TVRemote::ChannelDown(Device * device)
-{
-    if(device->GetChannel() > MINIMUM_CHANNEL)
-    {
+int TVRemote::ChannelDown(Device * device) {
+    if(device->GetChannel() > MINIMUM_CHANNEL) {
         device->SetChannel(device->GetChannel() - 1);
     }
 
@@ -401,8 +221,7 @@ bool TVRemote::TogglePlay(Device * device)
 }
 
 // rewinds 1/4 of a minute 
-double TVRemote::FastRewind(Device * device)
-{
+double TVRemote::FastRewind(Device * device) {
     TVDevice * tvDevice = dynamic_cast<TVDevice *>(device);
     
     // edge case
@@ -417,8 +236,7 @@ double TVRemote::FastRewind(Device * device)
 }
 
 // rewinds 1 minute
-double TVRemote::Rewind(Device * device)
-{   
+double TVRemote::Rewind(Device * device) {   
     TVDevice * tvDevice = dynamic_cast<TVDevice *>(device);
     
     // edge case
@@ -450,7 +268,7 @@ double TVRemote::FastForward(Device * device)
 
 // =============== Client Code ===============
 // increases/decreases channel to requested new channel
-void ChangeChannelTo(Remote * remote, int changeChannelTo)
+static void ChangeChannelTo(Remote * remote, int changeChannelTo)
 {
     do
     {
@@ -465,7 +283,7 @@ void ChangeChannelTo(Remote * remote, int changeChannelTo)
 }
 
 // increases/decreases volume to requested new volume
-void ChangeVolumeTo(Remote * remote, int changeVolumeTo)
+static void ChangeVolumeTo(Remote * remote, int changeVolumeTo)
 {
     do
     {
