@@ -32,6 +32,9 @@ For the factor method, there seems to be three ways it is implemented:
 ## Chain of Responsibility
 [Article](https://en.wikipedia.org/wiki/Chain-of-responsibility_pattern)
 [Article 2](https://www.vishalchovatiya.com/chain-of-responsibility-design-pattern-in-modern-cpp/)
+## Proxy
+[Article](https://cppcodetips.wordpress.com/2017/03/31/proxy-design-pattern-explained-with-c-sample/)
+
 
 
 # General Resource
