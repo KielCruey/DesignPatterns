@@ -25,23 +25,23 @@ inline void Time::SetYear(int year) {
 
 // ======= CreditCardOwnerData =======
 inline int CreditCardOwnerData::GetSecurityCode() const {
-	return 0;
+	return this->securityCode;
 }
 
 inline int CreditCardOwnerData::GetCardNumber() const {
-	return 0;
+	return this->cardNumber;
 }
 
 inline std::string CreditCardOwnerData::GetFirstName() const {
-	return "";
+	return this->firstName;
 }
 
 inline std::string CreditCardOwnerData::GetLastName() const {
-	return "";
+	return this->lastName;
 }
 
-inline std::string CreditCardOwnerData::GetCompany() const {
-	return "";
+inline std::string CreditCardOwnerData::GetCompanyName() const {
+	return this->companyName;
 }
 
 inline void CreditCardOwnerData::SetSecurityCode(int securityCode) {
@@ -53,15 +53,15 @@ inline void CreditCardOwnerData::SetCardNumber(int cardNumber) {
 }
 
 inline void CreditCardOwnerData::SetFirstName(std::string firstName) {
-
+	this->firstName = firstName;
 }
 
 inline void CreditCardOwnerData::SetLastName(std::string lastName) {
-
+	this->lastName = lastName;
 }
 
 inline void CreditCardOwnerData::SetCompany(std::string companyName) {
-
+	this->companyName = companyName;
 }
 
 // ======= CreditCardData =======

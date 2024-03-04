@@ -82,7 +82,7 @@ double Cash::CheckBalance() {
 	return this->paymentBalance;
 }
 
-double Cash::PayAmount(double payment, Time * time) {
+double Cash::PayAmount(double payment, Time * time, CreditCardOwnerData * creditCardOwnerData) {
 	double newBalance = GetPaymentBalance() - payment;
 
 	// checks for overpayment, returns overplayment else return no overplayment value
@@ -120,11 +120,13 @@ double CreditCard::CheckBalance() {
 	return GetCash()->CheckBalance();
 }
 
-double CreditCard::PayAmount(double payment, Time * time) {
+double CreditCard::PayAmount(double payment, 
+							 Time * time,
+							 CreditCardOwnerData * creditCardOwnerData) {
 	double results;
 
-	if (CheckPaymentAuthentication(GetCreditCardData(), time)) {
-		results = GetCash()->PayAmount(payment, time);
+	if (CheckPaymentAuthentication(GetCreditCardData(), time, creditCardOwnerData)) {
+		results = GetCash()->PayAmount(payment, time, creditCardOwnerData);
 		GetCash()->SetPaymentBalance(results);
 		std::cout << "Payment authenticated and processing..." << std::endl;
 	}
@@ -136,14 +138,17 @@ double CreditCard::PayAmount(double payment, Time * time) {
 	return results;
 }
 
-bool CreditCard::CheckPaymentAuthentication(CreditCardData * creditCardData, Time * time) {
-	if (CheckValidMonth(creditCardData, time) &&
-		CheckValidYear(creditCardData, time) &&
-		CheckSecurityCode(creditCardData) &&
-		CheckCardNumber(creditCardData) &&
-		CheckFirstName(creditCardData) &&
-		CheckLastName(creditCardData) &&
-		CheckCompanyName(creditCardData))
+bool CreditCard::CheckPaymentAuthentication(CreditCardData * creditCardData, 
+											Time * time,
+											CreditCardOwnerData * creditCardOwnerData) 
+{
+	if (CheckValidMonth(creditCardData, creditCardOwnerData) &&
+		CheckValidYear(creditCardData, time, creditCardOwnerData) &&
+		CheckSecurityCode(creditCardData, creditCardOwnerData) &&
+		CheckCardNumber(creditCardData, creditCardOwnerData) &&
+		CheckFirstName(creditCardData, creditCardOwnerData) &&
+		CheckLastName(creditCardData, creditCardOwnerData) &&
+		CheckCompanyName(creditCardData, creditCardOwnerData))
 	{
 		return true;
 	}
@@ -151,7 +156,9 @@ bool CreditCard::CheckPaymentAuthentication(CreditCardData * creditCardData, Tim
 		return false;
 }
 
-bool CreditCard::CheckValidMonth(CreditCardData* creditCardData, Time* time) {
+bool CreditCard::CheckValidMonth(CreditCardData * creditCardData,
+								 CreditCardOwnerData * creditCardOwnerData) 
+{
 	if (1 <= creditCardData->GetValidMonth() &&
 		creditCardData->GetValidMonth() <= 12)
 	{
@@ -161,17 +168,21 @@ bool CreditCard::CheckValidMonth(CreditCardData* creditCardData, Time* time) {
 		return false;
 }
 
-bool CreditCard::CheckValidYear(CreditCardData* creditCardData, Time * time) {
-
+bool CreditCard::CheckValidYear(CreditCardData * creditCardData, 
+								Time * time,
+								CreditCardOwnerData * creditCardOwnerData) 
+{
 	if (time->GetYear() <= creditCardData->GetValidYear()) 
 		return true;
 	else 
 		return false;
 }
 
-bool CreditCard::CheckSecurityCode(CreditCardData* creditCardData) {
-	if (0 <= creditCardData->GetSecurityCode() &&
-		creditCardData->GetSecurityCode() <= 999)
+bool CreditCard::CheckSecurityCode(CreditCardData* creditCardData, 
+								   CreditCardOwnerData* creditCardOwnerData) {
+	if (creditCardData->GetSecurityCode() >= 0 &&
+		creditCardData->GetSecurityCode() <= 999 &&
+		creditCardData->GetSecurityCode() == creditCardOwnerData->GetSecurityCode())
 	{
 		return true;
 	}
@@ -179,20 +190,40 @@ bool CreditCard::CheckSecurityCode(CreditCardData* creditCardData) {
 		return false;
 }
 
-bool CreditCard::CheckCardNumber(CreditCardData* creditCardData) {
-	return true;
+bool CreditCard::CheckCardNumber(CreditCardData * creditCardData,
+								 CreditCardOwnerData * creditCardOwnerData) 
+{
+	if (creditCardData->GetCardNumber() == creditCardOwnerData->GetCardNumber())
+		return true;
+	else
+		return false;
 }
 
-bool CreditCard::CheckFirstName(CreditCardData* creditCardData) {
-	return true;
+bool CreditCard::CheckFirstName(CreditCardData * creditCardData,
+								CreditCardOwnerData * creditCardOwnerData) 
+{
+	if (creditCardData->GetFirstName() == creditCardOwnerData->GetFirstName())
+		return true;
+	else
+		return false;
 }
 
-bool CreditCard::CheckLastName(CreditCardData* creditCardData) {
-	return true;
+bool CreditCard::CheckLastName(CreditCardData * creditCardData,
+							   CreditCardOwnerData * creditCardOwnerData) 
+{
+	if (creditCardData->GetLastName() == creditCardOwnerData->GetLastName())
+		return true;
+	else
+		return false;
 }
 
-bool CreditCard::CheckCompanyName(CreditCardData* creditCardData) {
-	return true;
+bool CreditCard::CheckCompanyName(CreditCardData * creditCardData,
+								  CreditCardOwnerData * creditCardOwnerData) 
+{
+	if (creditCardData->GetCompany() == creditCardOwnerData->GetCompanyName())
+		return true;
+	else
+		return false;
 }
 
 // ======= Client Code =======
@@ -201,14 +232,13 @@ static double RequestCheckBalance(PaymentType * paymentType) {
 }
 
 static double PayBill(PaymentType* paymentType, double amount, Time * time, CreditCardOwnerData* creditCardOwnerData) {
-	return paymentType->PayAmount(amount, time);
+	return paymentType->PayAmount(amount, time, creditCardOwnerData);
 }
 
 // overloading function to differentiate if cash is used for payment
 static double PayBill(Cash* paymentType, double amount, Time * time, CreditCardOwnerData* creditCardOwnerData) {
-	return paymentType->PayAmount(amount, time);
+	return paymentType->PayAmount(amount, time, creditCardOwnerData);
 }
-
 
 // ======= Main =======
 int main() {

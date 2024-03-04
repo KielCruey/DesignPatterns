@@ -35,7 +35,7 @@ public:
 	inline int GetCardNumber() const;
 	inline std::string GetFirstName() const;
 	inline std::string GetLastName() const;
-	inline std::string GetCompany() const;
+	inline std::string GetCompanyName() const;
 
 	inline void SetSecurityCode(int securityCode);
 	inline void SetCardNumber(int cardNumber);
@@ -100,7 +100,7 @@ class PaymentType
 public:
 	virtual ~PaymentType() {};
 	virtual double CheckBalance() = 0;
-	virtual double PayAmount(double payment, Time * time) = 0;
+	virtual double PayAmount(double payment, Time * time, CreditCardOwnerData * creditCardOwnerData) = 0;
 };
 
 // ======= Real Subject =======
@@ -112,7 +112,7 @@ public:
 	~Cash() override;
 
 	double CheckBalance() override;
-	double PayAmount(double payment, Time * time) override;
+	double PayAmount(double payment, Time * time, CreditCardOwnerData * creditCardOwnerData) override;
 
 	inline double GetPaymentBalance() const;
 	inline double GetPaymentTotal() const;
@@ -135,17 +135,9 @@ public:
 	~CreditCard() override;
 
 	double CheckBalance() override;
-	double PayAmount(double payment, Time * time) override;
+	double PayAmount(double payment, Time * time, CreditCardOwnerData * creditCardOwnerData) override;
 
-	bool CheckPaymentAuthentication(CreditCardData* creditCardData, Time * time);
-	bool CheckValidMonth(CreditCardData* creditCardData, Time * time);
-	bool CheckValidYear(CreditCardData* creditCardData, Time * time);
-	bool CheckSecurityCode(CreditCardData* creditCardData);
-	bool CheckCardNumber(CreditCardData* creditCardData);
-	bool CheckFirstName(CreditCardData* creditCardData);
-	bool CheckLastName(CreditCardData* creditCardData);
-	bool CheckCompanyName(CreditCardData* creditCardData);
-
+protected:
 	inline Cash * GetCash() const;
 	inline CreditCardData * GetCreditCardData() const;
 	inline Time * GetTime();
@@ -154,10 +146,19 @@ public:
 	inline void SetCreditCardData(CreditCardData * creditCardData);
 	inline void SetTime(Time * time);
 
-protected:
 	Cash * cash; // credit card is used to pay cash as payment
 	CreditCardData * creditCardData;
 	Time * time; // 
+
+private:
+	bool CheckPaymentAuthentication(CreditCardData* creditCardData, Time* time, CreditCardOwnerData* creditCardOwnerData);
+	bool CheckValidMonth(CreditCardData* creditCardData, CreditCardOwnerData* creditCardOwnerData);
+	bool CheckValidYear(CreditCardData* creditCardData, Time* time, CreditCardOwnerData* creditCardOwnerData);
+	bool CheckSecurityCode(CreditCardData* creditCardData, CreditCardOwnerData* creditCardOwnerData);
+	bool CheckCardNumber(CreditCardData* creditCardData, CreditCardOwnerData* creditCardOwnerData);
+	bool CheckFirstName(CreditCardData* creditCardData, CreditCardOwnerData* creditCardOwnerData);
+	bool CheckLastName(CreditCardData* creditCardData, CreditCardOwnerData* creditCardOwnerData);
+	bool CheckCompanyName(CreditCardData* creditCardData, CreditCardOwnerData* creditCardOwnerData);
 };
 
 #include "proxy.inl"
