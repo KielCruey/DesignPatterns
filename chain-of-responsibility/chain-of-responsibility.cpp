@@ -25,14 +25,6 @@ std::string BaseHandler::Handle(std::string request) {
     return "";
 }
 
-void BaseHandler::setHandler(Handler* nextHandler) {
-    this->nextHandler = nextHandler;
-}
-
-Handler* BaseHandler::getHandler() const {
-    return this->nextHandler;
-}
-
 // =========== RobotBodyHandler ===========
 RobotBodyHandler::RobotBodyHandler(bool hasRobotChest,
                                    bool hasRobotPelvis) :
@@ -58,22 +50,6 @@ std::string RobotBodyHandler::Handle(std::string request) {
     else {
         return BaseHandler::Handle(request); // defaults to base handler
     }
-}
-
-void RobotBodyHandler::setHasRobotChest(bool hasRobotChest) {
-    this->hasRobotChest = hasRobotChest;
-}
-
-void RobotBodyHandler::setHasRobotPelvis(bool hasRobotPelvis) {
-    this->hasRobotPelvis = hasRobotPelvis;
-}
-
-bool RobotBodyHandler::getHasRobotChest() const {
-    return this->hasRobotChest;
-}
-
-bool RobotBodyHandler::getHasRobotPelvis() const {
-    return this->hasRobotPelvis;
 }
 
 // =========== RobotLimbHandler ===========
@@ -116,38 +92,6 @@ std::string RobotLimbHandler::Handle(std::string request) {
     }
 }
 
-void RobotLimbHandler::setHasRobotRightArm(bool hasRobotRightArm) {
-    this->hasRobotRightArm = hasRobotRightArm;
-}
-
-void RobotLimbHandler::setHasRobotLeftArm(bool hasRobotLeftArm) {
-    this->hasRobotLeftArm = hasRobotLeftArm;
-}
-
-void RobotLimbHandler::setHasRobotRightLeg(bool hasRobotRightLeg) {
-    this->hasRobotRightLeg = hasRobotRightLeg;
-}
-
-void RobotLimbHandler::setHasRobotLeftLeg(bool hasRobotLeftLeg) {
-    this->hasRobotLeftLeg = hasRobotLeftLeg;
-}
-
-bool RobotLimbHandler::getHasRobotRightArm() const {
-    return this->hasRobotRightArm;
-}
-
-bool RobotLimbHandler::getHasRobotLeftArm() const {
-    return this->hasRobotLeftArm;
-}
-
-bool RobotLimbHandler::getHasRobotRightLeg() const {
-    return this->hasRobotRightLeg;
-}
-
-bool RobotLimbHandler::getHasRobotLeftLeg() const {
-    return this->hasRobotLeftLeg;
-}
-
 // =========== RobotCraniumHandler ===========
 RobotCraniumHandler::RobotCraniumHandler(bool hasRobotCranium) :
     hasRobotCranium(hasRobotCranium)
@@ -167,14 +111,6 @@ std::string RobotCraniumHandler::Handle(std::string request) {
     else {
         return BaseHandler::Handle(request);
     }
-}
-
-void RobotCraniumHandler::setHasRobotCranium(bool hasRobotCranium) {
-    this->hasRobotCranium = hasRobotCranium;
-}
-
-bool RobotCraniumHandler::getHasRobotCranium() const {
-    return this->hasRobotCranium;
 }
 
 // =========== Client Code ===========

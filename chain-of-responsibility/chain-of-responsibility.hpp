@@ -20,8 +20,8 @@ public:
     virtual Handler * setNext(Handler * handler) override;
     virtual std::string Handle(std::string request) override;
 
-    void setHandler(Handler* nextHandler);
-    Handler* getHandler() const;
+    inline void setHandler(Handler* nextHandler);
+    inline Handler* getHandler() const;
 
 private:
     Handler * nextHandler;
@@ -37,10 +37,10 @@ public:
 
     virtual std::string Handle(std::string request) override;
 
-    void setHasRobotChest(bool hasRobotChest);
-    void setHasRobotPelvis(bool hasRobotPelvis);
-    bool getHasRobotChest() const;
-    bool getHasRobotPelvis() const;
+    inline void setHasRobotChest(bool hasRobotChest);
+    inline void setHasRobotPelvis(bool hasRobotPelvis);
+    inline bool getHasRobotChest() const;
+    inline bool getHasRobotPelvis() const;
 
 private:
     bool hasRobotChest;
@@ -58,14 +58,14 @@ public:
 
     virtual std::string Handle(std::string request) override;
 
-    void setHasRobotRightArm(bool hasRobotRightArm);
-    void setHasRobotLeftArm(bool hasRobotLeftArm);
-    void setHasRobotRightLeg(bool hasRobotRightLeg);
-    void setHasRobotLeftLeg(bool hasRobotLeftLeg);
-    bool getHasRobotRightArm() const;
-    bool getHasRobotLeftArm() const;
-    bool getHasRobotRightLeg() const;
-    bool getHasRobotLeftLeg() const;
+    inline void setHasRobotRightArm(bool hasRobotRightArm);
+    inline void setHasRobotLeftArm(bool hasRobotLeftArm);
+    inline void setHasRobotRightLeg(bool hasRobotRightLeg);
+    inline void setHasRobotLeftLeg(bool hasRobotLeftLeg);
+    inline bool getHasRobotRightArm() const;
+    inline bool getHasRobotLeftArm() const;
+    inline bool getHasRobotRightLeg() const;
+    inline bool getHasRobotLeftLeg() const;
 
 private:
     bool hasRobotRightArm;
@@ -82,9 +82,11 @@ public:
 
     virtual std::string Handle(std::string request) override;
 
-    void setHasRobotCranium(bool hasRobotCranium);
-    bool getHasRobotCranium() const;
+    inline void setHasRobotCranium(bool hasRobotCranium);
+    inline bool getHasRobotCranium() const;
 
 private:
     bool hasRobotCranium;
 };
+
+#include "chain-of-responsibility.inl"
