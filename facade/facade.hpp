@@ -38,12 +38,13 @@ public:
     FrontOfHouse(Waiter * waiter = nullptr);
     ~FrontOfHouse();
 
-    Waiter * GetWaiter() const;
-    void SetWaiter(Waiter * waiter);
-
     void WritesReserveTime();
     void SeatsGuests(int number);
     void ReceivesBill();
+
+    // ------ getters/setters ------
+    inline Waiter* GetWaiter() const;
+    inline void SetWaiter(Waiter* waiter);
 
 private:
     Waiter * waiter;
@@ -55,11 +56,12 @@ public:
     BackOfHouse(Chef * chef = nullptr);
     ~BackOfHouse();
 
-    Chef * GetChef() const;
-    void SetChef(Chef * chef);
-
     void ReceivesOrder();
     void CallsWaiter();
+
+    // ------ getters/setters ------
+    inline Chef* GetChef() const;
+    inline void SetChef(Chef* chef);
 
 private:
     Chef * chef;
@@ -90,7 +92,7 @@ class RestaurantFacade
 {
 public:
     RestaurantFacade(FrontOfHouse * frontOfHouse = nullptr,
-                        BackOfHouse * backOfHouse = nullptr);
+                     BackOfHouse * backOfHouse = nullptr);
     ~RestaurantFacade();
 
     void ChecksForReservation(Customer* customer);
@@ -101,16 +103,18 @@ public:
     void CustomerCheckout(Customer* customer);
     void ThankCustomers(Customer* customer);
 
-    FrontOfHouse * GetFrontOfHouse() const;
-    BackOfHouse * GetBackOfHouse() const;
-    std::queue<Customer*> GetCustomerQueue() const;
-
-    void SetFrontOfHouse(FrontOfHouse* frontOfHouse);
-    void SetBackOfHouse(BackOfHouse* backOfHouse);
-    void GetCustomerQueue(std::queue<Customer*> customerQueue);
-
+    // ---- modifying customer queue ----
     void AddCustomer(Customer * customer);
     void RemoveCustomer();
+
+    // ----- getters/setters -----
+    inline FrontOfHouse* GetFrontOfHouse() const;
+    inline BackOfHouse* GetBackOfHouse() const;
+    inline std::queue<Customer*> GetCustomerQueue() const;
+
+    inline void SetFrontOfHouse(FrontOfHouse* frontOfHouse);
+    inline void SetBackOfHouse(BackOfHouse* backOfHouse);
+    inline void SetCustomerQueue(std::queue<Customer*> customerQueue);
 
 protected:
     FrontOfHouse * frontOfHouse;
@@ -118,3 +122,5 @@ protected:
 
     std::queue<Customer*> customerQueue;
 };
+
+#include "facade.inl"
