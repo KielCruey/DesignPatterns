@@ -87,14 +87,6 @@ FrontOfHouse::~FrontOfHouse() {
     std::cout << "FrontOfHouse destroyed" << std::endl;
 }
 
-Waiter* FrontOfHouse::GetWaiter() const {
-    return this->waiter;
-}
-
-void FrontOfHouse::SetWaiter(Waiter* waiter) {
-    this->waiter = waiter;
-}
-
 void FrontOfHouse::WritesReserveTime() {
     std::cout << "FrontOfHouse writes down guests reservation time" << std::endl;
 }
@@ -118,14 +110,6 @@ BackOfHouse::BackOfHouse(Chef * chef) :
 
 BackOfHouse::~BackOfHouse() {
     std::cout << "BackOfHouse destroyed" << std::endl;
-}
-
-Chef * BackOfHouse::GetChef() const {
-    return this->chef;
-}
-
-void BackOfHouse::SetChef(Chef * chef) {
-    this->chef = chef;
 }
 
 void BackOfHouse::ReceivesOrder() {
@@ -252,30 +236,6 @@ void RestaurantFacade::ThankCustomers(Customer* customer) {
     customer->LeavesRestaurant();
     GetFrontOfHouse()->GetWaiter()->CleansTable();
     customer->RatesRestaurantReview();
-}
-
-FrontOfHouse* RestaurantFacade::GetFrontOfHouse() const {
-    return this->frontOfHouse;
-}
-
-BackOfHouse* RestaurantFacade::GetBackOfHouse() const {
-    return this->backOfHouse;
-}
-
-std::queue<Customer*> RestaurantFacade::GetCustomerQueue() const {
-    return this->customerQueue;
-}
-
-void RestaurantFacade::SetFrontOfHouse(FrontOfHouse* frontOfHouse) {
-    this->frontOfHouse = frontOfHouse;
-}
-
-void RestaurantFacade::SetBackOfHouse(BackOfHouse* backOfHouse) {
-    this->backOfHouse = backOfHouse;
-}
-
-void RestaurantFacade::GetCustomerQueue(std::queue<Customer*> customerQueue) {
-    this->customerQueue = customerQueue;
 }
 
 void RestaurantFacade::AddCustomer(Customer* customer) {
