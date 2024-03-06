@@ -3,7 +3,7 @@
 
 #include "singleton.hpp"
 
-// ========== Singleton class ==========
+// ========== Globals ==========
 Globals::Globals(int systemState, int numberOfFiles) :
     systemState(systemState),
     numberOfFiles(numberOfFiles)
@@ -29,24 +29,8 @@ Globals * Globals::getInstance()
     }
 }
 
-int Globals::GetSystemState() {
-    return this->systemState;
-}
-
-int Globals::GetNumberOfFiles() {
-    return this->numberOfFiles;
-}
-
-void Globals::SetSystemState(int systemState) {
-    this->systemState = systemState;
-}
-
-void Globals::SetNumberOfFiles(int numberOfFiles) {
-    this->numberOfFiles = numberOfFiles;
-}
-
 // ========== Client ==========
-void PrintAllGlobals(Globals * globals) {
+static void PrintAllGlobals(Globals * globals) {
     std::cout << "System State: " << globals->GetSystemState() << std::endl;
     std::cout << "Number of Files: " << globals->GetNumberOfFiles() << std::endl;
 }

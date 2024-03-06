@@ -18,11 +18,11 @@ public:
 
     static Globals * getInstance(); // functions calls the private constructor -- effectively is the constructor
 
-    // ============ getters ============ 
-    int GetSystemState();
-    int GetNumberOfFiles();
-
-    // ============ setters ============
-    void SetSystemState(int systemState);
-    void SetNumberOfFiles(int numberOfFiles);
+    // getters/setters
+    inline int GetSystemState();
+    inline int GetNumberOfFiles();
+    inline void SetSystemState(int systemState);
+    inline void SetNumberOfFiles(int numberOfFiles);
 };
+
+#include "singleton.inl"
