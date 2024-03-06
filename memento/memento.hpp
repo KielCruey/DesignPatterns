@@ -13,40 +13,48 @@ public:
 	virtual ~AbstractMemento() = default;
 
 	// variables for memento
-	virtual std::string getDate() = 0; // date of the memento save
-	virtual std::string getTime() = 0; // time of the memento save
+	inline virtual std::string getDate() = 0; // date of the memento save
+	inline virtual std::string getTime() = 0; // time of the memento save
 
 	// the originator's variables it's saving
-	virtual std::string getName() = 0;
-	virtual std::string getSpecialization() = 0;
-	virtual std::string getState() = 0;
-	virtual int getHealth() = 0;
-	virtual int getMana() = 0;
-	virtual int getLevel() = 0;
-	virtual std::string getState() = 0; // like dazed, drunk, or fear
+	inline virtual std::string getName() = 0;
+	inline virtual std::string getSpecialization() = 0;
+	inline virtual std::string getState() = 0; // like dazed, drunk, or fear
+	inline virtual int getHealth() = 0;
+	inline virtual int getMana() = 0;
+	inline virtual int getLevel() = 0; 
 };
 
 class Memento : public AbstractMemento
 {
 public:
-	Memento();
+	Memento(std::string date = nullptr,
+			std::string time = nullptr,
+			std::string name = nullptr,
+			std::string specialization = nullptr,
+			std::string state = nullptr,
+			int level = NULL,
+			int health = NULL,
+			int mana = NULL);
 	virtual ~Memento();
 
-	virtual std::string getDate(); // date of the memento save
-	virtual std::string getTime(); // time of the save
+	inline virtual std::string getDate(); // date of the memento save
+	inline virtual std::string getTime(); // time of the save
 
-	virtual std::string getName() override;
-	virtual std::string getSpecialization() override;
-	virtual std::string getState() override;
-	virtual int getHealth() override;
-	virtual int getMana() override;
-	virtual int getLevel() override;
-	virtual std::string getState() override; // like dazed, drunk, or fear
+	// only need getters for saving
+	inline virtual std::string getName() override;
+	inline virtual std::string getSpecialization() override;
+	inline virtual std::string getState() override;  // like dazed, drunk, or fear
+	inline virtual int getHealth() override;
+	inline virtual int getMana() override;
+	inline virtual int getLevel() override;
 
 private:
+	// memento information being saved
 	std::string date;
 	std::string time;
 	
+	// originator information being saved 
 	std::string name;
 	std::string specialization;
 	std::string state;
@@ -56,13 +64,18 @@ private:
 };
 
 /*
-* The Originator si the object whose state you want to save. 
+* The Originator is the object whose state you want to save. 
 * The Originator creates a Memento object to store its state or can restore its state from a Memento object.
 */
 class Originator
 {
 public:
-	Originator();
+	Originator(std::string name = nullptr,
+			   std::string specialization = nullptr,
+			   std::string state = nullptr,
+			   int level = NULL,
+			   int health = NULL,
+			   int mana = NULL);
 	~Originator();
 
 	// class actions
@@ -81,6 +94,21 @@ public:
 	Memento * save();
 	void restore(Memento * memento);
 
+	// getters/setters
+	inline std::string getName();
+	inline std::string getSpecialization();
+	inline std::string getState();
+	inline int getLevel();
+	inline int getHealth();
+	inline int getMana();
+
+	inline std::string setName();
+	inline std::string setSpecialization();
+	inline std::string setState();
+	inline int setLevel();
+	inline int setHealth();
+	inline int setMana();
+
 private:
 	std::string name;
 	std::string specialization;
@@ -97,7 +125,7 @@ private:
 class Caretaker 
 {
 public:
-	Caretaker(Originator * originator);
+	Caretaker(Originator * originator = nullptr);
 	~Caretaker();
 
 	void backup();
@@ -105,6 +133,9 @@ public:
 	void showHistory();
 
 private:
+	Originator * originator;
+
+	// data structure to hold Originator's snapshots/saves
 	std::vector<Memento*> mementos;
 };
 
