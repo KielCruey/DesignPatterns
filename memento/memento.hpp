@@ -1,4 +1,5 @@
 #include <string>
+#include <vector>
 
 // ========= Memento =========
 /*
@@ -13,13 +14,16 @@ public:
 
 	// variables for memento
 	virtual std::string getDate() = 0; // date of the memento save
-	virtual std::string getTime() = 0; // time of the save
+	virtual std::string getTime() = 0; // time of the memento save
 
 	// the originator's variables it's saving
+	virtual std::string getName() = 0;
+	virtual std::string getSpecialization() = 0;
+	virtual std::string getState() = 0;
 	virtual int getHealth() = 0;
 	virtual int getMana() = 0;
-	virtual int getState() = 0; // like dazed, drunk, or fear
-
+	virtual int getLevel() = 0;
+	virtual std::string getState() = 0; // like dazed, drunk, or fear
 };
 
 class Memento : public AbstractMemento
@@ -31,17 +35,24 @@ public:
 	virtual std::string getDate(); // date of the memento save
 	virtual std::string getTime(); // time of the save
 
+	virtual std::string getName() override;
+	virtual std::string getSpecialization() override;
+	virtual std::string getState() override;
 	virtual int getHealth() override;
 	virtual int getMana() override;
-	virtual int getState() override; // like dazed, drunk, or fear
+	virtual int getLevel() override;
+	virtual std::string getState() override; // like dazed, drunk, or fear
 
 private:
 	std::string date;
 	std::string time;
-
+	
+	std::string name;
+	std::string specialization;
+	std::string state;
+	int level;
 	int health;
 	int mana;
-	int state;
 };
 
 /*
@@ -50,7 +61,33 @@ private:
 */
 class Originator
 {
+public:
+	Originator();
+	~Originator();
 
+	// class actions
+	void changeName();
+	void changeSpecialization();
+	void changeState();
+
+	void levelUp();
+	void levelDown();
+	void healUp();
+	void healDown();
+	void manaUp();
+	void manaDown();
+
+	// saving actions
+	Memento * save();
+	void restore(Memento * memento);
+
+private:
+	std::string name;
+	std::string specialization;
+	std::string state;
+	int level;
+	int health;
+	int mana;
 };
 
 /*
@@ -59,7 +96,16 @@ class Originator
 */
 class Caretaker 
 {
+public:
+	Caretaker(Originator * originator);
+	~Caretaker();
 
+	void backup();
+	void undo();
+	void showHistory();
+
+private:
+	std::vector<Memento*> mementos;
 };
 
 #include "memento.inl"
