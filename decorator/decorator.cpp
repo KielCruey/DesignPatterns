@@ -21,18 +21,6 @@ Entity::~Entity() {
     std::cout << "Entity destroyed" << std::endl;
 }
 
-int Entity::GetHealth() const {
-    return this->health;
-}
-
-int Entity::GetMana() const {
-    return this->mana;
-}
-
-int Entity::GetFatigue() const {
-    return this->fatigue;
-}
-
 void Entity::SetHealth(int health) {
     if(0 > health) {
         this->health = 0;
@@ -134,14 +122,6 @@ Archer::~Archer() {
     std::cout << "Archer destroyed" << std::endl;
 }
 
-int Archer::GetArrowsEquip() const {
-    return this->arrowsEquip;
-}
-
-void Archer::SetArrowsEquip(int arrowsEquip) {
-    this->arrowsEquip = arrowsEquip;
-}
-
 void Archer::EquipArmor() {
     std::cout << "Armor equipped" << std::endl;
 }
@@ -208,14 +188,6 @@ EntitySpecialization::~EntitySpecialization() {
     std::cout << "EntitySpecialization destroyed" << std::endl;
 }
 
-Entity * EntitySpecialization::GetEntity() const {
-    return this->entity;
-}
-
-void EntitySpecialization::SetEntity(Entity * entity) {
-    this->entity = entity;
-}
-
 // =========== Holy Knight ===========
 HolyKnight::HolyKnight(Entity * entity, int faithMagic) :
     EntitySpecialization(entity),
@@ -226,14 +198,6 @@ HolyKnight::HolyKnight(Entity * entity, int faithMagic) :
 
 HolyKnight::~HolyKnight() {
     std::cout << "Holy Knight destroyed" << std::endl;
-}
-
-int HolyKnight::GetFaithMagic() const {
-    return this->faithMagic;
-}
-
-void HolyKnight::SetFaithMagic(int faithMagic) {
-    this->faithMagic = faithMagic;
 }
 
 void HolyKnight::ClassAttack() {
@@ -302,14 +266,6 @@ DarkKnight::DarkKnight(Entity * entity, int darkMagic) :
 
 DarkKnight::~DarkKnight() {
     std::cout << "Dark Knight destroyed" << std::endl;
-}
-
-int DarkKnight::GetDarkMagic() const {
-    return this->darkMagic;
-}
-
-void DarkKnight::SetDarkMagic(int darkMagic) {
-    this->darkMagic = darkMagic;
 }
 
 void DarkKnight::ClassAttack() {
@@ -382,14 +338,6 @@ CrossBowArcher::~CrossBowArcher() {
 
 void CrossBowArcher::ClassAttack() {
     std::cout << "Cross Bow Archers's Ultimate Attack!" << std::endl;
-}
-
-int CrossBowArcher::GetFinessePoints() const {
-    return this->finessePoints;
-}
-
-void CrossBowArcher::SetFinessePoints(int finessePoints) {
-    this->finessePoints = finessePoints;
 }
 
 void CrossBowArcher::EquipArmor() {
