@@ -1,6 +1,12 @@
 #include <string>
 #include <vector>
 
+const int MINIMUM_LEVEL = 1;
+const int MAXIMUM_LEVEL = 100;
+
+const int MINIMUM_VALUE = 0;
+const int MAXIMUM_VALUE = 100;
+
 // ========= Memento =========
 /*
 * The Memento object is responsible for storing the state of the Originator. 
@@ -28,9 +34,7 @@ public:
 class Memento : public AbstractMemento
 {
 public:
-	Memento(std::string date = nullptr,
-			std::string time = nullptr,
-			std::string name = nullptr,
+	Memento(std::string name = nullptr,
 			std::string specialization = nullptr,
 			std::string state = nullptr,
 			int level = NULL,
@@ -79,9 +83,9 @@ public:
 	~Originator();
 
 	// class actions
-	void changeName();
-	void changeSpecialization();
-	void changeState();
+	void changeName(std::string newName);
+	void changeSpecialization(std::string newSpecialization);
+	void changeState(std::string newState);
 
 	void levelUp();
 	void levelDown();
@@ -102,12 +106,12 @@ public:
 	inline int getHealth();
 	inline int getMana();
 
-	inline std::string setName();
-	inline std::string setSpecialization();
-	inline std::string setState();
-	inline int setLevel();
-	inline int setHealth();
-	inline int setMana();
+	inline void setName(std::string name);
+	inline void setSpecialization(std::string specialization);
+	inline void setState(std::string state);
+	inline void setLevel(int level);
+	inline void setHealth(int health);
+	inline void setMana(int mana);
 
 private:
 	std::string name;
@@ -132,7 +136,12 @@ public:
 	void undo();
 	void showHistory();
 
-private:
+	inline Originator * getOriginator();
+	inline void setOriginator(std::vector<Memento *> mementos);
+
+	inline std::vector<Memento *> getMementos();
+
+protected:
 	Originator * originator;
 
 	// data structure to hold Originator's snapshots/saves
