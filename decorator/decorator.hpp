@@ -3,7 +3,9 @@
 class Entity
 {
 public:
-    Entity(int health = 100, int mana = 100, int fatigue = 100);
+    Entity(int health = 100, 
+           int mana = 100, 
+           int fatigue = 100);
     virtual ~Entity();
 
     // concrete decorator's virtual responsibilities
@@ -19,10 +21,10 @@ public:
     virtual int Block() = 0;
     virtual void Reload() = 0;
     
-    int GetHealth() const;
-    int GetMana() const;
-    int GetFatigue() const;
-
+    // getters/setters
+    inline int GetHealth() const;
+    inline int GetMana() const;
+    inline int GetFatigue() const;
     void SetHealth(int health);
     void SetMana(int mana);
     void SetFatigue(int fatigue);
@@ -37,10 +39,12 @@ private:
 class Knight : public Entity
 {
 public:
-    Knight(int health = 100, int mana = 100, int fatigue = 100);
+    Knight(int health = 100, 
+           int mana = 100,
+           int fatigue = 100);
     ~Knight();
 
-    // ---- virtuals ----
+    // virtuals
     void EquipArmor() override;
     void EquipGreaves() override;
     void EquipHelmet() override;
@@ -56,13 +60,13 @@ public:
 class Archer : public Entity
 {
 public:
-    Archer(int arrowsEquip = 100, int health = 100, int mana = 100, int fatigue = 100);
+    Archer(int arrowsEquip = 100, 
+           int health = 100, 
+           int mana = 100, 
+           int fatigue = 100);
     ~Archer();
 
-    int GetArrowsEquip() const;
-    void SetArrowsEquip(int ArrowsEquip);
-
-    // ---- virtuals ----
+    // virtuals
     void EquipArmor() override;
     void EquipGreaves() override;
     void EquipHelmet() override;
@@ -73,6 +77,10 @@ public:
     int Attack() override;
     int Block() override;
     void Reload() override;
+
+    // getters/setters
+    inline int GetArrowsEquip() const;
+    inline void SetArrowsEquip(int ArrowsEquip);
 
 private:
     int arrowsEquip;
@@ -85,11 +93,12 @@ public:
     EntitySpecialization(Entity * entity);
     ~EntitySpecialization();
 
-    Entity * GetEntity() const;
-    void SetEntity(Entity * entity);
-
-    // ---- virtuals ----
+    // virtuals
     virtual void ClassAttack() = 0;
+
+    // getters/setters
+    inline Entity * GetEntity() const;
+    inline void SetEntity(Entity* entity);
 
 protected:
     Entity * entity;
@@ -99,12 +108,11 @@ protected:
 class HolyKnight : public EntitySpecialization
 {
 public:
-    HolyKnight(Entity * entity = nullptr, int faithMagic = 100);
+    HolyKnight(Entity * entity = nullptr, 
+               int faithMagic = 100);
     ~HolyKnight();
 
-    int GetFaithMagic() const;
-    void SetFaithMagic(int faithMagic);
-
+    // from 'entity specialization' class
     void ClassAttack() override;
 
     // from entity class
@@ -119,6 +127,10 @@ public:
     int Attack() override;
     int Block() override;
     void Reload() override;
+
+    // getters/setters
+    inline int GetFaithMagic() const;
+    inline void SetFaithMagic(int faithMagic);
 
 private:
     int faithMagic;
@@ -127,12 +139,11 @@ private:
 class DarkKnight : public EntitySpecialization
 {
 public:
-    DarkKnight(Entity* entity = nullptr, int darkMagic = 100);
+    DarkKnight(Entity* entity = nullptr, 
+               int darkMagic = 100);
     ~DarkKnight();
 
-    int GetDarkMagic() const;
-    void SetDarkMagic(int darkMagic);
-
+    // from 'entity specialization' class
     void ClassAttack() override;
 
     // from entity class
@@ -147,6 +158,10 @@ public:
     int Attack() override;
     int Block() override;
     void Reload() override;
+
+    // getters/setters
+    int GetDarkMagic() const;
+    void SetDarkMagic(int darkMagic);
 
 private:
     int darkMagic;
@@ -155,12 +170,11 @@ private:
 class CrossBowArcher : public EntitySpecialization
 {
 public:
-    CrossBowArcher(Entity * entity = nullptr, int finessePoints = 100);
+    CrossBowArcher(Entity * entity = nullptr, 
+                   int finessePoints = 100);
     ~CrossBowArcher();
 
-    int GetFinessePoints() const;
-    void SetFinessePoints(int finessePoints);
-
+    // from 'entity specialization' class
     void ClassAttack() override;
 
     // from entity class
@@ -176,6 +190,12 @@ public:
     int Block() override;
     void Reload() override;
 
+    // getters/setters
+    int GetFinessePoints() const;
+    void SetFinessePoints(int finessePoints);
+
 private:
     int finessePoints;
 };
+
+#include "decorator.inl"
