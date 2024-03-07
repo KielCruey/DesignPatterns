@@ -154,10 +154,17 @@ Caretaker::~Caretaker() {
 	printToConsole("Originator deleted");
 }
 
+// saves a snapshot of the current state of the originator
 void Caretaker::backup() {
-	getMementos().push_back(this->originator->save());
+	// this is wrong, when calling the getMemento function, it doesn't save the originator to the memento vector.
+	// maybe something to do with past by value?
+	//getMementos().push_back(getOriginator()->save()); 
+	// https://stackoverflow.com/questions/12851516/getters-setters-with-stdvector-push-back
+
+	mementos.push_back(getOriginator()->save());
 }
 
+// deletes the last snapshot, and reverts to last snapshot
 void Caretaker::undo() {
 	// checks if vector is empty
 	if (!getMementos().size()) {
@@ -178,8 +185,7 @@ void Caretaker::undo() {
 void Caretaker::showHistory() {
 	printToConsole("List of Memento Saves:");
 
-	for (Memento * memento : getMementos())
-	{
+	for (Memento * memento : getMementos())	{
 		printSavedData(memento);
 	}
 }
@@ -189,7 +195,9 @@ int main() {
 
 	Originator * originator = new Originator("George", "Monk", "Happy", 100, 100, 100);
 	Caretaker * caretaker = new Caretaker(originator);
-	originator->levelUp();
+
+	caretaker->backup();
+	caretaker->showHistory();
 
 	return 0;
 }
