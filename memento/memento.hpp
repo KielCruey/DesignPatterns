@@ -67,6 +67,7 @@ private:
 	int mana;
 };
 
+// ========= Originator =========
 /*
 * The Originator is the object whose state you want to save. 
 * The Originator creates a Memento object to store its state or can restore its state from a Memento object.
@@ -122,6 +123,7 @@ private:
 	int mana;
 };
 
+// ========= Caretaker =========
 /*
 * The Caretaker is responsible for keeping track of the Memento objects and their history. It can save and retrieve Memento objects from a collection. 
 * It doesn’t modify the Memento’s state but can request the Originator to save or restore its state using a Memento.
@@ -139,7 +141,7 @@ public:
 	inline Originator * getOriginator();
 	inline void setOriginator(std::vector<Memento *> mementos);
 
-	inline std::vector<Memento *> getMementos();
+	inline std::vector<Memento *> &getMementos();
 
 protected:
 	Originator * originator;

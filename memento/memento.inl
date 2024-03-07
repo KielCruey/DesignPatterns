@@ -89,6 +89,6 @@ inline void Caretaker::setOriginator(std::vector<Memento*> mementos) {
 	this->originator = originator;
 }
 
-inline std::vector<Memento*> Caretaker::getMementos() {
+inline std::vector<Memento*> &Caretaker::getMementos() {
 	return this->mementos;
 }

@@ -156,12 +156,7 @@ Caretaker::~Caretaker() {
 
 // saves a snapshot of the current state of the originator
 void Caretaker::backup() {
-	// this is wrong, when calling the getMemento function, it doesn't save the originator to the memento vector.
-	// maybe something to do with past by value?
-	//getMementos().push_back(getOriginator()->save()); 
-	// https://stackoverflow.com/questions/12851516/getters-setters-with-stdvector-push-back
-
-	mementos.push_back(getOriginator()->save());
+	getMementos().push_back(getOriginator()->save());
 }
 
 // deletes the last snapshot, and reverts to last snapshot
