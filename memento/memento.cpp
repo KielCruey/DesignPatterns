@@ -115,13 +115,13 @@ void Originator::healDown() {
 
 void Originator::manaUp() {
 	if (getMana() < MAXIMUM_VALUE) {
-		setHealth(getMana() + 1);
+		setMana(getMana() + 1);
 	}
 }
 
 void Originator::manaDown() {
 	if (getMana() > MINIMUM_VALUE) {
-		setHealth(getMana() - 1);
+		setMana(getMana() - 1);
 	}
 }
 
@@ -188,9 +188,36 @@ void Caretaker::showHistory() {
 // ======== Main ========
 int main() {
 
-	Originator * originator = new Originator("George", "Monk", "Happy", 100, 100, 100);
+	Originator * originator = new Originator("George", "Monk", "Happy", 1, 100, 100);
 	Caretaker * caretaker = new Caretaker(originator);
 
+	// manipulating the 'originator' class and saving snapshots
+	caretaker->backup();
+	caretaker->showHistory();
+
+	originator->levelUp();
+	caretaker->backup();
+	caretaker->showHistory();
+
+	originator->manaDown();
+	originator->healDown();
+	caretaker->backup();
+	caretaker->showHistory();
+
+	originator->manaUp();
+	originator->healUp();
+	caretaker->backup();
+	caretaker->showHistory();
+
+	originator->changeState("Sad");
+	caretaker->backup();
+	caretaker->showHistory();
+
+	originator->changeSpecialization("Bard");
+	caretaker->backup();
+	caretaker->showHistory();
+
+	originator->changeName("Georgia");
 	caretaker->backup();
 	caretaker->showHistory();
 
