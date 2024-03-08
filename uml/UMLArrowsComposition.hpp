@@ -13,7 +13,7 @@ public:
 class Car
 {
 public:
-    Car();
+    Car(); // creates a dynamic engine
     ~Car();
 
     void Start();
