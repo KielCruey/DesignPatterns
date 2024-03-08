@@ -10,6 +10,7 @@
 #include <string>
 #include <unordered_map>
 
+// helpful enum to determine what the derived class type is
 enum RobotTypes {
     MILITARY = 0,
     CIVILIAN
@@ -18,66 +19,62 @@ enum RobotTypes {
 // ============== Abstract Product ==============
 class RobotPrototype
 {
-private:
-    int serialNumber;
-
 public:
     RobotPrototype(int serialNumber = 0);
-    virtual ~RobotPrototype(); // not required for derived classes to override but can
+    virtual ~RobotPrototype();
 
-    // =========== virtual functions ===========
-    virtual void PrintInfo();
+    virtual RobotPrototype * Clone() const = 0; // creates heap memory robot
+    virtual void PrintInfo(); // prints all member variables
 
-    // =========== pure virtual functions ===========
-    virtual RobotPrototype * Clone() const = 0;
-    virtual int GetRobotType() = 0;
+    // getters/setters
+    inline virtual int GetRobotType() = 0;
 
-    // =========== getters/setters ===========
-    void SetSerialNumber(int serialNumber);
-    int GetSerialNumber() const;
+    inline void SetSerialNumber(int serialNumber);
+    inline int GetSerialNumber() const;
+
+private:
+    int serialNumber;
 };
 
 // ============== Concrete Product ==============
 class ConcreteCivilianRobotPrototype : public RobotPrototype
 {
-private:
-    std::string name;
-
 public:
     ConcreteCivilianRobotPrototype(int serialNumber, std::string name);
     ~ConcreteCivilianRobotPrototype() override;
 
-    // =========== virtual functions ===========
-    void PrintInfo() override;
+    RobotPrototype * Clone() const override; // creates heap memory robot
+    
+    void PrintInfo() override; // prints all member variables
 
-    // =========== pure virtual functions ===========
-    RobotPrototype * Clone() const override;
+    // getters/setters 
+    inline int GetRobotType() override;
 
-    // ============== getters/setters ==============
-    void SetName(std::string name);
-    std::string GetName();
-    int GetRobotType();
+    inline void SetName(std::string name);
+    inline std::string GetName();
+
+private:
+    std::string name; 
 };
 
 class ConcreteMilitaryRobotPrototype : public RobotPrototype
 {
-private:
-    std::string rank;
-
 public:
     ConcreteMilitaryRobotPrototype(int serialNumber, std::string rank);
     ~ConcreteMilitaryRobotPrototype() override;
 
-    // =========== virtual functions ===========
-    void PrintInfo() override;
+    RobotPrototype * Clone() const override; // creates heap memory robot
+    
+    void PrintInfo() override; // prints all member variables
 
-    // =========== pure virtual functions ===========
-    RobotPrototype * Clone() const override;
+    // getters/setters 
+    inline int GetRobotType() override;
 
-    // ============== getters/setters ==============
-    void SetRank(std::string rank);
-    std::string GetRank();
-    int GetRobotType();
+    inline void SetRank(std::string rank);
+    inline std::string GetRank();
+
+private:
+    std::string rank;
 };
 
 // ============== Factory ==============
@@ -92,3 +89,5 @@ public:
 
     RobotPrototype * CreatePrototype(RobotTypes rType);
 };
+
+#include "prototype.inl"
