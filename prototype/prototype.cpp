@@ -1,6 +1,6 @@
 #include "prototype.hpp"
 
-// ============== RobotPrototype class ==============
+// ============== RobotPrototype ==============
 RobotPrototype::RobotPrototype(int serialNumber) :
     serialNumber(serialNumber)
 { 
@@ -15,15 +15,7 @@ void RobotPrototype::PrintInfo() {
     std::cout << "Robot's serial number: " + GetSerialNumber() << std::endl;
 }
 
-void RobotPrototype::SetSerialNumber(int serialNumber) {
-    this->serialNumber = serialNumber;
-}
-
-int RobotPrototype::GetSerialNumber() const {
-    return this->serialNumber;
-}
-
-// ============== ConcreteCivilianRobotPrototype class ==============
+// ============== ConcreteCivilianRobotPrototype ==============
 ConcreteCivilianRobotPrototype::ConcreteCivilianRobotPrototype(int serialNumber, std::string name) :
     RobotPrototype(serialNumber), 
     name(name)
@@ -43,19 +35,7 @@ RobotPrototype * ConcreteCivilianRobotPrototype::Clone() const {
     return new ConcreteCivilianRobotPrototype(*this); // calling default copy constructor -- shallow copy only
 }
 
-void ConcreteCivilianRobotPrototype::SetName(std::string name) {
-    this->name = name;
-}
-
-std::string ConcreteCivilianRobotPrototype::GetName() {
-    return this->name;
-}
-
-int ConcreteCivilianRobotPrototype::GetRobotType() {
-    return RobotTypes::CIVILIAN;
-}
-
-// ============== ConcreteMilitaryRobotPrototype class ==============
+// ============== ConcreteMilitaryRobotPrototype ==============
 ConcreteMilitaryRobotPrototype::ConcreteMilitaryRobotPrototype(int serialNumber, std::string rank) :
     RobotPrototype(serialNumber),
     rank(rank)
@@ -75,18 +55,6 @@ RobotPrototype * ConcreteMilitaryRobotPrototype::Clone() const {
     return new ConcreteMilitaryRobotPrototype(*this); // calling default copy constructor -- shallow copy only
 }
 
-void ConcreteMilitaryRobotPrototype::SetRank(std::string rank) {
-    this->rank = rank;
-}
-
-std::string ConcreteMilitaryRobotPrototype::GetRank() {
-    return this->rank;
-}
-
-int ConcreteMilitaryRobotPrototype::GetRobotType() {
-    return RobotTypes::MILITARY;
-}
-
 // ============== Factory ==============
 PrototypeFactory::PrototypeFactory() {
     robotMap[RobotTypes::CIVILIAN] = new ConcreteCivilianRobotPrototype(0, "No Name");
@@ -104,8 +72,8 @@ RobotPrototype * PrototypeFactory::CreatePrototype(RobotTypes rType) {
     return robotMap[rType]->Clone();
 }
 
-// ============== client code ==============
-RobotPrototype * CloneAndPrintMilitaryRobot(ConcreteMilitaryRobotPrototype * mRobot) {
+// ============== Client Code ==============
+static RobotPrototype * CloneAndPrintMilitaryRobot(ConcreteMilitaryRobotPrototype * mRobot) {
     // cloning miliary robot
     RobotPrototype * protoMilitary = mRobot->Clone();
     // printing out member variables
@@ -114,7 +82,7 @@ RobotPrototype * CloneAndPrintMilitaryRobot(ConcreteMilitaryRobotPrototype * mRo
     return protoMilitary;
 }
 
-RobotPrototype * CloneAndPrintCivilianRobot(ConcreteCivilianRobotPrototype * cRobot) {
+static RobotPrototype * CloneAndPrintCivilianRobot(ConcreteCivilianRobotPrototype * cRobot) {
     // cloning civilian robot
     RobotPrototype * protoCivilian = cRobot->Clone();
     // printing out member variables
@@ -123,7 +91,7 @@ RobotPrototype * CloneAndPrintCivilianRobot(ConcreteCivilianRobotPrototype * cRo
     return cRobot;
 }
 
-void SimpleMiliaryClone() {
+static void SimpleMiliaryClone() {
     ConcreteMilitaryRobotPrototype * mRobot = new ConcreteMilitaryRobotPrototype(123, "Private");
     mRobot->PrintInfo();
 
@@ -131,7 +99,7 @@ void SimpleMiliaryClone() {
     RobotPrototype * milRobot = CloneAndPrintMilitaryRobot(mRobot);
 }
 
-void SimpleCivilianClone() {
+static void SimpleCivilianClone() {
     ConcreteCivilianRobotPrototype * cRobot = new ConcreteCivilianRobotPrototype(321, "Dawn");
     cRobot->PrintInfo();
 
@@ -139,7 +107,7 @@ void SimpleCivilianClone() {
     RobotPrototype * civRobot = CloneAndPrintCivilianRobot(cRobot);
 }
 
-void CheckRobotType(RobotPrototype * r) {
+static void CheckRobotType(RobotPrototype * r) {
     if(r->GetRobotType() == RobotTypes::CIVILIAN) {
         std::cout << r->GetSerialNumber() << " is a civilian robot" << std::endl;
     }
@@ -151,13 +119,13 @@ void CheckRobotType(RobotPrototype * r) {
     }
 }
 
-void FactoryMilitaryClone(PrototypeFactory * pFactory) {
+static void FactoryMilitaryClone(PrototypeFactory * pFactory) {
     RobotPrototype * pMilRobot = pFactory->CreatePrototype(RobotTypes::MILITARY);
 
     pMilRobot->PrintInfo();
 }
 
-void FactoryCivilianClone(PrototypeFactory * pFactory) {
+static void FactoryCivilianClone(PrototypeFactory * pFactory) {
     RobotPrototype * pCivRobot = pFactory->CreatePrototype(RobotTypes::CIVILIAN);
 
     pCivRobot->PrintInfo();
