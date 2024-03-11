@@ -12,9 +12,15 @@ Motorcycle::Motorcycle(std::string make,
 					   std::string model, 
 					   int * serialNumber) :
 	make(make),
-	model(model),
-	serialNumber(new int(*serialNumber))
+	model(model)
 {
+	if (serialNumber == nullptr) {
+		this->serialNumber = 0;
+	}
+	else {
+		this->serialNumber = new int(*serialNumber);
+	}
+
 	printToConsole("Motorcycle created");
 }
 
@@ -38,15 +44,23 @@ Motorcycle::Motorcycle(const Motorcycle& motorcycle) :
 	printToConsole("Motorcycle deep copy");
 }
 
-/*
-// The copy assignment operator allows the member variables to be copied.
+// An assignment operator is used to replace the data of a previously initialized object with some other object's data.
 // This assumes that both objects are created and by using the = operator, member variables get copied.
-Motorcycle& Motorcycle::operator= (const Motorcycle& rhs) {
+Motorcycle& Motorcycle::operator= (const Motorcycle& motorcyle){
+	this->make = motorcyle.make;
+	this->model = motorcyle.model;
+
+	if (motorcyle.serialNumber == nullptr) {
+		this->serialNumber = 0;
+	}
+	else {
+		this->serialNumber = new int(*motorcyle.serialNumber);
+	}
 
 	return *this;
 }
 
-
+/*
 // move constructor
 Motorcycle::Motorcycle(Motorcycle&&) {
 
@@ -58,6 +72,18 @@ Motorcycle& Motorcycle::operator= (Motorcycle&&) {
 }
 */
 
+// ========= Client Code =========
+static void copyConstructorExample() {
+	
+	Motorcycle motor = Motorcycle("Harlely-Davison", "Nightster", new int(12345));
+	Motorcycle cycle = motor;
+
+	// changing 'motor' object doesn't change 'cycle' object because of deep copy
+	motor.setMake("Honda");
+	motor.setModel("Roadster");
+	motor.setSerialNumber(new int(11111));
+}
+
 // ========= Main =========
 int main() {
 	// constructor/destructor example
@@ -65,13 +91,12 @@ int main() {
 	delete motorcycle; //destructor
 
 	// copy constructor example
-	Motorcycle motor = Motorcycle("Harlely-Davison", "Nightster", new int(12345));
-	Motorcycle cycle = motor;
+	copyConstructorExample();
 
-	// chaning 'motor' object doesn't change 'cycle' object because of deep copy
-	motor.setMake("Honda");
-	motor.setModel("Roadster");
-	motor.setSerialNumber(new int(11111));
+
+	Motorcycle mCycle = Motorcycle("Honda", "Roadster", new int(44444));
+	Motorcycle bike;
+	bike = mCycle;
 
 	return 0;
 }
