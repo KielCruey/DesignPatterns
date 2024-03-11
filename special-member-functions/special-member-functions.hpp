@@ -10,8 +10,8 @@ public:
 	~Motorcycle(); // destructor
 	Motorcycle(const Motorcycle & motorcycle); // copy constructor
 	Motorcycle& operator= (const Motorcycle& motorcycle); // copy assignment
-	Motorcycle(Motorcycle&&); // move constructor
-	Motorcycle& operator= (Motorcycle&&); // move assigment
+	Motorcycle(Motorcycle&& motorcycle); // move constructor
+	Motorcycle& operator= (Motorcycle&& motorcycle); // move assigment
 
 	// getters/setters
 	inline std::string getMake();

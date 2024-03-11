@@ -52,14 +52,26 @@ Motorcycle& Motorcycle::operator= (const Motorcycle& motorcyle){
 	return *this;
 }
 
-/*
-// move constructor
-Motorcycle::Motorcycle(Motorcycle&&) {
 
+// For the move constructor and move assigment functions, the && means a r-value, which is of type unnamed temporary object.
+// For the move constructor, the content is actually transferred from one object (the source) to the other (the destination).
+// This moving only happens when the source of the value is an unnamed object.
+// Unnamed objects are objects that are temporary in nature, and thus haven't even been given a name. Typical examples of unnamed objects are return values of functions or type-casts.
+Motorcycle::Motorcycle(Motorcycle&& motorcycle) {
+	// when transfering the data from one object to another, must delete the object that's being moved dynamic memory 
+	this->make = motorcycle.getMake();
+	this->model = motorcycle.getModel();
+	this->serialNumber = motorcycle.getSerialNumber();
+
+	// for all dynamic memory, need to set the values to nullptr to prevent a dandling pointer
+	// the memory will be cleared up my the destructor, however need to 'erase' the pointer.
+	motorcycle.serialNumber = nullptr; // 
 }
-
+/*
 // move assigment
-Motorcycle& Motorcycle::operator= (Motorcycle&&) {
+Motorcycle& Motorcycle::operator= (Motorcycle&& motorcycle) {
+	delete motorcycle.serialNumber;
+
 	return;
 }
 */
