@@ -14,12 +14,8 @@ Motorcycle::Motorcycle(std::string make,
 	make(make),
 	model(model)
 {
-	if (serialNumber == nullptr) {
-		this->serialNumber = 0;
-	}
-	else {
-		this->serialNumber = new int(*serialNumber);
-	}
+	if (serialNumber == nullptr) { this->serialNumber = 0; }
+	else { this->serialNumber = new int(*serialNumber);	}
 
 	printToConsole("Motorcycle created");
 }
@@ -50,12 +46,8 @@ Motorcycle& Motorcycle::operator= (const Motorcycle& motorcyle){
 	this->make = motorcyle.make;
 	this->model = motorcyle.model;
 
-	if (motorcyle.serialNumber == nullptr) {
-		this->serialNumber = 0;
-	}
-	else {
-		this->serialNumber = new int(*motorcyle.serialNumber);
-	}
+	if (motorcyle.serialNumber == nullptr) { this->serialNumber = 0; }
+	else { this->serialNumber = new int(*motorcyle.serialNumber); }
 
 	return *this;
 }
@@ -74,7 +66,6 @@ Motorcycle& Motorcycle::operator= (Motorcycle&&) {
 
 // ========= Client Code =========
 static void copyConstructorExample() {
-	
 	Motorcycle motor = Motorcycle("Harlely-Davison", "Nightster", new int(12345));
 	Motorcycle cycle = motor;
 
@@ -82,6 +73,17 @@ static void copyConstructorExample() {
 	motor.setMake("Honda");
 	motor.setModel("Roadster");
 	motor.setSerialNumber(new int(11111));
+}
+
+static void copyAssignmentOperator() {
+	Motorcycle mCycle = Motorcycle("Honda", "Roadster", new int(44444));
+	Motorcycle bike;
+	bike = mCycle;
+
+	// chaning 'bike' object doesn't change 'mCycle' object
+	bike.setMake("BMW");
+	bike.setModel("Sidecar");
+	bike.setSerialNumber(new int(99999));
 }
 
 // ========= Main =========
@@ -93,10 +95,7 @@ int main() {
 	// copy constructor example
 	copyConstructorExample();
 
-
-	Motorcycle mCycle = Motorcycle("Honda", "Roadster", new int(44444));
-	Motorcycle bike;
-	bike = mCycle;
+	copyAssignmentOperator();
 
 	return 0;
 }
