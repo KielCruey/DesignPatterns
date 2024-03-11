@@ -49,5 +49,7 @@ For creating UML, [drawio.com](https://www.drawio.com/) was used. A quick [tutor
 # Special Member Functions
 [Article](https://cplusplus.com/doc/tutorial/classes2/#default_constructor)
 
+[Copy Constructor](https://www.shiksha.com/online-courses/articles/copy-constructor-in-cpp/) details
+
 # Compiling Code
 This [video](https://www.youtube.com/watch?v=3-9sObAg6R0) helps with compiling on VS code.
