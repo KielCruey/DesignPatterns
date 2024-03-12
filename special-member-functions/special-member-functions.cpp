@@ -43,6 +43,7 @@ Motorcycle::Motorcycle(const Motorcycle& motorcycle) :
 // An assignment operator is used to replace the data of a previously initialized object with some other object's data.
 // This assumes that both objects are created and by using the = operator, member variables get copied.
 Motorcycle& Motorcycle::operator= (const Motorcycle& motorcyle){
+	// transfering data to newly created object
 	this->make = motorcyle.make;
 	this->model = motorcyle.model;
 
@@ -62,7 +63,9 @@ Motorcycle::Motorcycle(Motorcycle&& motorcycle) {
 	// when transfering the data from one object to another, must delete the object that's being moved dynamic memory 
 	this->make = motorcycle.getMake();
 	this->model = motorcycle.getModel();
-	this->serialNumber = motorcycle.getSerialNumber();
+
+	if (motorcycle.serialNumber == nullptr) { this->serialNumber = 0; }
+	else { this->serialNumber = motorcycle.getSerialNumber(); }
 
 	// for all dynamic memory, need to set the values to nullptr to prevent a dandling pointer
 	// the memory will be cleared up my the destructor, however need to 'erase' the pointer.
@@ -71,7 +74,12 @@ Motorcycle::Motorcycle(Motorcycle&& motorcycle) {
 
 // move assigment
 Motorcycle& Motorcycle::operator= (Motorcycle&& motorcycle) noexcept {
-	//delete motorcycle.serialNumber;
+	// transfering data to newly created object
+	this->make = motorcycle.make;
+	this->model = motorcycle.model;
+	
+	if (motorcycle.serialNumber == nullptr) { this->serialNumber = 0; }
+	else { this->serialNumber = motorcycle.getSerialNumber(); }
 
 	return motorcycle;
 }
@@ -103,10 +111,16 @@ static void copyAssignmentOperator() {
 	bike.setSerialNumber(new int(99999));
 }
 
-// move constructor example
-static Motorcycle createMotorcycle() {
-	Motorcycle m = Motorcycle("Indian", "Roadster", new int(22222));
-	return m; // this return value will invoke the move constructor 
+static void moveConstructorExample() {
+	std::vector<Motorcycle> vMotorcycle;
+
+	// calls the move constructor because the Motorcycle is an unnamed object as the vector's parameter
+	vMotorcycle.push_back( Motorcycle("Indian", "Roadster", new int(22222)) );
+}
+
+static void moveAssignmentExample() {
+	Motorcycle motorcycle;
+	motorcycle = Motorcycle("Unbranded", "Monster", new int(414));
 }
 
 // ========= Main =========
@@ -114,9 +128,10 @@ int main() {
 	constructorDestructorExample();
 	copyConstructorExample();
 	copyAssignmentOperator();
+	moveConstructorExample();
+	moveAssignmentExample();
 
-	Motorcycle motorcycle;
-	motorcycle = createMotorcycle();
+
 
 	return 0;
 }
