@@ -11,7 +11,7 @@ public:
 	Motorcycle(const Motorcycle & motorcycle); // copy constructor
 	Motorcycle& operator= (const Motorcycle& motorcycle); // copy assignment
 	Motorcycle(Motorcycle&& motorcycle); // move constructor
-	Motorcycle& operator= (Motorcycle&& motorcycle); // move assigment
+	Motorcycle& operator=(Motorcycle&& motorcycle) noexcept; // move assigment
 
 	// getters/setters
 	inline std::string getMake();

@@ -52,8 +52,9 @@ Motorcycle& Motorcycle::operator= (const Motorcycle& motorcyle){
 	return *this;
 }
 
-
 // For the move constructor and move assigment functions, the && means a r-value, which is of type unnamed temporary object.
+// The concept of moving is most useful for objects that manage the storage they use, such as objects that allocate storage with new and delete.
+
 // For the move constructor, the content is actually transferred from one object (the source) to the other (the destination).
 // This moving only happens when the source of the value is an unnamed object.
 // Unnamed objects are objects that are temporary in nature, and thus haven't even been given a name. Typical examples of unnamed objects are return values of functions or type-casts.
@@ -67,16 +68,20 @@ Motorcycle::Motorcycle(Motorcycle&& motorcycle) {
 	// the memory will be cleared up my the destructor, however need to 'erase' the pointer.
 	motorcycle.serialNumber = nullptr; // 
 }
-/*
-// move assigment
-Motorcycle& Motorcycle::operator= (Motorcycle&& motorcycle) {
-	delete motorcycle.serialNumber;
 
-	return;
+// move assigment
+Motorcycle& Motorcycle::operator= (Motorcycle&& motorcycle) noexcept {
+	//delete motorcycle.serialNumber;
+
+	return motorcycle;
 }
-*/
 
 // ========= Client Code =========
+static void constructorDestructorExample() {
+	Motorcycle* motorcycle = new Motorcycle("Yamaha", "Sport Touring", new int(98765)); // constructor
+	delete motorcycle; //destructor
+}
+
 static void copyConstructorExample() {
 	Motorcycle motor = Motorcycle("Harlely-Davison", "Nightster", new int(12345));
 	Motorcycle cycle = motor;
@@ -98,16 +103,20 @@ static void copyAssignmentOperator() {
 	bike.setSerialNumber(new int(99999));
 }
 
+// move constructor example
+static Motorcycle createMotorcycle() {
+	Motorcycle m = Motorcycle("Indian", "Roadster", new int(22222));
+	return m; // this return value will invoke the move constructor 
+}
+
 // ========= Main =========
 int main() {
-	// constructor/destructor example
-	Motorcycle * motorcycle = new Motorcycle("Yamaha", "Sport Touring", new int(98765)); // constructor
-	delete motorcycle; //destructor
-
-	// copy constructor example
+	constructorDestructorExample();
 	copyConstructorExample();
-
 	copyAssignmentOperator();
+
+	Motorcycle motorcycle;
+	motorcycle = createMotorcycle();
 
 	return 0;
 }
