@@ -51,6 +51,8 @@ For creating UML, [drawio.com](https://www.drawio.com/) was used. A quick [tutor
 
 [Copy Constructor](https://www.shiksha.com/online-courses/articles/copy-constructor-in-cpp/) details
 
-[rvalue/lvalue article](https://www.scaler.com/topics/cpp/lvalue-and-rvalue/)
+[rvalue/lvalue](https://www.scaler.com/topics/cpp/lvalue-and-rvalue/)
+
+[Move Constructor](https://www.scaler.com/topics/cpp-move-constructor/)
 # Compiling Code
 This [video](https://www.youtube.com/watch?v=3-9sObAg6R0) helps with compiling on VS code.
