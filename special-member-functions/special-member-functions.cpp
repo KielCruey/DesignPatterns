@@ -14,6 +14,7 @@ Motorcycle::Motorcycle(std::string make,
 	make(make),
 	model(model)
 {
+	// creating heap memory
 	if (serialNumber == nullptr) { this->serialNumber = 0; }
 	else { this->serialNumber = new int(*serialNumber);	}
 
@@ -28,10 +29,10 @@ Motorcycle::~Motorcycle() {
 	printToConsole("Motorcycle deleted");
 }
 
-// The default copy constructor is a shallow copy of the variables.
-// This copy constructor deep copies member variables.
+// The default copy constructor is a shallow copy.
+// This copy constructor deep copies member variables, because heap memory is used.
 // Deep copying is only needed for pointers, because copys only the address of the dynamic memory.
-// It also needs to create a new block of memory as well during the copy.
+// It also needs to create a new block of memory during the copy.
 Motorcycle::Motorcycle(const Motorcycle& motorcycle) :
 	make(motorcycle.make),
 	model(motorcycle.model),
@@ -41,7 +42,7 @@ Motorcycle::Motorcycle(const Motorcycle& motorcycle) :
 }
 
 // An assignment operator is used to replace the data of a previously initialized object with some other object's data.
-// This assumes that both objects are created and by using the = operator, member variables get copied.
+// This assumes that both objects are created and by using the = operator, all member variables should get copied.
 Motorcycle& Motorcycle::operator= (const Motorcycle& motorcyle){
 	// transfering data to newly created object
 	this->make = motorcyle.make;
@@ -54,11 +55,12 @@ Motorcycle& Motorcycle::operator= (const Motorcycle& motorcyle){
 }
 
 // For the move constructor and move assigment functions, the && means a r-value, which is of type unnamed temporary object.
-// The concept of moving is most useful for objects that manage the storage they use, such as objects that allocate storage with new and delete.
+// The concept of moving is most useful for objects that manage the storage they use, such as objects that allocate storage with new and delete keyword.
 
 // For the move constructor, the content is actually transferred from one object (the source) to the other (the destination).
-// This moving only happens when the source of the value is an unnamed object.
-// Unnamed objects are objects that are temporary in nature, and thus haven't even been given a name. Typical examples of unnamed objects are return values of functions or type-casts.
+// This moving only happens when the source of the value is an unnamed object or an rvalue.
+// Unnamed objects are objects that are temporary in nature, and thus haven't even been given a name. 
+// Typical examples of unnamed objects are return values of functions or type-casts.
 Motorcycle::Motorcycle(Motorcycle&& motorcycle) :
 	make(motorcycle.make),
 	model(motorcycle.model)
@@ -69,10 +71,10 @@ Motorcycle::Motorcycle(Motorcycle&& motorcycle) :
 
 	// for all dynamic memory, need to set the values to nullptr to prevent a dandling pointer
 	// the memory will be cleared up my the destructor, however need to 'erase' the pointer.
-	motorcycle.serialNumber = nullptr; // 
+	motorcycle.serialNumber = nullptr;
 }
 
-// The move assignment operator = is used for transferring a temporary object to an existing object.
+// The move assignment operator = is used for transferring a temporary or unnamed object to an existing object.
 Motorcycle& Motorcycle::operator= (Motorcycle&& motorcycle) noexcept
 {
 	// transfering data to newly created object
@@ -82,6 +84,7 @@ Motorcycle& Motorcycle::operator= (Motorcycle&& motorcycle) noexcept
 	if (motorcycle.serialNumber == nullptr) { this->serialNumber = 0; }
 	else { this->serialNumber = new int(*motorcycle.serialNumber); }
 
+	// when the data is transfered, the copied object need to clear heap memory
 	motorcycle.serialNumber = nullptr;
 
 	return motorcycle;
