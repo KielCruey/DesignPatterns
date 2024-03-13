@@ -1,10 +1,26 @@
 // ============ TV ============
+inline bool TV::getIsPowered() const {
+	return this->isPowered;
+}
+
+inline int TV::getChannel() const {
+	return this->channel;
+}
+
+inline int TV::getVolume() const {
+	return this->volume;
+}
+
 inline void TV::setIsPowered(bool isPowered) {
 	this->isPowered = isPowered;
 }
 
-inline bool TV::getIsPowered() const {
-	return this->isPowered;
+inline void TV::setChannel(bool channel) {
+	this->channel = channel;
+}
+
+inline void TV::setVolume(bool volume) {
+	this->volume = volume;
 }
 
 // ============ PowerOn ============
@@ -69,3 +85,4 @@ inline void TVRemote::setTVCommand(TVCommand* tvCommand) {
 inline TVCommand * TVRemote::getTVCommand() {
 	return this->tvCommand;
 }
+

@@ -1,12 +1,20 @@
 #include <iostream>
 
+const int MINVOLUME = 0;
+const int MAXVOLUME = 10;
+const int MINCHANNEL = 0;
+const int MAXCHANNEL = 100;
+
+
 // ============ Receiver ============
 // Receiver contains the business logic when it receives a concrete command.
 // Receiver figures out how to handle the command.
 class TV
 {
 public:
-	TV(bool isPowered = false);
+	TV(bool isPowered = false,
+	   int channel = NULL,
+	   int volume = NULL);
 	~TV() = default;
 
 	// commands (from invoker) that the TV responds to
@@ -17,11 +25,19 @@ public:
 	void channelUp();
 	void channelDown();
 
-	inline void setIsPowered(bool isPowered);
+	// getters/setters
 	inline bool getIsPowered() const;
+	inline int getChannel() const;
+	inline int getVolume() const;
+
+	inline void setIsPowered(bool isPowered);
+	inline void setChannel(bool channel);
+	inline void setVolume(bool volume);
 
 private:
 	bool isPowered;
+	int channel;
+	int volume;
 };
 
 // ============ Abstract Command ============

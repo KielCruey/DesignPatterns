@@ -6,8 +6,12 @@ static void printToConsole(std::string string) {
 }
 
 // ============ TV ============
-TV::TV(bool isPowered) :
-	isPowered(isPowered)
+TV::TV(bool isPowered,
+	   int channel,
+	   int volume) :
+	isPowered(isPowered),
+	channel(channel),
+	volume(volume)
 { }
 
 void TV::powerOn() {
@@ -21,33 +25,63 @@ void TV::powerOn() {
 }
 
 void TV::powerOff() {
-	if (!getIsPowered()) {
-		printToConsole("TV is already off!");
-	}
-	else {
+	if (getIsPowered()) {
 		setIsPowered(false);
 		printToConsole("TV is powered off!");
+	}
+	else {
+		printToConsole("TV is already off!");
 	}
 }
 
 void TV::volumeUp() {
-	if (getIsPowered()) printToConsole("TV volumed up!");
-	else			    printToConsole("TV not powered -- can't increase volume!");
+	if (getIsPowered() && getVolume() < MAXVOLUME) {
+		setVolume(getVolume() + 1);
+		printToConsole("TV volumed up!");
+	}
+	else if (getIsPowered() && getVolume() >= MAXVOLUME) {
+		setVolume(MAXVOLUME); // make sure it's at the highest
+		printToConsole("TV can't increase volume! Volume at it's highest");
+	}
+	else printToConsole("Can change volume -- TV is powered off!");
 }
 
 void TV::volumeDown() {
-	if (getIsPowered()) printToConsole("TV volumed down!");
-	else			    printToConsole("TV not powered -- can't decrease volume!");
+	if (getIsPowered() && getVolume() > MINVOLUME) {
+		setVolume(getVolume() - 1);
+		printToConsole("TV volumed down!");
+	}
+	else if (getIsPowered() && getVolume() <= MINVOLUME) {
+		setVolume(MINVOLUME); // make sure it's at the lowest
+		printToConsole("TV can't decrease volume! Volume at it's lowest");
+	}
+	else printToConsole("TV not powered -- can't decrease volume!");
 }
 
 void TV::channelUp() {
-	if (getIsPowered()) printToConsole("TV channeled up!");
-	else			    printToConsole("TV not powered -- can't increase the channel!");
+	if (getIsPowered() && getChannel() < MAXCHANNEL) {
+		setChannel(getChannel() + 1);
+		printToConsole("TV channeled up!");
+	}
+	else if (getIsPowered() && getChannel() >= MAXCHANNEL) {
+		setChannel(MAXCHANNEL); // make sure it's at the highest
+		printToConsole("TV can't increase channel! Channel at it's highest");
+	}
+	else printToConsole("TV not powered -- can't increase the channel!");
 }
 
 void TV::channelDown() {
-	if (getIsPowered()) printToConsole("TV channeled down!");
-	else			    printToConsole("TV not powered -- can't decrease the channel!");
+	if (getIsPowered() && getChannel() > MINCHANNEL) {
+		setChannel(getChannel() - 1);
+		printToConsole("TV channeled down!");
+	}
+	else if (getIsPowered() && getChannel() <= MINCHANNEL) {
+		setChannel(MINCHANNEL); // make sure it's at the lowest
+		printToConsole("TV can't decrease channel! Channel at it's lowest");
+	}
+	else {
+		printToConsole("TV not powered -- can't decrease the channel!");
+	}
 }
 
 // ============ PowerOn ============
