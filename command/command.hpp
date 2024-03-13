@@ -1,6 +1,8 @@
 #include <iostream>
 
 // ============ Receiver ============
+// Receiver contains the business logic when it receives a concrete command.
+// Receiver figures out how to handle the command.
 class TV
 {
 public:
@@ -22,7 +24,7 @@ private:
 	bool isPowered;
 };
 
-// ============ AbstractCommand ============
+// ============ Abstract Command ============
 class TVCommand 
 {
 public:
@@ -30,6 +32,9 @@ public:
 	virtual void execute() = 0;
 };
 
+// ============ Concrete Commands ============
+// Concrete commands implements the requests.
+// The concrete commands aren't supposed to do work, but pass on the logic to the receiver.
 class PowerOn : public TVCommand
 {
 public:
@@ -121,6 +126,9 @@ protected:
 };
 
 // ============ Invoker ============
+// The invoker is responsible for initiating requests. 
+// The invoker must have a field for storing a reference to a command object.
+// The invoker sends a command object eventually to the receiver class.
 class TVRemote
 {
 public:
