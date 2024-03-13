@@ -59,27 +59,30 @@ Motorcycle& Motorcycle::operator= (const Motorcycle& motorcyle){
 // For the move constructor, the content is actually transferred from one object (the source) to the other (the destination).
 // This moving only happens when the source of the value is an unnamed object.
 // Unnamed objects are objects that are temporary in nature, and thus haven't even been given a name. Typical examples of unnamed objects are return values of functions or type-casts.
-Motorcycle::Motorcycle(Motorcycle&& motorcycle) {
+Motorcycle::Motorcycle(Motorcycle&& motorcycle) :
+	make(motorcycle.make),
+	model(motorcycle.model)
+{
 	// when transfering the data from one object to another, must delete the object that's being moved dynamic memory 
-	this->make = motorcycle.getMake();
-	this->model = motorcycle.getModel();
-
 	if (motorcycle.serialNumber == nullptr) { this->serialNumber = 0; }
-	else { this->serialNumber = motorcycle.getSerialNumber(); }
+	else { this->serialNumber = new int (*motorcycle.serialNumber); }
 
 	// for all dynamic memory, need to set the values to nullptr to prevent a dandling pointer
 	// the memory will be cleared up my the destructor, however need to 'erase' the pointer.
 	motorcycle.serialNumber = nullptr; // 
 }
 
-// move assigment
-Motorcycle& Motorcycle::operator= (Motorcycle&& motorcycle) noexcept {
+// The move assignment operator = is used for transferring a temporary object to an existing object.
+Motorcycle& Motorcycle::operator= (Motorcycle&& motorcycle) noexcept
+{
 	// transfering data to newly created object
 	this->make = motorcycle.make;
 	this->model = motorcycle.model;
 	
 	if (motorcycle.serialNumber == nullptr) { this->serialNumber = 0; }
-	else { this->serialNumber = motorcycle.getSerialNumber(); }
+	else { this->serialNumber = new int(*motorcycle.serialNumber); }
+
+	motorcycle.serialNumber = nullptr;
 
 	return motorcycle;
 }
@@ -120,7 +123,9 @@ static void moveConstructorExample() {
 
 static void moveAssignmentExample() {
 	Motorcycle motorcycle;
-	motorcycle = Motorcycle("Unbranded", "Monster", new int(414));
+
+	// move assignment invoked because created a unnamed object, which is a rvalue
+	motorcycle = Motorcycle("Unbranded", "Monster", new int(414)); 
 }
 
 // ========= Main =========
@@ -130,8 +135,6 @@ int main() {
 	copyAssignmentOperator();
 	moveConstructorExample();
 	moveAssignmentExample();
-
-
 
 	return 0;
 }
