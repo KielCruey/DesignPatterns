@@ -2,6 +2,8 @@
 // language is not related to the Template Method pattern.C++ define templates
 // for data types whereas the Template Method pattern define a template for an algorithm.
 
+#include <iostream>
+#include <string>
 
 const int MIN_AMOUNT = 0;
 
@@ -19,7 +21,7 @@ public:
 		   int creamShot = MAX_SHOT_AMOUNT,
 		   int milkShot = MAX_SHOT_AMOUNT,
 		   int chocolateShot = MAX_SHOT_AMOUNT);
-	~Extras();
+	~Extras() = default;
 
 	// getters/setters
 	inline int getSugarShot() const;
@@ -45,7 +47,7 @@ public:
 	Teas(int greenTea = MAX_BEVERAGE_AMOUNT,
 		 int blackTea = MAX_BEVERAGE_AMOUNT,
 		 int chiaTea = MAX_BEVERAGE_AMOUNT);
-	~Teas();
+	~Teas() = default;
 
 	// getters/setters
 	inline int getGreenTea() const;
@@ -68,7 +70,7 @@ public:
 	Coffees(int lightRoast = MAX_BEVERAGE_AMOUNT,
 			int mediumRoast = MAX_BEVERAGE_AMOUNT,
 			int darkRoast = MAX_BEVERAGE_AMOUNT);
-	~Coffees();
+	~Coffees() = default;
 
 	// getters/setters
 	inline int getLightRoast() const;
@@ -86,6 +88,7 @@ private:
 };
 
 // ========== Abstract Template ==========
+// The BeverageMaker class will take control over scope of the Extra, Teas, and Coffees classes via dynamic memory.
 class BeverageMaker
 {
 public:
@@ -109,15 +112,15 @@ public:
 	inline void setWaterAmount(double waterAmount); // in fl oz
 
 protected:
-	Extras * extras;
-	Teas * teas;
-	Coffees * coffees;
-
 	virtual void placeCup();
 	virtual void boilWater();
 	virtual void brew() = 0;
 	virtual void pourInCup();
 	virtual void addExtras() = 0;
+
+	Extras * extras;
+	Teas * teas;
+	Coffees * coffees;
 
 private:
 	int cups;
