@@ -35,11 +35,19 @@ Coffees::Coffees(int lightRoast,
 { }
 
 // =========== BeverageMaker ===========
+BeverageMaker::BeverageMaker() {
+	setExtras(new Extras());
+	setTeas(new Teas());
+	setCoffees(new Coffees());
+	setCups(MAX_CUPS);
+	setWaterAmount(MAX_WATER_AMOUNT);
+}
+
 BeverageMaker::BeverageMaker(Extras* extras,
-			  Teas* teas,
-			  Coffees* coffees,
-			  int cups,
-			  double waterAmount) :
+							Teas* teas,
+							Coffees* coffees,
+							int cups,
+							double waterAmount) :
 	extras(new Extras(*extras)),
 	teas(new Teas(*teas)),
 	coffees(new Coffees(*coffees)),
@@ -86,13 +94,17 @@ void BeverageMaker::pourInCup() {
 }
 
 // =========== TeaMaker ===========
-TeaMaker::TeaMaker(BeverageMaker * beverageMaker) :
-	BeverageMaker(beverageMaker->getExtras(),
-		beverageMaker->getTeas(),
-		beverageMaker->getCoffees(),
-		beverageMaker->getCups(),
-		beverageMaker->getWaterAmount())
+TeaMaker::TeaMaker(Extras* extras,
+					Teas* teas,
+					Coffees* coffees,
+					int cups,
+					double waterAmount) :
+	BeverageMaker(extras, teas, coffees, cups, waterAmount)
 { }
+
+TeaMaker::~TeaMaker() {
+
+}
 
 void TeaMaker::brew() {
 
@@ -103,13 +115,17 @@ void TeaMaker::addExtras() {
 }
 
 // =========== CoffeeMaker ===========
-CoffeeMaker::CoffeeMaker(BeverageMaker * beverageMaker) :
-	BeverageMaker(beverageMaker->getExtras(),
-		beverageMaker->getTeas(),
-		beverageMaker->getCoffees(),
-		beverageMaker->getCups(),
-		beverageMaker->getWaterAmount()) 
+CoffeeMaker::CoffeeMaker(Extras* extras,
+						Teas* teas,
+						Coffees* coffees,
+						int cups,
+						double waterAmount) :
+	BeverageMaker(extras, teas, coffees, cups, waterAmount)
 { }
+
+CoffeeMaker::~CoffeeMaker() {
+
+}
 
 void CoffeeMaker::brew() {
 
@@ -121,6 +137,19 @@ void CoffeeMaker::addExtras() {
 
 // =========== Main ===========
 int main() {
+
+	// a little test
+	{
+		Extras* extras = new Extras();
+		Teas* teas = new Teas();
+		Coffees* coffees = new Coffees();
+
+		TeaMaker * teaMaker = new TeaMaker(extras, teas, coffees);
+
+		delete extras;
+		delete teas;
+		delete coffees;
+	}
 
 	return 0;
 }

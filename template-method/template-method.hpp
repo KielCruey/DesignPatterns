@@ -23,6 +23,8 @@ public:
 		   int chocolateShot = MAX_SHOT_AMOUNT);
 	~Extras() = default;
 
+	//Extras(const Extras& extras); // copy constructor
+
 	// getters/setters
 	inline int getSugarShot() const;
 	inline int getCreamShot() const;
@@ -92,9 +94,10 @@ private:
 class BeverageMaker
 {
 public:
-	BeverageMaker(Extras * extras = nullptr,
-				  Teas * teas = nullptr,
-				  Coffees * coffees = nullptr,
+	BeverageMaker();
+	BeverageMaker(Extras * extras,
+				  Teas * teas,
+				  Coffees * coffees,
 				  int cups = MAX_CUPS,
 				  double waterAmount = MAX_WATER_AMOUNT);
 	~BeverageMaker();
@@ -138,7 +141,12 @@ private:
 class TeaMaker : public BeverageMaker
 {
 public:
-	TeaMaker(BeverageMaker * beverageMaker = nullptr);
+	TeaMaker(Extras* extras,
+		Teas* teas,
+		Coffees* coffees,
+		int cups = MAX_CUPS,
+		double waterAmount = MAX_WATER_AMOUNT);
+	~TeaMaker();
 
 	void brew() override;
 	void addExtras() override;
@@ -147,7 +155,12 @@ public:
 class CoffeeMaker : public BeverageMaker
 {
 public:
-	CoffeeMaker(BeverageMaker* beverageMaker = nullptr);
+	CoffeeMaker(Extras* extras,
+		Teas* teas,
+		Coffees* coffees,
+		int cups = MAX_CUPS,
+		double waterAmount = MAX_WATER_AMOUNT);
+	~CoffeeMaker();
 
 	void brew() override;
 	void addExtras() override;
