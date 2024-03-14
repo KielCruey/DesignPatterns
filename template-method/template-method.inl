@@ -82,12 +82,36 @@ inline void Coffees::setDarkRoast(int darkRoast) {
 }
 
 // ========== Beverage Maker ==========
+inline Extras* BeverageMaker::getExtras() const {
+	return this->extras;
+}
+
+inline Teas* BeverageMaker::getTeas() const {
+	return this->teas;
+}
+
+inline Coffees* BeverageMaker::getCoffees() const {
+	return this->coffees;
+}
+
 inline int BeverageMaker::getCups() const {
 	return this->cups;
 }
 
 inline double BeverageMaker::getWaterAmount() const {
 	return this->waterAmount;
+}
+
+inline void BeverageMaker::setExtras(Extras* extras) {
+	this->extras = extras;
+}
+
+inline void BeverageMaker::setTeas(Teas* teas) {
+	this->teas = teas;
+}
+
+inline void BeverageMaker::setCoffees(Coffees* coffees) {
+	this->coffees = coffees;
 }
 
 inline void BeverageMaker::setCups(int cups) {

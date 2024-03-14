@@ -105,11 +105,18 @@ public:
 	void restockCoffees();
 
 	// getters/setters
+	inline Extras * getExtras() const;
+	inline Teas * getTeas() const;
+	inline Coffees * getCoffees() const;
 	inline int getCups() const;
 	inline double getWaterAmount() const;
 
+	inline void setExtras(Extras * extras);
+	inline void setTeas(Teas * teas);
+	inline void setCoffees(Coffees * coffees);
 	inline void setCups(int cups);
 	inline void setWaterAmount(double waterAmount); // in fl oz
+
 
 protected:
 	virtual void placeCup();
@@ -131,6 +138,8 @@ private:
 class TeaMaker : public BeverageMaker
 {
 public:
+	TeaMaker(BeverageMaker * beverageMaker = nullptr);
+
 	void brew() override;
 	void addExtras() override;
 };
@@ -138,6 +147,8 @@ public:
 class CoffeeMaker : public BeverageMaker
 {
 public:
+	CoffeeMaker(BeverageMaker* beverageMaker = nullptr);
+
 	void brew() override;
 	void addExtras() override;
 };

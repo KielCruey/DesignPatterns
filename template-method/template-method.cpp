@@ -86,6 +86,14 @@ void BeverageMaker::pourInCup() {
 }
 
 // =========== TeaMaker ===========
+TeaMaker::TeaMaker(BeverageMaker * beverageMaker) :
+	BeverageMaker(beverageMaker->getExtras(),
+		beverageMaker->getTeas(),
+		beverageMaker->getCoffees(),
+		beverageMaker->getCups(),
+		beverageMaker->getWaterAmount())
+{ }
+
 void TeaMaker::brew() {
 
 }
@@ -95,6 +103,14 @@ void TeaMaker::addExtras() {
 }
 
 // =========== CoffeeMaker ===========
+CoffeeMaker::CoffeeMaker(BeverageMaker * beverageMaker) :
+	BeverageMaker(beverageMaker->getExtras(),
+		beverageMaker->getTeas(),
+		beverageMaker->getCoffees(),
+		beverageMaker->getCups(),
+		beverageMaker->getWaterAmount()) 
+{ }
+
 void CoffeeMaker::brew() {
 
 }
@@ -105,7 +121,6 @@ void CoffeeMaker::addExtras() {
 
 // =========== Main ===========
 int main() {
-
 
 	return 0;
 }
