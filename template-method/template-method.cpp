@@ -69,15 +69,6 @@ BeverageMaker::~BeverageMaker() {
 	printToConsole("BeverageMaker deleted");
 }
 
-// calls template methods
-void BeverageMaker::makeBeverage() {
-	placeCup();
-	boilWater();
-	brew();
-	pourInCup();
-	addExtras();
-}
-
 void BeverageMaker::restockExtras() {
 	getExtras()->setSugarShot(MAX_EXTRAS_AMOUNT);
 	getExtras()->setCreamShot(MAX_EXTRAS_AMOUNT);
@@ -119,6 +110,14 @@ void BeverageMaker::pourInCup() {
 	printToConsole("Beverage poured in cup");
 }
 
+void BeverageMaker::restockCups() {
+	setCups(MAX_CUPS);
+}
+
+void BeverageMaker::restockWater() {
+	setWaterAmount(MAX_WATER_AMOUNT);
+}
+
 // =========== TeaMaker ===========
 TeaMaker::TeaMaker(Extras* extras,
 					Teas* teas,
@@ -131,7 +130,23 @@ TeaMaker::~TeaMaker() {
 	printToConsole("TeaMaker deleted");
 }
 
-void TeaMaker::brew() {
+// calls template methods
+void TeaMaker::makeBeverage(std::string beverageSelected) {
+	placeCup();
+	boilWater();
+	brew(beverageSelected);
+	pourInCup();
+	addExtras();
+}
+
+void TeaMaker::brew(std::string beverageSelected) {
+	if (beverageSelected == "green tea")
+		this->getTeas()->setGreenTea(this->getTeas()->getGreenTea() - 1);
+	else if (beverageSelected == "black tea")
+		this->getTeas()->setBlackTea(this->getTeas()->getBlackTea() - 1);
+	else if (beverageSelected == "chia tea")
+		this->getTeas()->setChiaTea(this->getTeas()->getChiaTea() - 1);
+
 	printToConsole("Brewing tea");
 }
 
@@ -151,7 +166,23 @@ CoffeeMaker::~CoffeeMaker() {
 	printToConsole("CoffeeMaker deleted");
 }
 
-void CoffeeMaker::brew() {
+// calls template methods
+void CoffeeMaker::makeBeverage(std::string beverageSelected) {
+	placeCup();
+	boilWater();
+	brew(beverageSelected);
+	pourInCup();
+	addExtras();
+}
+
+void CoffeeMaker::brew(std::string beverageSelected) {
+	if (beverageSelected == "light roast")
+		this->getCoffees()->setLightRoast(this->getCoffees()->getLightRoast() - 1);
+	else if (beverageSelected == "medium roast")
+		this->getCoffees()->setMediumRoast(this->getCoffees()->getMediumRoast() - 1);
+	else if (beverageSelected == "dark roast")
+		this->getCoffees()->setDarkRoast(this->getCoffees()->getDarkRoast() - 1);
+
 	printToConsole("Brewing coffee");
 }
 
@@ -159,28 +190,67 @@ void CoffeeMaker::addExtras() {
 	printToConsole("Coffee extras added");
 }
 
-// =========== Main ===========
-int main() {
-
-
-
-	Extras* extras = new Extras();
-	Teas* teas = new Teas();
-	Coffees* coffees = new Coffees();
+// =========== Client Code ===========
+static TeaMaker * createTeaMaker() {
+	Extras * extras = new Extras();
+	Teas * teas = new Teas();
 
 	TeaMaker * teaMaker = new TeaMaker(extras, teas);
-	CoffeeMaker* coffeeMaker = new CoffeeMaker(extras, coffees);
 
 	delete extras;
 	delete teas;
+
+	return teaMaker;
+}
+
+static CoffeeMaker * createCoffeeMaker() {
+	Extras * extras = new Extras();
+	Coffees * coffees = new Coffees();
+
+	CoffeeMaker * coffeeMaker = new CoffeeMaker(extras, coffees);
+
+	delete extras;
 	delete coffees;
 
-	teaMaker->makeBeverage();
-	coffeeMaker->makeBeverage();
+	return coffeeMaker;
+}
 
+static TeaMaker * refillMachine(TeaMaker & teaMaker) {
+	if (teaMaker.getTeas() != nullptr)
+		teaMaker.restockTeas();
 
+	teaMaker.restockExtras();
+	teaMaker.restockCups();
+	teaMaker.restockWater();
 
+	return &teaMaker;
+}
 
+static CoffeeMaker * refillMachine(CoffeeMaker & coffeeMaker) {
+	if (coffeeMaker.getCoffees() != nullptr)
+		coffeeMaker.restockCoffees();
+
+	coffeeMaker.restockExtras();
+	coffeeMaker.restockCups();
+	coffeeMaker.restockWater();
+
+	return &coffeeMaker;
+}
+
+// =========== Main ===========
+int main() {
+	// client code 'factories'
+	TeaMaker * teaMaker = createTeaMaker();
+	CoffeeMaker * coffeeMaker = createCoffeeMaker();
+
+	// brewing different beverage calls the template method function called 'makeBeverage'
+	// depending on if it's a tea or coffee maker, it will call the derived class's functions
+	teaMaker->makeBeverage("chia tea");
+	coffeeMaker->makeBeverage("light roast");
+
+	// refill all of the machines
+	teaMaker = refillMachine(*teaMaker);
+	coffeeMaker = refillMachine(*coffeeMaker);
 
 	return 0;
 }

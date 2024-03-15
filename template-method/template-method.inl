@@ -58,15 +58,15 @@ inline void Teas::setChiaTea(int chiaTea) {
 
 // ========== Coffees ==========
 inline int Coffees::getLightRoast() const {
-	this->lightRoast;
+	return this->lightRoast;
 }
 
 inline int Coffees::getMediumRoast() const {
-	this->mediumRoast;
+	return this->mediumRoast;
 }
 
 inline int Coffees::getDarkRoast() const {
-	this->darkRoast;
+	return this->darkRoast;
 }
 
 inline void Coffees::setLightRoast(int lightRoast) {
@@ -119,5 +119,5 @@ inline void BeverageMaker::setCups(int cups) {
 }
 
 inline void BeverageMaker::setWaterAmount(double waterAmount) {
-	this->waterAmount = waterAmount;
+	if(waterAmount > 0) this->waterAmount = waterAmount;
 }

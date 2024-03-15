@@ -102,18 +102,12 @@ public:
 	~BeverageMaker();
 
 	// template actions
-	void makeBeverage();
+	virtual void makeBeverage(std::string beverageSelected) = 0;
 	void restockExtras();
 	void restockTeas();
 	void restockCoffees();
-
-protected:
-	// class actions
-	virtual void placeCup();
-	virtual void boilWater();
-	virtual void brew() = 0;
-	virtual void pourInCup();
-	virtual void addExtras() = 0;
+	void restockCups();
+	void restockWater();
 
 	// getters/setters
 	inline Extras * getExtras() const;
@@ -127,6 +121,14 @@ protected:
 	inline void setCoffees(Coffees * coffees);
 	inline void setCups(int cups);
 	inline void setWaterAmount(double waterAmount); // in fl oz
+
+protected:
+	// class actions
+	virtual void placeCup();
+	virtual void boilWater();
+	virtual void brew(std::string beverageSelected) = 0;
+	virtual void pourInCup();
+	virtual void addExtras() = 0;
 
 	Extras * extras;
 	Teas * teas;
@@ -148,7 +150,9 @@ public:
 			double waterAmount = MAX_WATER_AMOUNT);
 	~TeaMaker();
 
-	void brew() override;
+	void makeBeverage(std::string beverageSelected) override;
+
+	void brew(std::string beverageSelected) override;
 	void addExtras() override;
 };
 
@@ -162,7 +166,9 @@ public:
 				double waterAmount = MAX_WATER_AMOUNT);
 	~CoffeeMaker();
 
-	void brew() override;
+	virtual void makeBeverage(std::string beverageSelected) override;
+
+	void brew(std::string beverageSelected) override;
 	void addExtras() override;
 };
 
