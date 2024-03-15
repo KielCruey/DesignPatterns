@@ -7,20 +7,22 @@
 
 const int MIN_AMOUNT = 0;
 
-const int MAX_SHOT_AMOUNT = 15;
+const int MAX_EXTRAS_AMOUNT = 15;
 const int MAX_BEVERAGE_AMOUNT = 30;
 
 const int MAX_CUPS = 60;
-const int MAX_WATER_AMOUNT = 600; // about 75 
+const int MAX_WATER_AMOUNT = 600; // about 75 cups at 8 fl oz
+
+const int BEVERAGE_WATER = 8;
 
 // ============ Support Classes ============
 class Extras
 {
 public:
-	Extras(int sugarShot = MAX_SHOT_AMOUNT,
-		   int creamShot = MAX_SHOT_AMOUNT,
-		   int milkShot = MAX_SHOT_AMOUNT,
-		   int chocolateShot = MAX_SHOT_AMOUNT);
+	Extras(int sugarShot = MAX_EXTRAS_AMOUNT,
+		   int creamShot = MAX_EXTRAS_AMOUNT,
+		   int milkShot = MAX_EXTRAS_AMOUNT,
+		   int chocolateShot = MAX_EXTRAS_AMOUNT);
 	~Extras() = default;
 
 	// getters/setters
@@ -114,15 +116,15 @@ protected:
 	virtual void addExtras() = 0;
 
 	// getters/setters
-	inline Extras* getExtras() const;
-	inline Teas* getTeas() const;
-	inline Coffees* getCoffees() const;
+	inline Extras * getExtras() const;
+	inline Teas * getTeas() const;
+	inline Coffees * getCoffees() const;
 	inline int getCups() const;
 	inline double getWaterAmount() const;
 
-	inline void setExtras(Extras* extras);
-	inline void setTeas(Teas* teas);
-	inline void setCoffees(Coffees* coffees);
+	inline void setExtras(Extras * extras);
+	inline void setTeas(Teas * teas);
+	inline void setCoffees(Coffees * coffees);
 	inline void setCups(int cups);
 	inline void setWaterAmount(double waterAmount); // in fl oz
 
@@ -140,10 +142,10 @@ private:
 class TeaMaker : public BeverageMaker
 {
 public:
-	TeaMaker(Extras* extras,
-		Teas* teas,
-		int cups = MAX_CUPS,
-		double waterAmount = MAX_WATER_AMOUNT);
+	TeaMaker(Extras * extras,
+			Teas * teas,
+			int cups = MAX_CUPS,
+			double waterAmount = MAX_WATER_AMOUNT);
 	~TeaMaker();
 
 	void brew() override;
@@ -154,10 +156,10 @@ public:
 class CoffeeMaker : public BeverageMaker
 {
 public:
-	CoffeeMaker(Extras* extras,
-		Coffees* coffees,
-		int cups = MAX_CUPS,
-		double waterAmount = MAX_WATER_AMOUNT);
+	CoffeeMaker(Extras * extras,
+				Coffees * coffees,
+				int cups = MAX_CUPS,
+				double waterAmount = MAX_WATER_AMOUNT);
 	~CoffeeMaker();
 
 	void brew() override;

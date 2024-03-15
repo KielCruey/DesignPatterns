@@ -115,7 +115,7 @@ inline void BeverageMaker::setCoffees(Coffees* coffees) {
 }
 
 inline void BeverageMaker::setCups(int cups) {
-	this->cups = cups;
+	if(cups > 0) this->cups = cups;
 }
 
 inline void BeverageMaker::setWaterAmount(double waterAmount) {

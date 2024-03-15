@@ -34,9 +34,9 @@ Coffees::Coffees(int lightRoast,
 { }
 
 // =========== BeverageMaker ===========
-BeverageMaker::BeverageMaker(Extras* extras,
-							Teas* teas,
-							Coffees* coffees,
+BeverageMaker::BeverageMaker(Extras * extras,
+							Teas * teas,
+							Coffees * coffees,
 							int cups,
 							double waterAmount) :
 	extras(new Extras(*extras)),
@@ -69,32 +69,54 @@ BeverageMaker::~BeverageMaker() {
 	printToConsole("BeverageMaker deleted");
 }
 
+// calls template methods
 void BeverageMaker::makeBeverage() {
-
+	placeCup();
+	boilWater();
+	brew();
+	pourInCup();
+	addExtras();
 }
 
 void BeverageMaker::restockExtras() {
+	getExtras()->setSugarShot(MAX_EXTRAS_AMOUNT);
+	getExtras()->setCreamShot(MAX_EXTRAS_AMOUNT);
+	getExtras()->setMilkShot(MAX_EXTRAS_AMOUNT);
+	getExtras()->setChocolateShot(MAX_EXTRAS_AMOUNT);
 
+	printToConsole("Restocked extras");
 }
 
 void BeverageMaker::restockTeas() {
+	getTeas()->setGreenTea(MAX_BEVERAGE_AMOUNT);
+	getTeas()->setBlackTea(MAX_BEVERAGE_AMOUNT);
+	getTeas()->setChiaTea(MAX_BEVERAGE_AMOUNT);
 
+	printToConsole("Restocked teas");
 }
 
 void BeverageMaker::restockCoffees() {
+	getCoffees()->setLightRoast(MAX_BEVERAGE_AMOUNT);
+	getCoffees()->setMediumRoast(MAX_BEVERAGE_AMOUNT);
+	getCoffees()->setDarkRoast(MAX_BEVERAGE_AMOUNT);
 
+	printToConsole("Restocked coffees");
 }
 
 void BeverageMaker::placeCup() {
+	setCups(getCups() - 1);
 
+	printToConsole("Cup placed");
 }
 
 void BeverageMaker::boilWater() {
-
+	printToConsole("Water boiled");
 }
 
 void BeverageMaker::pourInCup() {
+	setWaterAmount(getWaterAmount() - BEVERAGE_WATER);
 
+	printToConsole("Beverage poured in cup");
 }
 
 // =========== TeaMaker ===========
@@ -106,15 +128,15 @@ TeaMaker::TeaMaker(Extras* extras,
 { }
 
 TeaMaker::~TeaMaker() {
-
+	printToConsole("TeaMaker deleted");
 }
 
 void TeaMaker::brew() {
-
+	printToConsole("Brewing tea");
 }
 
 void TeaMaker::addExtras() {
-
+	printToConsole("Tea extras added");
 }
 
 // =========== CoffeeMaker ===========
@@ -126,36 +148,39 @@ CoffeeMaker::CoffeeMaker(Extras* extras,
 { }
 
 CoffeeMaker::~CoffeeMaker() {
-
+	printToConsole("CoffeeMaker deleted");
 }
 
 void CoffeeMaker::brew() {
-
+	printToConsole("Brewing coffee");
 }
 
 void CoffeeMaker::addExtras() {
-
+	printToConsole("Coffee extras added");
 }
 
 // =========== Main ===========
 int main() {
 
-	// a little test
-	{
-		Extras* extras = new Extras();
-		Teas* teas = new Teas();
-		Coffees* coffees = new Coffees();
 
-		TeaMaker * teaMaker = new TeaMaker(extras, teas);
-		CoffeeMaker* coffeeMaker = new CoffeeMaker(extras, coffees);
 
-		delete extras;
-		delete teas;
-		delete coffees;
+	Extras* extras = new Extras();
+	Teas* teas = new Teas();
+	Coffees* coffees = new Coffees();
 
-		delete teaMaker;
-		delete coffeeMaker;
-	}
+	TeaMaker * teaMaker = new TeaMaker(extras, teas);
+	CoffeeMaker* coffeeMaker = new CoffeeMaker(extras, coffees);
+
+	delete extras;
+	delete teas;
+	delete coffees;
+
+	teaMaker->makeBeverage();
+	coffeeMaker->makeBeverage();
+
+
+
+
 
 	return 0;
 }
