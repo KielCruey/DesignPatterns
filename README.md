@@ -42,6 +42,8 @@ For the factor method, there seems to be three ways it is implemented:
 [Design Pattern Wiki](https://en.wikipedia.org/wiki/Software_design_pattern#Concurrency_patterns)
 
 # UML Diagrams
+[UML Examples](https://docs.nomagic.com/pages/viewpage.action?pageId=54167712)
+
 General UML [tutorial](https://www.visual-paradigm.com/guide/uml-unified-modeling-language/uml-class-diagram-tutorial/) on the class diagrams.
 
 General UML [tutorial](https://www.drawio.com/blog/sequence-diagrams) on the sequency diagram.
