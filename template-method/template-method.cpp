@@ -252,5 +252,8 @@ int main() {
 	teaMaker = refillMachine(*teaMaker);
 	coffeeMaker = refillMachine(*coffeeMaker);
 
+	delete teaMaker;
+	delete coffeeMaker;
+
 	return 0;
 }

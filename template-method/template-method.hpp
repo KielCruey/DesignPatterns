@@ -94,14 +94,14 @@ private:
 class BeverageMaker
 {
 public:
-	BeverageMaker(Extras * extras,
-				  Teas * teas,
-				  Coffees * coffees,
+	BeverageMaker(Extras * extras = nullptr,
+				  Teas * teas = nullptr,
+				  Coffees * coffees = nullptr,
 				  int cups = MAX_CUPS,
 				  double waterAmount = MAX_WATER_AMOUNT);
 	~BeverageMaker();
 
-	// template actions
+	// class actions
 	virtual void makeBeverage(std::string beverageSelected) = 0;
 	void restockExtras();
 	void restockTeas();
@@ -123,7 +123,7 @@ public:
 	inline void setWaterAmount(double waterAmount); // in fl oz
 
 protected:
-	// class actions
+	// template actions
 	virtual void placeCup();
 	virtual void boilWater();
 	virtual void brew(std::string beverageSelected) = 0;
