@@ -23,8 +23,6 @@ public:
 		   int chocolateShot = MAX_SHOT_AMOUNT);
 	~Extras() = default;
 
-	//Extras(const Extras& extras); // copy constructor
-
 	// getters/setters
 	inline int getSugarShot() const;
 	inline int getCreamShot() const;
@@ -94,7 +92,6 @@ private:
 class BeverageMaker
 {
 public:
-	BeverageMaker();
 	BeverageMaker(Extras * extras,
 				  Teas * teas,
 				  Coffees * coffees,
@@ -102,31 +99,32 @@ public:
 				  double waterAmount = MAX_WATER_AMOUNT);
 	~BeverageMaker();
 
+	// template actions
 	void makeBeverage();
 	void restockExtras();
 	void restockTeas();
 	void restockCoffees();
 
-	// getters/setters
-	inline Extras * getExtras() const;
-	inline Teas * getTeas() const;
-	inline Coffees * getCoffees() const;
-	inline int getCups() const;
-	inline double getWaterAmount() const;
-
-	inline void setExtras(Extras * extras);
-	inline void setTeas(Teas * teas);
-	inline void setCoffees(Coffees * coffees);
-	inline void setCups(int cups);
-	inline void setWaterAmount(double waterAmount); // in fl oz
-
-
 protected:
+	// class actions
 	virtual void placeCup();
 	virtual void boilWater();
 	virtual void brew() = 0;
 	virtual void pourInCup();
 	virtual void addExtras() = 0;
+
+	// getters/setters
+	inline Extras* getExtras() const;
+	inline Teas* getTeas() const;
+	inline Coffees* getCoffees() const;
+	inline int getCups() const;
+	inline double getWaterAmount() const;
+
+	inline void setExtras(Extras* extras);
+	inline void setTeas(Teas* teas);
+	inline void setCoffees(Coffees* coffees);
+	inline void setCups(int cups);
+	inline void setWaterAmount(double waterAmount); // in fl oz
 
 	Extras * extras;
 	Teas * teas;

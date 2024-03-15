@@ -34,14 +34,6 @@ Coffees::Coffees(int lightRoast,
 { }
 
 // =========== BeverageMaker ===========
-BeverageMaker::BeverageMaker() {
-	setExtras(new Extras());
-	setTeas(new Teas());
-	setCoffees(new Coffees());
-	setCups(MAX_CUPS);
-	setWaterAmount(MAX_WATER_AMOUNT);
-}
-
 BeverageMaker::BeverageMaker(Extras* extras,
 							Teas* teas,
 							Coffees* coffees,
@@ -59,14 +51,20 @@ BeverageMaker::BeverageMaker(Extras* extras,
 		this->coffees = new Coffees(*coffees);
 	}
 
-
 	printToConsole("BeverageMaker created");
 }
 
 BeverageMaker::~BeverageMaker() {
 	delete extras;
-	delete teas;
-	delete coffees;
+
+	// only TeaMaker class needs to delete
+	if (this->teas != nullptr) {
+		delete teas;
+	}
+
+	if (this->coffees != nullptr) {
+		delete coffees;
+	}
 
 	printToConsole("BeverageMaker deleted");
 }
@@ -149,12 +147,14 @@ int main() {
 		Coffees* coffees = new Coffees();
 
 		TeaMaker * teaMaker = new TeaMaker(extras, teas);
-
 		CoffeeMaker* coffeeMaker = new CoffeeMaker(extras, coffees);
 
 		delete extras;
 		delete teas;
 		delete coffees;
+
+		delete teaMaker;
+		delete coffeeMaker;
 	}
 
 	return 0;
