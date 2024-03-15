@@ -138,12 +138,12 @@ private:
 };
 
 // ========== Concrete Templates ==========
+// only makes teas
 class TeaMaker : public BeverageMaker
 {
 public:
 	TeaMaker(Extras* extras,
 		Teas* teas,
-		Coffees* coffees,
 		int cups = MAX_CUPS,
 		double waterAmount = MAX_WATER_AMOUNT);
 	~TeaMaker();
@@ -152,11 +152,11 @@ public:
 	void addExtras() override;
 };
 
+// only makes coffee
 class CoffeeMaker : public BeverageMaker
 {
 public:
 	CoffeeMaker(Extras* extras,
-		Teas* teas,
 		Coffees* coffees,
 		int cups = MAX_CUPS,
 		double waterAmount = MAX_WATER_AMOUNT);

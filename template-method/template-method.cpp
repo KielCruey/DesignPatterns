@@ -16,7 +16,6 @@ Extras::Extras(int sugarShot,
 { }
 
 // =========== Teas ===========
-
 Teas::Teas(int greenTea,
 			int blackTea,
 			int chiaTea) :
@@ -49,11 +48,18 @@ BeverageMaker::BeverageMaker(Extras* extras,
 							int cups,
 							double waterAmount) :
 	extras(new Extras(*extras)),
-	teas(new Teas(*teas)),
-	coffees(new Coffees(*coffees)),
 	cups(cups),
 	waterAmount(waterAmount)
 {
+	if (teas != nullptr) {
+		this->teas = new Teas(*teas);
+	}
+
+	if (coffees != nullptr) {
+		this->coffees = new Coffees(*coffees);
+	}
+
+
 	printToConsole("BeverageMaker created");
 }
 
@@ -96,10 +102,9 @@ void BeverageMaker::pourInCup() {
 // =========== TeaMaker ===========
 TeaMaker::TeaMaker(Extras* extras,
 					Teas* teas,
-					Coffees* coffees,
 					int cups,
 					double waterAmount) :
-	BeverageMaker(extras, teas, coffees, cups, waterAmount)
+	BeverageMaker(extras, teas, nullptr, cups, waterAmount)
 { }
 
 TeaMaker::~TeaMaker() {
@@ -116,11 +121,10 @@ void TeaMaker::addExtras() {
 
 // =========== CoffeeMaker ===========
 CoffeeMaker::CoffeeMaker(Extras* extras,
-						Teas* teas,
 						Coffees* coffees,
 						int cups,
 						double waterAmount) :
-	BeverageMaker(extras, teas, coffees, cups, waterAmount)
+	BeverageMaker(extras, nullptr, coffees, cups, waterAmount)
 { }
 
 CoffeeMaker::~CoffeeMaker() {
@@ -144,7 +148,9 @@ int main() {
 		Teas* teas = new Teas();
 		Coffees* coffees = new Coffees();
 
-		TeaMaker * teaMaker = new TeaMaker(extras, teas, coffees);
+		TeaMaker * teaMaker = new TeaMaker(extras, teas);
+
+		CoffeeMaker* coffeeMaker = new CoffeeMaker(extras, coffees);
 
 		delete extras;
 		delete teas;
