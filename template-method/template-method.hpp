@@ -150,8 +150,10 @@ public:
 			double waterAmount = MAX_WATER_AMOUNT);
 	~TeaMaker();
 
+	// user gives the tea choice they want
 	void makeBeverage(std::string beverageSelected) override;
 
+	// override strickly for the TeaMaker classes
 	void brew(std::string beverageSelected) override;
 	void addExtras() override;
 };
@@ -166,8 +168,10 @@ public:
 				double waterAmount = MAX_WATER_AMOUNT);
 	~CoffeeMaker();
 
+	// user gives the coffee choice they want
 	virtual void makeBeverage(std::string beverageSelected) override;
 
+	// override strickly for the CoffeeMaker classes
 	void brew(std::string beverageSelected) override;
 	void addExtras() override;
 };
