@@ -1,4 +1,4 @@
-class Disposition;
+class Mood;
 
 // ======== Context ========
 class Boss
@@ -10,12 +10,12 @@ public:
 	void helpMe();
 	void directMe();
 	
-	char * getMood();
+	inline Mood * getMood();
 
 private:
 	Mood * mood;
 
-	void setMood(Disposition* mood);
+	inline void setMood(Mood * mood);
 };
 
 // ======== State ========
