@@ -4,18 +4,21 @@ class Mood;
 class Boss
 {
 public:
-	Boss();
+	Boss(Mood * mood = nullptr);
 	~Boss();
 
+	// delegates part of its behavior to the current Mood object
 	void helpMe();
 	void directMe();
 	
 	inline Mood * getMood();
+	inline void setMood(Mood * mood);
 
 private:
 	Mood * mood;
 
-	inline void setMood(Mood * mood);
+	// allows changing the Boss object at runtime.
+	void TransitionMood(Mood * mood);
 };
 
 // ======== State ========
@@ -25,7 +28,7 @@ public:
 	Mood();
 	virtual ~Mood();
 
-	void setBoss(Boss * boss);
+	inline void setBoss(Boss * boss);
 
 	virtual void helpMe() = 0;
 	virtual void directMe() = 0;
