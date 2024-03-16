@@ -245,8 +245,13 @@ int main() {
 
 	// brewing different beverage calls the template method function called 'makeBeverage'
 	// depending on if it's a tea or coffee maker, it will call the derived class's functions
+	teaMaker->makeBeverage("green tea");
+	teaMaker->makeBeverage("black tea");
 	teaMaker->makeBeverage("chia tea");
+
 	coffeeMaker->makeBeverage("light roast");
+	coffeeMaker->makeBeverage("medium roast");
+	coffeeMaker->makeBeverage("dark roast");
 
 	// refill all of the machines
 	teaMaker = refillMachine(*teaMaker);
