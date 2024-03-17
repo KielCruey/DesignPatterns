@@ -1,4 +1,21 @@
 class Mood;
+class Boss;
+
+// ======== State ========
+class Mood
+{
+public:
+	Mood(Boss * boss = nullptr);
+	virtual ~Mood() = default;
+
+	inline void setBoss(Boss * boss);
+
+	virtual void helpMe() = 0;
+	virtual void directMe() = 0;
+
+protected:
+	Boss * boss;
+};
 
 // ======== Context ========
 class Boss
@@ -6,6 +23,9 @@ class Boss
 public:
 	Boss(Mood * mood = nullptr);
 	~Boss();
+
+	// allows changing the Boss object at runtime.
+	void TransitionMood(Mood* mood);
 
 	// delegates part of its behavior to the current Mood object
 	void helpMe();
@@ -16,25 +36,6 @@ public:
 
 private:
 	Mood * mood;
-
-	// allows changing the Boss object at runtime.
-	void TransitionMood(Mood * mood);
-};
-
-// ======== State ========
-class Mood
-{
-public:
-	Mood();
-	virtual ~Mood();
-
-	inline void setBoss(Boss * boss);
-
-	virtual void helpMe() = 0;
-	virtual void directMe() = 0;
-
-protected:
-	Boss * boss;
 };
 
 // ======== Concrete State ========

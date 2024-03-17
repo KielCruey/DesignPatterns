@@ -8,6 +8,6 @@ inline void Boss::setMood(Mood * mood) {
 }
 
 // ======== Mood ========
-void Mood::setBoss(Boss* boss) {
-
+void Mood::setBoss(Boss * boss) {
+	this->boss = boss;
 }
