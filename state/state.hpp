@@ -2,6 +2,9 @@ class Mood;
 class Boss;
 
 // ======== State ========
+// The base State class declares methods that all Concrete State should implement and 
+// also provides a backreference to the Context object, associated with the State.
+// This backreference can be used by States to transition the Context to another State.
 class Mood
 {
 public:
@@ -18,6 +21,8 @@ protected:
 };
 
 // ======== Context ========
+// The Context defines the interface of interest to clients. 
+// It also maintains a reference to an instance of a State subclass, which represents the current state of the Context.
 class Boss
 {
 public:
