@@ -60,5 +60,10 @@ For creating UML, [drawio.com](https://www.drawio.com/) was used. A quick [tutor
 ## Command
 [Article](https://www.bogotobogo.com/DesignPatterns/command.php)
 
+
+## Templates
+[Article - Part 1](https://www.codeproject.com/Articles/257589/An-Idiots-Guide-to-Cplusplus-Templates-Part-1)
+[Article - Part 2](https://www.codeproject.com/Articles/268849/An-Idiots-Guide-to-Cplusplus-Templates-Part-2)
+
 # Compiling Code
 This [video](https://www.youtube.com/watch?v=3-9sObAg6R0) helps with compiling on VS code.
