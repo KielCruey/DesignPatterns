@@ -60,5 +60,8 @@ For creating UML, [drawio.com](https://www.drawio.com/) was used. A quick [tutor
 ## Command
 [Article](https://www.bogotobogo.com/DesignPatterns/command.php)
 
+## Flyweight
+[Article](https://advancedcppwithexamples.blogspot.com/2010/10/c-example-of-flyweight-design-pattern.html)
+
 # Compiling Code
 This [video](https://www.youtube.com/watch?v=3-9sObAg6R0) helps with compiling on VS code.
