@@ -39,6 +39,8 @@ For the factor method, there seems to be three ways it is implemented:
 # General Resource
 [Design Pattern Book](https://www.cs.up.ac.za/cs/lmarshall/TDP/TDP.html)
 
+[Design Pattern Wiki](https://en.wikipedia.org/wiki/Software_design_pattern#Concurrency_patterns)
+
 # UML Diagrams
 General UML [tutorial](https://www.visual-paradigm.com/guide/uml-unified-modeling-language/uml-class-diagram-tutorial/) on the class diagrams.
 
